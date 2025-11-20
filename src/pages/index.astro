@@ -3,23 +3,49 @@ import MainLayout from '../layouts/MainLayout.astro';
 import Navigation from '../components/Navigation.astro';
 import { getCollection } from 'astro:content';
 
+// --- DATA FETCHING ---
+
 // 1. Selections
 const allSelections = await getCollection('selections');
 const featuredSelections = allSelections
-	.sort((a, b) => b.data.tastingDate.valueOf() - a.data.tastingDate.valueOf())
-	.slice(0, 2);
+    .sort((a, b) => b.data.tastingDate.valueOf() - a.data.tastingDate.valueOf())
+    .slice(0, 2);
 
 // 2. Portraits
 const allPortraits = await getCollection('portraits');
 const featuredPortraits = allPortraits
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-	.slice(0, 2);
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 2);
 
 // 3. Essays
 const allEssays = await getCollection('essays');
 const featuredEssays = allEssays
-	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-	.slice(0, 2);
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+    .slice(0, 2);
+
+// --- UI HELPERS ---
+
+// The Blueprint Data (Architecture of the site)
+const blueprint = [
+    {
+        id: "01",
+        title: "Selections",
+        desc: "The Archive. Technical reviews organized by structural profile.",
+        link: "#selections"
+    },
+    {
+        id: "02",
+        title: "Portraits",
+        desc: "The Voices. Narrative profiles of makers and growers.",
+        link: "#portraits"
+    },
+    {
+        id: "03",
+        title: "Essays",
+        desc: "The Context. Investigations into geography and culture.",
+        link: "#essays"
+    }
+];
 
 // Helper for Colors
 const getMoodColor = (tag) => {
@@ -51,145 +77,196 @@ const legacyUrl = "https://legacy.enoversa.com";
 ---
 
 <MainLayout title="Enoversa | Narratives of Soil & Craft">
-	<Navigation />
+    <Navigation />
 
-	<main>
-		<!-- HERO SECTION -->
-		<header class="min-h-screen flex flex-col justify-center px-6 md:px-24 pt-20 pb-32 relative border-b border-line">
-			<div class="max-w-7xl w-full">
-				<div class="mb-12 flex items-center gap-4">
-					<span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-					<span class="font-mono text-xs text-text-muted tracking-widest uppercase">Vol. II — 2025</span>
-				</div>
+    <main>
+        <header class="min-h-screen flex flex-col justify-center px-6 md:px-24 pt-20 pb-32 relative border-b border-line">
+            <div class="max-w-7xl w-full">
+                <div class="mb-12 flex items-center gap-4">
+                    <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+                    <span class="font-mono text-xs text-text-muted tracking-widest uppercase">Vol. II — 2025</span>
+                </div>
 
-				<h1 class="text-6xl md:text-8xl lg:text-9xl font-light leading-[0.9] tracking-tighter mb-16">
-					Narratives<br>
-					of <span class="text-text-dim italic font-serif font-thin">Soil & Craft.</span>
-				</h1>
+                <h1 class="text-6xl md:text-8xl lg:text-9xl font-light leading-[0.9] tracking-tighter mb-16">
+                    Narratives<br>
+                    of <span class="text-text-dim italic font-serif font-thin">Soil & Craft.</span>
+                </h1>
 
-				<div class="grid grid-cols-1 md:grid-cols-12 gap-8 w-full items-end">
-					<div class="md:col-span-4">
-						<p class="font-mono text-xs text-text-dim max-w-[200px]">
-							SCROLL TO EXPLORE<br>
-							THE JOURNAL
-						</p>
-					</div>
-					<div class="md:col-span-8">
-						<p class="text-xl md:text-2xl font-light text-text-muted leading-relaxed max-w-2xl">
-							A digital journal exploring low-intervention wines through the lens of landscape architecture and literary theory.
-						</p>
-					</div>
-				</div>
-			</div>
-		</header>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 w-full items-end">
+                    
+                    <div class="md:col-start-5 md:col-span-8 flex flex-col gap-8">
+                        
+                        <p class="text-xl md:text-2xl font-light text-text-muted leading-none">
+                            A digital journal exploring low-intervention wines.
+                        </p>
 
-		<!-- 00 / THE PIVOT -->
-		<section id="pivot" class="px-6 md:px-24 py-32 md:py-48 border-b border-line">
-			<div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
-				<div class="md:col-span-3 relative">
-					<div class="sticky-label">
-						<span class="font-mono text-xs text-accent mb-2 block">00</span>
-						<h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">The Pivot</h2>
-					</div>
-				</div>
-				<div class="md:col-span-8 md:col-start-5">
-					<div class="space-y-12 max-w-3xl">
-						<p class="text-3xl md:text-4xl font-light leading-snug">
-							We stopped looking for perfection and started seeking <span class="text-accent">truth.</span>
-						</p>
-						
-						<div class="text-lg font-light text-text-muted leading-relaxed space-y-8">
-							<p>
-								Enoversa began in 2017 as a hobbyist archive. Over time, our palate shifted fundamentally. We realized that the most compelling narratives weren't found in industrial consistency, but in the unpredictable nuances of living soil.
-							</p>
-							<p>
-								Today, we focus exclusively on wines that respect their origin. This space is a philosophical inquiry into terroir, guided by our 
-								<a href="/methodology" class="text-white border-b border-accent hover:text-accent transition-colors">Structural Methodology</a>.
-							</p>
-						</div>
+                        <div class="flex flex-col gap-4">
+                            <div class="w-px h-12 bg-line opacity-50"></div>
+                            
+                            <p class="font-mono text-[10px] text-text-dim uppercase tracking-widest">
+                                Scroll to explore
+                            </p>
+                        </div>
 
-						<div class="pt-12 mt-12 border-t border-line flex gap-12">
-							<div>
-								<span class="font-mono text-[10px] text-text-dim uppercase block mb-2">Vítor</span>
-								<span class="text-sm text-text-main block">Literature & Narrative</span>
-								<a href="/about" class="text-xs text-text-dim hover:text-white mt-1 inline-block border-b border-transparent hover:border-text-dim transition">Read Bio -></a>
-							</div>
-							<div>
-								<span class="font-mono text-[10px] text-text-dim uppercase block mb-2">Catarina</span>
-								<span class="text-sm text-text-main block">Landscape & Terroir</span>
-								<a href="/about" class="text-xs text-text-dim hover:text-white mt-1 inline-block border-b border-transparent hover:border-text-dim transition">Read Bio -></a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-		<!-- 01 / SELECTIONS -->
-		<section id="selections" class="px-6 md:px-24 py-32 md:py-48 border-b border-line bg-bg">
-			<div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
-				<div class="md:col-span-3 relative">
-					<div class="sticky-label">
-						<span class="font-mono text-xs text-accent mb-2 block">01</span>
-						<h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Selections</h2>
-					</div>
-				</div>
-				<div class="md:col-span-9">
-                    <p class="text-text-muted font-light mb-12 max-w-xl text-lg">
-						The Archive. Technical and emotional reviews of low-intervention wines, evaluated by structural profile.
-					</p>
+        <section id="pivot" class="px-6 md:px-24 py-32 md:py-48 border-b border-line">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                
+                <div class="md:col-span-3 relative">
+                    <div class="sticky-label">
+                        <span class="font-mono text-xs text-accent mb-2 block">00</span>
+                        <h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">The Pivot</h2>
+                    </div>
+                </div>
 
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
-						{featuredSelections.map(post => (
-							<article class="group cursor-pointer">
-								<a href={`/selections/${post.slug}`}>
+                <div class="md:col-span-8 md:col-start-5">
+                    <div class="space-y-12 max-w-3xl">
+                        
+                        <p class="text-3xl md:text-4xl font-light leading-snug">
+                            We drink to be <span class="text-accent">moved.</span>
+                        </p>
+                        
+                        <div class="text-lg font-light text-text-muted leading-relaxed space-y-8">
+                            
+                            <p>
+                                Enoversa was born in 2017 as a hobbyist archive. For years, we chronicled the wider world of wine, tasting without prejudice—from technical industrial benchmarks to obscure garage projects. We were looking for quality, wherever it lived.
+                            </p>
+
+                            <p>
+                                But slowly, a pattern emerged. The technically "perfect" wines often left us numb. We realized that what the industry calls consistency is often just a mask. We were drinking a <i class="text-text-dim">product</i>—engineered, polished, and predictable.
+                            </p>
+
+                            <p>
+                                The wines that actually moved us were the ones behaving like <span class="text-white font-normal">living beings.</span> They were often imperfect, but they were profound. Today, we have stripped away the rest to focus solely on this energy: wines that refuse the masquerade to reveal the raw, vibrating tension of their place of being.
+                            </p>
+
+                        </div>
+
+                        <div class="pt-12 mt-12 border-t border-line grid grid-cols-1 md:grid-cols-2 gap-12">
+                            
+                            <div>
+                                <span class="font-mono text-[10px] text-text-dim uppercase block mb-2">The Editors</span>
+                                <span class="text-sm text-text-main block mb-2">Vítor & Catarina</span>
+                                <a href="/about" class="group inline-flex items-center gap-2 text-xs text-text-dim hover:text-white transition-colors">
+                                    <span class="border-b border-transparent group-hover:border-text-dim pb-0.5">Meet us</span>
+                                    <span class="transition-transform group-hover:translate-x-1">-></span>
+                                </a>
+                            </div>
+
+                            <div>
+                                <span class="font-mono text-[10px] text-text-dim uppercase block mb-2">The Framework</span>
+                                <span class="text-sm text-text-main block mb-2">Structural Methodology</span>
+                                <a href="/methodology" class="group inline-flex items-center gap-2 text-xs text-text-dim hover:text-white transition-colors">
+                                    <span class="border-b border-transparent group-hover:border-text-dim pb-0.5">How we taste</span>
+                                    <span class="transition-transform group-hover:translate-x-1">-></span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="px-6 md:px-24 py-24 border-b border-line bg-surface/30">
+            <div class="max-w-7xl mx-auto">
+                
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+                    
+                    <div class="md:col-span-4">
+                        <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">The Blueprint</span>
+                        <h2 class="text-3xl md:text-4xl font-light text-white leading-tight">
+                            Three distinct<br>
+                            <span class="italic font-serif text-text-dim">architectural spaces.</span>
+                        </h2>
+                    </div>
+
+                    <div class="md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {blueprint.map(item => (
+                            <a href={item.link} class="group block p-6 border border-line hover:border-accent hover:bg-bg transition duration-500">
+                                <div class="flex justify-between items-start mb-4">
+                                    <span class="font-mono text-xs text-text-dim group-hover:text-accent transition">{item.id}</span>
+                                    <span class="text-xs text-text-dim opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition duration-500">↓</span>
+                                </div>
+                                <h3 class="text-lg text-white font-light mb-3">{item.title}</h3>
+                                <p class="text-xs text-text-muted font-light leading-relaxed">
+                                    {item.desc}
+                                </p>
+                            </a>
+                        ))}
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="selections" class="px-6 md:px-24 py-32 md:py-48 border-b border-line bg-bg">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                <div class="md:col-span-3 relative">
+                    <div class="sticky-label">
+                        <span class="font-mono text-xs text-accent mb-2 block">01</span>
+                        <h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Selections</h2>
+                    </div>
+                </div>
+                <div class="md:col-span-9">
+                    <p class="text-text-muted font-light mb-12 max-w-xl text-base">
+                        The Archive. Reviews of low-intervention wines, evaluated by structural profile.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
+                        {featuredSelections.map(post => (
+                            <article class="group cursor-pointer">
+                                <a href={`/selections/${post.slug}`}>
                                     <div class={`aspect-[4/3] relative mb-6 overflow-hidden flex items-center justify-center px-6 transition duration-500 group-hover:scale-[1.02] ${getCardBg(post.data.tags[0])}`}>
                                         <h3 class="font-sans text-2xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
                                             {post.data.vibe}
                                         </h3>
                                     </div>
 
-									<div class="border-b border-line pb-6 mb-6 flex justify-between items-end">
-										<h3 class="text-2xl font-light group-hover:text-accent transition-colors">{post.data.title}</h3>
-										<span class="font-mono text-xs text-text-dim uppercase">{post.data.producer}</span>
-									</div>
-									<p class="text-text-muted font-light leading-relaxed mb-4 line-clamp-3">
-										{post.data.excerpt}
-									</p>
-									<div class="flex justify-between items-center">
+                                    <div class="border-b border-line pb-6 mb-6 flex justify-between items-end">
+                                        <h3 class="text-2xl font-light group-hover:text-accent transition-colors">{post.data.title}</h3>
+                                        <span class="font-mono text-xs text-text-dim uppercase">{post.data.producer}</span>
+                                    </div>
+                                    <p class="text-text-muted font-light leading-relaxed mb-4 line-clamp-3">
+                                        {post.data.excerpt}
+                                    </p>
+                                    <div class="flex justify-between items-center">
                                         <span class={`font-mono text-[10px] uppercase tracking-widest ${getMoodColor(post.data.tags[0])}`}>{post.data.tags[0]}</span>
                                         <span class="text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">Read Notes -></span>
                                     </div>
-								</a>
-							</article>
-						))}
-					</div>
+                                </a>
+                            </article>
+                        ))}
+                    </div>
                     
                     <div class="mt-16 border-t border-line pt-8 text-right">
                          <a href="/selections" class="text-xs font-mono uppercase tracking-widest text-text-dim hover:text-white transition">View Full Archive -></a>
                     </div>
-				</div>
-			</div>
-		</section>
+                </div>
+            </div>
+        </section>
 
-		<!-- 02 / PORTRAITS -->
-		<section id="portraits" class="px-6 md:px-24 py-32 md:py-48 border-b border-line">
-			<div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
-				<div class="md:col-span-3 relative">
-					<div class="sticky-label">
-						<span class="font-mono text-xs text-accent mb-2 block">02</span>
-						<h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Portraits</h2>
-					</div>
-				</div>
-				<div class="md:col-span-9">
-					<p class="text-text-muted font-light mb-12 max-w-xl text-lg">
-						The Voices. Narrative profiles of the makers, the growers, and the thinkers who shape the culture of wine.
-					</p>
+        <section id="portraits" class="px-6 md:px-24 py-32 md:py-48 border-b border-line">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                <div class="md:col-span-3 relative">
+                    <div class="sticky-label">
+                        <span class="font-mono text-xs text-accent mb-2 block">02</span>
+                        <h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Portraits</h2>
+                    </div>
+                </div>
+                <div class="md:col-span-9">
+                    <p class="text-text-muted font-light mb-12 max-w-xl text-base">
+                        The Voices. Narrative profiles of the makers, the growers, and the thinkers.
+                    </p>
 
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
-						{featuredPortraits.map(post => (
-							<article class="group cursor-pointer">
-								<a href={`/portraits/${post.slug}`}>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
+                        {featuredPortraits.map(post => (
+                            <article class="group cursor-pointer">
+                                <a href={`/portraits/${post.slug}`}>
                                     <div class={`aspect-[4/3] relative mb-6 overflow-hidden flex flex-col items-center justify-center px-6 transition duration-500 group-hover:scale-[1.02] ${getCardBg(post.data.tags[0])}`}>
                                         <span class="font-mono text-[10px] uppercase tracking-widest opacity-60 mb-2">{post.data.role}</span>
                                         <h3 class="font-sans text-2xl font-medium text-center tracking-tight leading-tight">
@@ -197,86 +274,84 @@ const legacyUrl = "https://legacy.enoversa.com";
                                         </h3>
                                     </div>
 
-									<div class="flex justify-between items-baseline mb-2">
-										<h3 class="text-2xl font-light group-hover:text-white transition">{post.data.title}</h3>
+                                    <div class="flex justify-between items-baseline mb-2">
+                                        <h3 class="text-2xl font-light group-hover:text-white transition">{post.data.title}</h3>
                                         <span class="font-mono text-xs text-text-dim">{post.data.location}</span>
-									</div>
-									<p class="text-text-muted font-light leading-relaxed line-clamp-3 mb-4">{post.data.excerpt}</p>
+                                    </div>
+                                    <p class="text-text-muted font-light leading-relaxed line-clamp-3 mb-4">{post.data.excerpt}</p>
                                     
                                     <div class="flex justify-between items-center">
                                         <span class={`font-mono text-[10px] uppercase tracking-widest ${getMoodColor(post.data.tags[0])}`}>{post.data.tags[0]}</span>
                                         <span class="text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">Read Profile -></span>
                                     </div>
-								</a>
-							</article>
-						))}
-					</div>
+                                </a>
+                            </article>
+                        ))}
+                    </div>
 
                      <div class="mt-16 border-t border-line pt-8 text-right">
                          <a href="/portraits" class="text-xs font-mono uppercase tracking-widest text-text-dim hover:text-white transition">View All Portraits -></a>
                     </div>
-				</div>
-			</div>
-		</section>
+                </div>
+            </div>
+        </section>
 
-		<!-- 03 / ESSAYS -->
-		<section id="essays" class="px-6 md:px-24 py-32 md:py-48 border-b border-line">
-			<div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
-				<div class="md:col-span-3 relative">
-					<div class="sticky-label">
-						<span class="font-mono text-xs text-accent mb-2 block">03</span>
-						<h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Essays</h2>
-					</div>
-				</div>
-				<div class="md:col-span-9">
-                    <p class="text-text-muted font-light mb-12 max-w-xl text-lg">
-                        The Context. Investigations into the geography (landscapes) and culture (literature/arts) of wine.
+        <section id="essays" class="px-6 md:px-24 py-32 md:py-48 border-b border-line">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                <div class="md:col-span-3 relative">
+                    <div class="sticky-label">
+                        <span class="font-mono text-xs text-accent mb-2 block">03</span>
+                        <h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Essays</h2>
+                    </div>
+                </div>
+                <div class="md:col-span-9">
+                    <p class="text-text-muted font-light mb-12 max-w-xl text-base">
+                        The Context. Investigations into the geography and culture of wine.
                     </p>
 
-					<div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
-						{featuredEssays.map(post => (
-							<a href={`/essays/${post.slug}`} class="group block cursor-pointer">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24">
+                        {featuredEssays.map(post => (
+                            <a href={`/essays/${post.slug}`} class="group block cursor-pointer">
                                 <div class={`aspect-[4/3] relative mb-6 overflow-hidden flex items-center justify-center px-6 transition duration-500 group-hover:scale-[1.02] ${getCardBg(post.data.type)}`}>
                                     <h3 class="font-sans text-2xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
                                         {post.data.vibe}
                                     </h3>
                                 </div>
 
-								<div class="flex justify-between items-baseline mb-2">
-									<h3 class="text-2xl font-light text-white group-hover:text-accent transition-colors">{post.data.title}</h3>
-									<span class="font-mono text-xs text-text-dim">{post.data.type}</span>
-								</div>
+                                <div class="flex justify-between items-baseline mb-2">
+                                    <h3 class="text-2xl font-light text-white group-hover:text-accent transition-colors">{post.data.title}</h3>
+                                    <span class="font-mono text-xs text-text-dim">{post.data.type}</span>
+                                </div>
                                 <p class="text-text-muted font-light leading-relaxed line-clamp-3 mb-4">{post.data.excerpt}</p>
                                 
                                 <div class="flex justify-between items-center">
                                     <span class={`font-mono text-[10px] uppercase tracking-widest ${getMoodColor(post.data.type)}`}>{post.data.tags[0]}</span>
                                     <span class="text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">Read Essay -></span>
                                 </div>
-							</a>
-						))}
-					</div>
+                            </a>
+                        ))}
+                    </div>
 
                     <div class="mt-16 border-t border-line pt-8 text-right">
                          <a href="/essays" class="text-xs font-mono uppercase tracking-widest text-text-dim hover:text-white transition">View All Essays -></a>
                     </div>
-				</div>
-			</div>
-		</section>
+                </div>
+            </div>
+        </section>
 
-		<!-- 04 / LEGACY (Updated to be Narrative-Only) -->
-		<section id="legacy" class="px-6 md:px-24 py-32 md:py-48 bg-surface">
-			<div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
-				<div class="md:col-span-3 relative">
-					<div class="sticky-label">
-						<span class="font-mono text-xs text-accent mb-2 block">04</span>
-						<div class="flex items-center gap-3">
+        <section id="legacy" class="px-6 md:px-24 py-32 md:py-48 bg-surface">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                <div class="md:col-span-3 relative">
+                    <div class="sticky-label">
+                        <span class="font-mono text-xs text-accent mb-2 block">04</span>
+                        <div class="flex items-center gap-3">
                              <h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">Legacy Archive</h2>
                              <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
                         </div>
-						<p class="font-mono text-[10px] text-text-dim mt-4">2017 — 2023</p>
-					</div>
-				</div>
-				<div class="md:col-span-8 md:col-start-5">
+                        <p class="font-mono text-[10px] text-text-dim mt-4">2017 — 2023</p>
+                    </div>
+                </div>
+                <div class="md:col-span-8 md:col-start-5">
                     
                     <div class="max-w-3xl space-y-8 text-lg font-light leading-relaxed text-text-muted border-t border-line pt-8">
                         <p>
@@ -296,8 +371,8 @@ const legacyUrl = "https://legacy.enoversa.com";
                         </div>
                     </div>
 
-				</div>
-			</div>
-		</section>
-	</main>
+                </div>
+            </div>
+        </section>
+    </main>
 </MainLayout>
