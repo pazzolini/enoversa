@@ -1,0 +1,48 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: 📦 Install Dependencies
+      run: npm install
+
+    - name: 🛠 Build Project
+      run: npm run build
+
+    - name: 📂 Sync to Hostinger via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        
+        # Astro builds the site into this folder:
+        local-dir: ./dist/
+        
+        # WHERE TO UPLOAD:
+        # Use ./public_html/ if using the main Hostinger account.
+        # Use ./ if you created a specific FTP user locked to that folder.
+        server-dir: ./public_html/
+        
+        # 🛡️ SAFETY ZONE: This prevents the legacy folder from being deleted
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          legacy/**

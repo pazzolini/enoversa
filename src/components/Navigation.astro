@@ -1,0 +1,82 @@
+---
+// src/components/Navigation.astro
+---
+<nav class="fixed w-full z-50 top-0 left-0 px-6 md:px-12 py-8 flex justify-between items-start bg-gradient-to-b from-bg via-bg/80 to-transparent pointer-events-none">
+    
+    <a href="/" class="text-xs font-bold tracking-[0.25em] uppercase hover:text-accent transition-colors z-50 pointer-events-auto mix-blend-difference text-white">
+        Enoversa
+    </a>
+    
+    <div class="relative z-50 pointer-events-auto">
+        <button id="menu-btn" class="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase hover:text-accent transition-colors focus:outline-none mix-blend-difference text-white">
+            <span id="menu-text">[ INDEX ]</span>
+        </button>
+
+        <div id="menu-dropdown" class="absolute right-0 top-full mt-6 w-56 bg-surface border border-line p-6 menu-hidden shadow-2xl">
+            <div class="flex flex-col gap-4 font-mono text-[10px] tracking-widest uppercase text-text-muted">
+                <a href="/#pivot" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">00 Pivot</a>
+                <a href="/selections" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">01 Selections</a>
+                <a href="/portraits" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">02 Portraits</a>
+                <a href="/essays" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">03 Essays</a>
+                <div class="h-px bg-line my-2"></div>
+                <!-- Points to the future subdomain -->
+                <a href="https://legacy.enoversa.com" target="_blank" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block text-text-dim">04 Legacy Archive ↗</a>
+                <a href="/about" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block mt-2">About Us</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<style>
+    #menu-dropdown {
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    }
+    .menu-hidden {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+    }
+    .menu-visible {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menuDropdown = document.getElementById('menu-dropdown');
+    const menuText = document.getElementById('menu-text');
+
+    if(menuBtn && menuDropdown && menuText) {
+        menuBtn.addEventListener('click', () => {
+            if (menuDropdown.classList.contains('menu-hidden')) {
+                menuDropdown.classList.remove('menu-hidden');
+                menuDropdown.classList.add('menu-visible');
+                menuText.textContent = '[ CLOSE ]';
+            } else {
+                menuDropdown.classList.remove('menu-visible');
+                menuDropdown.classList.add('menu-hidden');
+                menuText.textContent = '[ INDEX ]';
+            }
+        });
+        
+        const links = menuDropdown.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                 menuDropdown.classList.remove('menu-visible');
+                 menuDropdown.classList.add('menu-hidden');
+                 menuText.textContent = '[ INDEX ]';
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            const target = e.target;
+            if (!menuBtn.contains(target) && !menuDropdown.contains(target)) {
+                menuDropdown.classList.remove('menu-visible');
+                menuDropdown.classList.add('menu-hidden');
+                menuText.textContent = '[ INDEX ]';
+            }
+        });
+    }
+</script>

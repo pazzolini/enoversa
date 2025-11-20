@@ -1,0 +1,179 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import ScoreBar from '../components/ScoreBar.astro';
+
+const editors = [
+    {
+        name: "Vítor",
+        role: "Literature & Narrative",
+        website: "vitorramalhosaferreira.com",
+        url: "https://vitorramalhosaferreira.com",
+        vintage: "1993",
+        bio: "Opens with intense notes of literary theory and electric energy. On the palate, it is deeply complex, layering high-voltage discourse with profound narrative depth. A demanding but ultimately rewarding vintage. Infinite finish.",
+        image: "/images/vitor-profile.jpg",
+        metrics: {
+            liveliness: 2,   
+            drinkability: 2, 
+            balance: 2,      
+            complexity: 2,   
+            emotion: 2       
+        },
+        total: "10/10"
+    },
+    {
+        name: "Catarina",
+        role: "Landscape & Terroir",
+        website: "catarinapatoiloteixeira.com",
+        url: "https://catarinapatoiloteixeira.com",
+        vintage: "1993",
+        bio: "A masterclass in structure and harmony. Deeply grounded with earthy notes of landscape architecture. The texture is smooth, reliable, and seamlessly integrated. A presence that brings order to the chaos and persists in the memory.",
+        image: "/images/catarina-profile.jpg",
+        metrics: {
+            liveliness: 2,   
+            drinkability: 2, 
+            balance: 2,      
+            complexity: 2,   
+            emotion: 2       
+        },
+        total: "10/10"
+    }
+];
+
+const sections = [
+    {
+        id: "01",
+        title: "Selections",
+        desc: "The Archive. Technical and emotional reviews of low-intervention wines. Organized not by score, but by structural profile."
+    },
+    {
+        id: "02",
+        title: "Portraits",
+        desc: "The Voices. Narrative profiles of the makers, the growers, and the thinkers who shape the culture of wine."
+    },
+    {
+        id: "03",
+        title: "Essays",
+        desc: "The Context. Investigations into the geography (landscapes) and culture (literature/arts) of wine."
+    }
+];
+---
+
+<MainLayout title="About | Enoversa">
+    <Navigation />
+
+    <main class="min-h-screen pt-32 px-6 md:px-24 pb-24">
+        
+        <!-- HEADER -->
+        <header class="max-w-7xl mx-auto mb-32 border-b border-line pb-12">
+            <div class="flex flex-col md:flex-row justify-between items-end">
+                <div>
+                    <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">The Editors</span>
+                    <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">Human <span class="italic font-serif text-text-dim">Terroir.</span></h1>
+                </div>
+                <p class="text-text-muted font-light text-right mt-4 md:mt-0 max-w-sm">
+                    Two distinct personalities. One shared philosophy.
+                </p>
+            </div>
+        </header>
+
+        <!-- PROFILES GRID -->
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 mb-48">
+            {editors.map(editor => (
+                <div class="group relative">
+                    
+                    <!-- "MUST TRY" STAMP -->
+                    <div class="absolute -top-6 -right-6 z-20 rotate-12 mix-blend-hard-light pointer-events-none">
+                        <div class="border-2 border-accent rounded-full w-24 h-24 flex items-center justify-center bg-accent/10 backdrop-blur-sm">
+                            <span class="text-accent font-mono font-bold text-xs text-center leading-tight uppercase transform -rotate-12">
+                                Official<br>Selection<br>MUST TRY
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Profile Image Card -->
+                    <div class="aspect-[4/5] bg-surface mb-8 flex items-center justify-center relative overflow-hidden border border-line group-hover:border-accent transition duration-500">
+                        <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition duration-700"></div>
+                        <!-- Placeholder Text -->
+                        <div class="text-center space-y-2">
+                             <span class="font-mono text-xs text-text-dim uppercase tracking-widest block">[ PHOTO: {editor.name} ]</span>
+                             <span class="font-mono text-[10px] text-accent uppercase tracking-widest block">Vintage: {editor.vintage}</span>
+                        </div>
+                    </div>
+
+                    <!-- Name, Role & Website -->
+                    <div class="border-b border-line pb-6 mb-8 flex justify-between items-end">
+                        <div>
+                            <h2 class="text-4xl font-light text-white mb-1">{editor.name}</h2>
+                            <span class="font-mono text-xs text-accent uppercase tracking-widest block mb-2">{editor.role}</span>
+                            
+                            <!-- Personal Website Link -->
+                            <a href={editor.url} target="_blank" class="font-mono text-[10px] text-text-dim hover:text-white border-b border-line hover:border-white transition pb-0.5">
+                                {editor.website} ->
+                            </a>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-mono text-[10px] text-text-dim uppercase">Total Score</span>
+                            <span class="text-3xl font-sans font-medium text-white">{editor.total}</span>
+                        </div>
+                    </div>
+
+                    <!-- The "Tasting Note" -->
+                    <p class="text-text-muted font-light leading-relaxed mb-12 min-h-[80px]">
+                        {editor.bio}
+                    </p>
+
+                    <!-- The Bars (Standardized Labels) -->
+                    <div class="bg-surface/30 p-8 border border-line/50 rounded-sm space-y-4 relative overflow-hidden">
+                        <div class="absolute inset-0 opacity-5 noise-bg pointer-events-none"></div>
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-text-main uppercase">01 Liveliness / Energy</span>
+                            <ScoreBar score={editor.metrics.liveliness} />
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-text-main uppercase">02 Drinkability / Purity</span>
+                            <ScoreBar score={editor.metrics.drinkability} />
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-text-main uppercase">03 Balance</span>
+                            <ScoreBar score={editor.metrics.balance} />
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-text-main uppercase">04 Complexity</span>
+                            <ScoreBar score={editor.metrics.complexity} />
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-text-main uppercase">05 Emotion</span>
+                            <ScoreBar score={editor.metrics.emotion} />
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+        <!-- THE BLUEPRINT -->
+        <section class="max-w-5xl mx-auto border-t border-line pt-24">
+            <div class="text-center mb-16">
+                <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">The Blueprint</span>
+                <h2 class="text-3xl md:text-5xl font-light text-white mb-6">How to Read <span class="italic font-serif text-text-dim">Enoversa.</span></h2>
+                <p class="text-text-muted font-light max-w-xl mx-auto">
+                    This is not just a blog; it is a structured inquiry. We have organized our findings into three distinct architectural spaces.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {sections.map(section => (
+                    <div class="border border-line p-8 hover:border-accent hover:bg-surface/50 transition duration-500 group cursor-default">
+                        <span class="font-mono text-xs text-text-dim group-hover:text-accent transition">{section.id}</span>
+                        <h3 class="text-xl text-white font-light mt-4 mb-4">{section.title}</h3>
+                        <p class="text-sm text-text-muted font-light leading-relaxed">
+                            {section.desc}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+    </main>
+</MainLayout>

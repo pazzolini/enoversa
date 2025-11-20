@@ -1,0 +1,118 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Navigation from '../../components/Navigation.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('selections');
+  return entries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { metrics } = entry.data;
+
+// Helper to generate bar segments
+const renderBar = (score: number) => {
+    // We want 3 distinct blocks. 
+    // If score is 0, highlight 1st block (low).
+    // If score is 1, highlight 1st and 2nd block (mid).
+    // If score is 2, highlight all 3 blocks (high).
+    // Actually, based on your description: 0 is a state, 1 is a state, 2 is a state.
+    // Let's do a filled progress bar style for modern minimalism.
+    
+    // 0 = 33% filled (Basic/Low)
+    // 1 = 66% filled (Good/Mid)
+    // 2 = 100% filled (High/Exceptional)
+    
+    // Wait, 0 is "Static/Disharmony". It shouldn't look "good".
+    // Let's use distinct dots/blocks.
+    
+    return (
+        <div class="flex gap-1 h-2 w-24">
+            <div class={`flex-1 transition-all ${score >= 0 ? 'bg-accent' : 'bg-line'}`}></div>
+            <div class={`flex-1 transition-all ${score >= 1 ? 'bg-accent' : 'bg-line'}`}></div>
+            <div class={`flex-1 transition-all ${score >= 2 ? 'bg-accent' : 'bg-line'}`}></div>
+        </div>
+    );
+};
+---
+
+<MainLayout title={`${entry.data.title} | Enoversa`}>
+    <Navigation />
+
+    <main class="min-h-screen pt-32 px-6 md:px-24 pb-24">
+        
+        <!-- HEADER / VIBE IMAGE -->
+        <header class="max-w-6xl mx-auto mb-24">
+            <div class="flex flex-col md:flex-row justify-between items-end border-b border-line pb-6 mb-12">
+                <div>
+                    <span class="font-mono text-xs text-accent uppercase tracking-widest mb-2 block">{entry.data.producer}</span>
+                    <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">{entry.data.title} <span class="text-text-dim text-3xl align-top">{entry.data.year}</span></h1>
+                </div>
+                <span class="font-mono text-xs text-text-dim uppercase mt-4 md:mt-0">{entry.data.region} / {entry.data.tag}</span>
+            </div>
+
+            <!-- THE VIBE "IMAGE" -->
+            <div class="w-full py-24 md:py-32 border-b border-line flex items-center justify-center bg-surface/30 relative overflow-hidden">
+                <!-- Abstract Background Blur -->
+                <div class="absolute inset-0 bg-accent opacity-5 blur-[100px]"></div>
+                
+                <h2 class="text-4xl md:text-6xl lg:text-7xl font-serif italic text-center leading-tight text-text-main max-w-4xl relative z-10 px-6">
+                    "{entry.data.vibe}"
+                </h2>
+            </div>
+        </header>
+
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
+            
+            <!-- LEFT: METRICS BAR -->
+            <aside class="lg:col-span-4 lg:sticky lg:top-32 h-fit space-y-10 p-8 bg-surface/50 border border-line rounded-sm">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="font-mono text-xs text-text-muted uppercase tracking-widest">Structural Profile</h3>
+                    <a href="/methodology" class="font-mono text-[10px] text-accent hover:underline">METHODOLOGY -></a>
+                </div>
+
+                <!-- Metric 1 -->
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-text-main">Liveliness</span>
+                    {renderBar(metrics.liveliness)}
+                </div>
+
+                <!-- Metric 2 -->
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-text-main">Drinkability</span>
+                    {renderBar(metrics.drinkability)}
+                </div>
+
+                <!-- Metric 3 -->
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-text-main">Balance</span>
+                    {renderBar(metrics.balance)}
+                </div>
+
+                <!-- Metric 4 -->
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-text-main">Complexity</span>
+                    {renderBar(metrics.complexity)}
+                </div>
+
+                <!-- Metric 5 -->
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-light text-text-main">Emotion</span>
+                    {renderBar(metrics.emotion)}
+                </div>
+
+            </aside>
+
+            <!-- RIGHT: NARRATIVE CONTENT -->
+            <article class="lg:col-span-8 prose prose-invert prose-lg max-w-none prose-headings:font-light prose-p:text-text-muted prose-p:font-light prose-a:text-accent hover:prose-a:text-white prose-strong:font-medium prose-strong:text-white">
+                <Content />
+            </article>
+
+        </div>
+
+    </main>
+</MainLayout>

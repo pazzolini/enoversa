@@ -1,0 +1,14 @@
+---
+interface Props {
+  score: number;
+}
+const { score } = Astro.props;
+---
+<div class="flex gap-1 h-2 w-24">
+    <!-- Block 1: Always lit if score is 0, 1, or 2 -->
+    <div class={`flex-1 transition-all ${score >= 0 ? 'bg-accent' : 'bg-line'}`}></div>
+    <!-- Block 2: Lit if score is 1 or 2 -->
+    <div class={`flex-1 transition-all ${score >= 1 ? 'bg-accent' : 'bg-line'}`}></div>
+    <!-- Block 3: Lit only if score is 2 -->
+    <div class={`flex-1 transition-all ${score >= 2 ? 'bg-accent' : 'bg-line'}`}></div>
+</div>

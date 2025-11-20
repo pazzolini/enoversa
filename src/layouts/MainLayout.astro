@@ -1,0 +1,92 @@
+---
+import "../styles/global.css";
+
+interface Props {
+    title: string;
+    description?: string;
+    image?: string;
+}
+
+const { 
+    title, 
+    description = "Narratives of Soil & Craft. A digital journal exploring low-intervention wines.",
+    image = "/images/enoversa-share.jpg" 
+} = Astro.props;
+
+const siteUrl = "https://enoversa.com";
+const fullImage = image.startsWith("http") ? image : `${siteUrl}${image}`;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth antialiased">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="author" content="Vítor & Catarina" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={siteUrl} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={fullImage} />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={siteUrl} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={fullImage} />
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400&family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </head>
+    <body class="bg-bg text-text-main noise-bg font-sans">
+        
+        <!-- ELEMENTO DO CURSOR -->
+        <div id="cursor" class="custom-cursor"></div>
+
+        <slot />
+
+        <footer class="px-6 md:px-24 py-12 border-t border-line flex flex-col md:flex-row justify-between items-end text-accent font-mono text-xs">
+            <div class="flex flex-col gap-4 mb-8 md:mb-0">
+                <a href="https://instagram.com/enoversa" target="_blank" class="hover:text-white transition text-lg">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="mailto:info@enoversa.com" class="hover:text-white transition">info@enoversa.com</a>
+            </div>
+            <div class="text-right opacity-60 text-text-dim">
+                <p>© 2025 ENOVERSA</p>
+                <p>Porto, Portugal</p>
+            </div>
+        </footer>
+
+        <!-- SCRIPT DO CURSOR -->
+        <script>
+            const cursor = document.getElementById('cursor');
+            const body = document.body;
+
+            // Mover o cursor
+            document.addEventListener('mousemove', (e) => {
+                if(cursor) {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                }
+            });
+
+            // Efeito Hover em Links
+            const links = document.querySelectorAll('a, button, .cursor-pointer');
+            links.forEach(link => {
+                link.addEventListener('mouseenter', () => {
+                    body.classList.add('hovering');
+                });
+                link.addEventListener('mouseleave', () => {
+                    body.classList.remove('hovering');
+                });
+            });
+        </script>
+    </body>
+</html>

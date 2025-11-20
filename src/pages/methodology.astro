@@ -1,0 +1,105 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<MainLayout title="Tasting Methodology | Enoversa">
+    <Navigation />
+
+    <main class="pt-32 pb-24 px-6 md:px-24 max-w-5xl mx-auto">
+        
+        <header class="mb-24 border-b border-line pb-12">
+            <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">The Framework</span>
+            <h1 class="text-5xl md:text-7xl font-light tracking-tighter mb-8">
+                Structural <span class="italic font-serif text-text-dim">Analysis.</span>
+            </h1>
+            <p class="text-xl font-light text-text-muted max-w-2xl leading-relaxed">
+                We do not score wines on a 100-point scale. Instead, we analyze their kinetic and structural architecture using a 3-point system (0—2).
+            </p>
+        </header>
+
+        <div class="space-y-24">
+            
+            <!-- Metric 1 -->
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <h2 class="text-2xl font-light text-white mb-2">01. Liveliness / Energy</h2>
+                    <p class="font-mono text-xs text-text-dim">KINETIC TENSION</p>
+                </div>
+                <div class="md:col-span-8 space-y-6">
+                    <p class="text-text-muted font-light">How much kinetic tension does the wine have? Acidity, texture, aromatic movement, and "inner light".</p>
+                    <div class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4">
+                        <div><span class="text-accent block mb-1">0 - Static</span>Heavy, dull, closed.</div>
+                        <div><span class="text-accent block mb-1">1 - Moderate</span>Some tension, signs of life.</div>
+                        <div><span class="text-accent block mb-1">2 - Electric</span>Vibration, lift, crystalline movement.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metric 2 -->
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <h2 class="text-2xl font-light text-white mb-2">02. Drinkability / Purity</h2>
+                    <p class="font-mono text-xs text-text-dim">FLUIDITY & TRANSPARENCY</p>
+                </div>
+                <div class="md:col-span-8 space-y-6">
+                    <p class="text-text-muted font-light">How clean, unforced, and drinkable the wine feels. Absence of distractions (excess extraction, oak, brett).</p>
+                    <div class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4">
+                        <div><span class="text-accent block mb-1">0 - Fatiguing</span>Hard to drink, distracting flaws.</div>
+                        <div><span class="text-accent block mb-1">1 - Clean</span>Good purity, nothing tiring.</div>
+                        <div><span class="text-accent block mb-1">2 - Crystalline</span>Transparent, fluid, irresistible.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metric 3 -->
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <h2 class="text-2xl font-light text-white mb-2">03. Balance</h2>
+                    <p class="font-mono text-xs text-text-dim">STRUCTURAL HARMONY</p>
+                </div>
+                <div class="md:col-span-8 space-y-6">
+                    <p class="text-text-muted font-light">Harmony among structural components (acid, tannin, alcohol, texture) and between nose & palate.</p>
+                    <div class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4">
+                        <div><span class="text-accent block mb-1">0 - Disharmony</span>Elements clash or dominate.</div>
+                        <div><span class="text-accent block mb-1">1 - Harmonious</span>Mostly integrated, minor unevenness.</div>
+                        <div><span class="text-accent block mb-1">2 - Complete</span>Seamless integration.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metric 4 -->
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <h2 class="text-2xl font-light text-white mb-2">04. Complexity</h2>
+                    <p class="font-mono text-xs text-text-dim">RANGE & EVOLUTION</p>
+                </div>
+                <div class="md:col-span-8 space-y-6">
+                    <p class="text-text-muted font-light">Range and evolution of aromas, textures, and flavours over time.</p>
+                    <div class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4">
+                        <div><span class="text-accent block mb-1">0 - Simple</span>One-dimensional.</div>
+                        <div><span class="text-accent block mb-1">1 - Layered</span>Several dimensions; gentle evolution.</div>
+                        <div><span class="text-accent block mb-1">2 - Deep</span>Multiple layers, long evolution over time.</div>
+                    </div>
+                </div>
+            </section>
+
+             <!-- Metric 5 -->
+             <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
+                <div class="md:col-span-4">
+                    <h2 class="text-2xl font-light text-white mb-2">05. Emotion</h2>
+                    <p class="font-mono text-xs text-text-dim">RESONANCE</p>
+                </div>
+                <div class="md:col-span-8 space-y-6">
+                    <p class="text-text-muted font-light">How deeply the wine resonates beyond its technical qualities — its ability to create memory, contemplation, or intimacy.</p>
+                    <div class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4">
+                        <div><span class="text-accent block mb-1">0 - None</span>No personal connection.</div>
+                        <div><span class="text-accent block mb-1">1 - Suggestive</span>A moment of recognition or nostalgia.</div>
+                        <div><span class="text-accent block mb-1">2 - Profound</span>Changes your mood or sense of time.</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</MainLayout>
