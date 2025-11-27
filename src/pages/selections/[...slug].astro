@@ -1,34 +1,30 @@
 ---
-import { getCollection } from 'astro:content';
-import MainLayout from '../../layouts/MainLayout.astro';
-import Navigation from '../../components/Navigation.astro';
-import ScoreBar from '../../components/ScoreBar.astro';
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import Navigation from "../../components/Navigation.astro";
+import ScoreBar from "../../components/ScoreBar.astro";
 
 export async function getStaticPaths() {
-  const entries = await getCollection('selections');
-  return entries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
-  }));
+    const entries = await getCollection("selections");
+    return entries.map((entry) => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
 }
+
+import { getMoodColor } from "../../utils/moodColors";
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 const { metrics } = entry.data;
 
 // Calculate Total Score
-const totalScore = metrics.liveliness + metrics.drinkability + metrics.balance + metrics.complexity + metrics.emotion;
-
-// Mood Colors (Based on the FIRST tag)
-const getMoodColor = (tag) => {
-    const colors = {
-        'Low Intervention': 'bg-[#3A4A40] text-[#E6EBE8]', // Sage
-        'Amphora': 'bg-[#594239] text-[#E8DCCA]',          // Clay
-        'Pet Nat': 'bg-[#4A3B4B] text-[#EADDEB]',          // Plum
-        'White': 'bg-[#4B4839] text-[#EBE9DD]',            // Olive
-        'Red': 'bg-[#422121] text-[#E8D5D5]',              // Burgundy
-    };
-    return colors[tag] || 'bg-[#1A1A1A] text-white';
-};
+const totalScore =
+    metrics.liveliness +
+    metrics.drinkability +
+    metrics.balance +
+    metrics.complexity +
+    metrics.emotion;
 
 const moodClass = getMoodColor(entry.data.tags[0]);
 ---
@@ -37,27 +33,35 @@ const moodClass = getMoodColor(entry.data.tags[0]);
     <Navigation />
 
     <main class="min-h-screen pt-32 px-6 md:px-24 pb-24">
-        
         <!-- HEADER SECTION -->
         <header class="max-w-6xl mx-auto mb-24">
-            
             <!-- 1. Title Row -->
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div
+                class="flex flex-col md:flex-row justify-between items-end mb-12"
+            >
                 <div>
-                    <span class="font-mono text-xs text-accent uppercase tracking-widest mb-2 block">{entry.data.producer}</span>
-                    <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">{entry.data.title}</h1>
+                    <span
+                        class="font-mono text-xs text-accent uppercase tracking-widest mb-2 block"
+                        >{entry.data.producer}</span
+                    >
+                    <h1
+                        class="text-5xl md:text-7xl font-light tracking-tighter text-white"
+                    >
+                        {entry.data.title}
+                    </h1>
                 </div>
             </div>
 
             <!-- 2. The Technical Data Strip -->
             <div class="border-y border-line py-6 mb-12">
-                <div class="grid grid-cols-2 md:grid-cols-6 gap-8 font-mono text-[10px] uppercase tracking-widest text-text-muted">
-                    
+                <div
+                    class="grid grid-cols-2 md:grid-cols-6 gap-8 font-mono text-[10px] uppercase tracking-widest text-text-muted"
+                >
                     <div>
                         <span class="block text-text-dim mb-1">Vintage</span>
                         <span class="text-white">{entry.data.vintage}</span>
                     </div>
-                    
+
                     <div>
                         <span class="block text-text-dim mb-1">Type</span>
                         <span class="text-white">{entry.data.type}</span>
@@ -65,7 +69,9 @@ const moodClass = getMoodColor(entry.data.tags[0]);
 
                     <div>
                         <span class="block text-text-dim mb-1">Origin</span>
-                        <span class="text-white">{entry.data.country} / {entry.data.region}</span>
+                        <span class="text-white"
+                            >{entry.data.country} / {entry.data.region}</span
+                        >
                     </div>
 
                     <div class="md:col-span-2">
@@ -77,60 +83,108 @@ const moodClass = getMoodColor(entry.data.tags[0]);
                         <span class="block text-text-dim mb-1">Price</span>
                         <span class="text-white">{entry.data.price}</span>
                     </div>
-
                 </div>
             </div>
 
             <!-- 3. The Vibe Card (La Cabra Style) -->
-            <div class={`w-full aspect-[21/9] md:aspect-[3/1] flex flex-col items-center justify-center rounded-sm relative overflow-hidden ${moodClass}`}>
+            <div
+                class={`w-full aspect-[21/9] md:aspect-[3/1] flex flex-col items-center justify-center rounded-sm relative overflow-hidden ${moodClass}`}
+            >
                 <!-- Tags Overlay -->
                 <div class="absolute top-4 left-4 flex gap-2">
-                     {entry.data.tags.map(tag => (
-                        <span class="font-mono text-[10px] uppercase tracking-widest opacity-60 border border-current px-2 py-0.5 rounded-full">{tag}</span>
-                     ))}
+                    {
+                        entry.data.tags.map((tag) => (
+                            <span class="font-mono text-[10px] uppercase tracking-widest opacity-60 border border-current px-2 py-0.5 rounded-full">
+                                {tag}
+                            </span>
+                        ))
+                    }
                 </div>
 
-                <h2 class="text-3xl md:text-4xl font-sans font-medium tracking-tight uppercase text-center max-w-4xl px-6">
+                <h2
+                    class="text-3xl md:text-4xl font-sans font-medium tracking-tight uppercase text-center max-w-4xl px-6"
+                >
                     {entry.data.vibe}
                 </h2>
             </div>
         </header>
 
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16">
-            
             <!-- LEFT: METRICS -->
-            <aside class="lg:col-span-4 lg:sticky lg:top-32 h-fit p-8 bg-surface/50 border border-line rounded-sm">
-                <div class="flex justify-between items-center mb-8 border-b border-line pb-4">
-                    <h3 class="font-mono text-xs text-text-muted uppercase tracking-widest">Structural Profile</h3>
-                    <a href="/methodology" class="font-mono text-[10px] text-accent hover:underline">METHODOLOGY -></a>
+            <aside
+                class="lg:col-span-4 lg:sticky lg:top-32 h-fit p-8 bg-surface/50 border border-line rounded-sm"
+            >
+                <div
+                    class="flex justify-between items-center mb-8 border-b border-line pb-4"
+                >
+                    <h3
+                        class="font-mono text-xs text-text-muted uppercase tracking-widest"
+                    >
+                        Structural Profile
+                    </h3>
+                    <a
+                        href="/methodology"
+                        class="font-mono text-[10px] text-accent hover:underline"
+                        >METHODOLOGY -></a
+                    >
                 </div>
 
                 <div class="space-y-6">
-                    <div class="flex justify-between items-center"><span class="text-sm font-light text-text-main">Liveliness</span><ScoreBar score={metrics.liveliness} /></div>
-                    <div class="flex justify-between items-center"><span class="text-sm font-light text-text-main">Drinkability</span><ScoreBar score={metrics.drinkability} /></div>
-                    <div class="flex justify-between items-center"><span class="text-sm font-light text-text-main">Balance</span><ScoreBar score={metrics.balance} /></div>
-                    <div class="flex justify-between items-center"><span class="text-sm font-light text-text-main">Complexity</span><ScoreBar score={metrics.complexity} /></div>
-                    <div class="flex justify-between items-center"><span class="text-sm font-light text-text-main">Emotion</span><ScoreBar score={metrics.emotion} /></div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-light text-text-main"
+                            >Liveliness</span
+                        ><ScoreBar score={metrics.liveliness} />
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-light text-text-main"
+                            >Drinkability</span
+                        ><ScoreBar score={metrics.drinkability} />
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-light text-text-main"
+                            >Balance</span
+                        ><ScoreBar score={metrics.balance} />
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-light text-text-main"
+                            >Complexity</span
+                        ><ScoreBar score={metrics.complexity} />
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-light text-text-main"
+                            >Emotion</span
+                        ><ScoreBar score={metrics.emotion} />
+                    </div>
                 </div>
 
                 <div class="mt-10 pt-6 border-t border-line">
                     <div class="flex justify-between items-end">
-                        <span class="font-mono text-xs text-text-muted uppercase tracking-widest mb-1">Total Index</span>
-                        <span class="text-5xl font-light text-white leading-none">{totalScore}<span class="text-lg text-text-dim font-mono ml-1">/10</span></span>
+                        <span
+                            class="font-mono text-xs text-text-muted uppercase tracking-widest mb-1"
+                            >Total Index</span
+                        >
+                        <span
+                            class="text-5xl font-light text-white leading-none"
+                            >{totalScore}<span
+                                class="text-lg text-text-dim font-mono ml-1"
+                                >/10</span
+                            ></span
+                        >
                     </div>
                 </div>
             </aside>
 
             <!-- RIGHT: NARRATIVE -->
-            <article class="lg:col-span-8 prose prose-invert prose-lg max-w-none 
+            <article
+                class="lg:col-span-8 prose prose-invert prose-lg max-w-none
                 prose-headings:font-light prose-headings:text-white prose-headings:mb-4 prose-headings:mt-12
                 prose-p:text-text-muted prose-p:font-light prose-p:leading-relaxed prose-p:mb-6
-                prose-a:text-accent hover:prose-a:text-white 
+                prose-a:text-accent hover:prose-a:text-white
                 prose-strong:font-medium prose-strong:text-white
-                prose-ul:list-disc prose-ul:pl-4 prose-li:text-text-muted prose-li:mb-2">
+                prose-ul:list-disc prose-ul:pl-4 prose-li:text-text-muted prose-li:mb-2"
+            >
                 <Content />
             </article>
-
         </div>
     </main>
 </MainLayout>
