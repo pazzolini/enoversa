@@ -22,17 +22,12 @@ tastingDate: 2025-11-27
 
 ### The Vibrant Thread
 
-**Ismael Gozalo** is best known as the wizard of Verdejo in Nieva, but with Ruf y Ann, he proves that his mastery of tension extends beyond whites. This is a red wine that refuses the weight of the Spanish sun. It is not built on extraction or power, but rather on a nervous, vibrating verticality.
+**Ismael Gozalo's** Ruf y Ann is a study in structural dissonance, a red wine that explicitly refuses the gravitational mass and extraction expected of the Spanish interior. It is built not on power, but on a nervous, vibrating verticality. It does not feel like a wine made in a cellar, but more like a captured frequency.
 
-It feels less like a wine made in a cellar and more like a captured frequency. It is raw, unmasked, and alive. A "ruffian" only in name, for on the palate, it displays a fragility that is almost heartbreakingly precise.
+The liveliness is electric. A streak of volatile acidity acts not as a flaw, but as the spine of the wine. This energy translates immediately into a rush of sour red fruit, redcurrant and tart raspberry, floating over a bed of crushed, saline stone. The profile achieves crystalline drinkability through its transparency, rejecting all distractions of excess material or oak. It is unmasked and demands no effort.
 
-It opens with a distinct lift, a streak of volatile acidity that acts not as a flaw, but as a spine, sharpening the aromas like a lens focusing light.
+Crucially, the balance is complete because its harmony is achieved through minimalist precision. The inherent delicacy of the Rufete is perfectly counterpoised by the dominant acidity and the persistent, fine tannins. The wine feels almost skeletal in its weightlessness. While its complexity is layered, not deep, the interest resides in the constant tension between the immediate raw fruit and the evolving mineral feeling on the finish. 
 
- - **Nose**: High-toned and sharp. There is an immediate rush of sour red fruit, redcurrant and raspberry, floating over a bed of crushed stone. The fruit is not jamm. It feels crunchy, tart, and bright.
-
-- **Palate**: Vibrant and alive. The acidity is the protagonist here, cutting a clean line through the palate. It feels weightless, almost skeletal in its delicacy, yet it persists with a mineral, saline grip.
-
-This wine is an outlier. A delicate red grape in a region famous for whites. A Burgundian soul in the harsh climate of Segovia. It requires a willingness to abandon conventional expectations of structure and listen to a different rhythm entirely. As the label reminds us:
+This wine requires a willingness to listen to a rhythm entirely distinct from the industry standard. As the label reminds us:
 
 "Aquellos que eran vistos bailando, eran considerados locos por quienes no podían escuchar la música."
-
