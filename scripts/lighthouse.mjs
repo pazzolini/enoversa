@@ -53,6 +53,26 @@ async function waitFor(url, timeout = 30_000) {
   throw new Error(`Timed out waiting for ${url}`);
 }
 
+async function stopProcess(child) {
+  if (child.exitCode !== null || child.signalCode !== null) return;
+
+  await new Promise((resolve) => {
+    const forceKillTimer = setTimeout(() => {
+      child.kill('SIGKILL');
+    }, 5_000);
+
+    child.once('exit', () => {
+      clearTimeout(forceKillTimer);
+      resolve();
+    });
+
+    if (!child.kill('SIGTERM')) {
+      clearTimeout(forceKillTimer);
+      resolve();
+    }
+  });
+}
+
 let failed = false;
 
 try {
@@ -83,9 +103,13 @@ try {
     console.table(scores);
   }
 } finally {
-  preview.kill('SIGTERM');
-  chrome.kill('SIGTERM');
-  await rm(profileDirectory, { recursive: true, force: true });
+  await Promise.all([stopProcess(preview), stopProcess(chrome)]);
+  await rm(profileDirectory, {
+    recursive: true,
+    force: true,
+    maxRetries: 5,
+    retryDelay: 200,
+  });
 }
 
 if (failed) {
