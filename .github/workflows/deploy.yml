@@ -79,7 +79,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/
-        server-dir: ./domains/enoversa.com/public_html/
+        server-dir: ./
         exclude: |
           **/.git*
           **/.git*/**
