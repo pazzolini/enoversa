@@ -1,38 +1,25 @@
 ---
-title: "O Vinho e o Leite"
+title: "Wine and Milk, after Roland Barthes"
 type: "Culture"
-location: "Paris, França"
-tags: ["Philosophy", "Literature", "Roland Barthes"]
-vibe: "Mítico. Totémico. Transmutador."
-excerpt: "O vinho é mutilante, cirúrgico, provoca a transmutação. O leite é cosmético, liga, recobre, restaura. Uma leitura das Mitologias de Roland Barthes."
+location: "France, 1957"
+tags: ["Mythology", "Wine Culture", "Roland Barthes"]
+vibe: "Wine. Myth. Contradiction."
+excerpt: "In Mythologies, Barthes takes wine as an example of how French habits come to feel natural."
 date: 2025-02-20
 ---
 
-### Mitologias (1957)
+In “Wine and Milk,” one of the short essays collected in *Mythologies*, Roland Barthes is not interested in how wine tastes. He is interested in what France has decided wine means.
 
-Embora tenha decidido incluir este texto (breves notas) num capítulo intitulado “O Vinho na Arte”, *Mythologies* (1957), de Roland Barthes, não é um objecto artístico no sentido tradicional. Como o escritor francês refere num momento introdutório, nesta obra estamos perante textos *reflexivos* escritos entre 1954 e 1956:
+Wine appears as a substance of conversion. It can make the weak feel strong, the quiet become talkative, and an ordinary situation feel briefly transformed. Its symbolic power matters more than the liquid itself.
 
-> *"Tentava eu reflectir então regularmente sobre alguns mitos da vida quotidiana francesa. O material desta reflexão pôde apresentar-se como muito variado (um artigo da imprensa, uma fotografia de um semanário, um filme, um espectáculo, uma exposição), e o assunto como muito arbitrário: tratava-se, evidentemente, da minha própria actualidade."*
+Milk is its opposite. Where wine changes, milk restores. It is associated with calm, purity, and childhood innocence. Barthes is not proposing a tasting comparison; he is showing how two everyday drinks can carry completely different social meanings.
 
-### A Bebida-Tóteme
+Wine also belongs to the nation before it belongs to the individual drinker. It represents conviviality, courage, work, and a recognisable idea of Frenchness. Drinking it requires no explanation. Refusing it often does.
 
-A reflexão sobre a actualidade levou Barthes a discutir algo que interessa a este espaço. Em cerca de quatro páginas e com o título "O Vinho e o Leite", Barthes discute a mitologia do vinho em França. Segundo ele, trata-se de “uma bebida-tóteme”, uma “substância mítica”, à qual prefere contrapor não a água mas o leite:
+But the essay is not a toast to wine. Barthes ends by returning the myth to its material conditions. French wine was tied to private capital and to colonial agriculture in Algeria, where vineyards occupied dispossessed land while the local population lacked basic food. The national symbol depended on a history that the symbol itself helped conceal.
 
-> *"O vinho é mutilante, cirúrgico, provoca a transmutação e o parto: o leite é cosmético, liga, recobre, restaura. Além disso, a sua pureza, associada à inocência da criança, é uma garantia de força, mas de uma força não revulsiva, não congestionante, e sim calma, branca, lúcida, idêntica ao real. [...] Mas o leite continua a ser uma substância exótica; é só o vinho que é nacional."*
+This is where Barthes becomes useful for natural wine. Words such as “living,” “honest,” “pure,” and “untouched” may describe real choices in the vineyard or cellar, but they can also become myths of their own. They can make labour, ownership, price, access, and commercial interests disappear behind a reassuring image of authenticity.
 
-### A Hereditariedade Alquímica
+Low intervention is not automatically innocent because it presents itself as natural. Treating it that way would repeat the mechanism Barthes was trying to expose.
 
-Escrito há mais de 70 anos e com um grande foco na “actualidade”, é evidente que algumas das observações podem, hoje, não parecer tão pertinentes. E se já na década de 50 Barthes escrevia “se é verdade que o vinho é uma bela e boa substância, não é menos verdade que a sua produção tem um grande peso no capitalismo francês”, o que diria no século XXI, em pleno capitalismo desenfreado?
-
-E ainda que o texto se ocupe do quotidiano francês, Barthes consegue de forma muito feliz encontrar definições universais (e muito actuais). Observa que, branco ou tinto (neste texto faltava talvez pensar acerca de algo tão francês como o champagne), o vinho “é uma substância de conversão capaz de voltar do avesso as situações e os estados e de extrair dos objectos o seu contrário”. E prossegue:
-
-> *"de fazer, por exemplo, de um fraco um valente, de um silencioso um fala-barato; daí a sua velha hereditariedade alquímica, o seu poder filosófico de transmutação ou de criação ex-nihilo."*
-
-### O Prolongamento de um Prazer
-
-Estamos, portanto, na presença de um líquido tremendo, “mil vezes repetido no folclore, nos provérbios, nas conversas e na Literatura”. Outro aspecto curioso é o facto de Barthes defender que, em França, o vinho, contrariamente a outras substâncias alcoólicas (whisky), nunca é bebido para provocar embriaguez. A (possível, provável) embriaguez é uma consequência, “jamais uma finalidade”. 
-
-E por isso me agrada muito a definição de vinho que Barthes esboça a meio do texto: “o prolongamento de um prazer”.
-
----
-*Barthes, Roland (1957), Mythologies; ed.ut.: Mitologias, tradução e prefácio de José Augusto Seabra, Lisboa, Edições 70, 1997.*
+Barthes does not prevent us from enjoying wine. He simply makes innocent enjoyment harder. Every bottle carries a story, but also the conditions that allowed that story to be told. The useful question is not only whether wine can transform us, but what has been transformed to produce it, and for whom.

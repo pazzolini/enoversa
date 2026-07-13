@@ -1,27 +1,77 @@
 ---
 // src/components/Navigation.astro
 ---
-<nav class="fixed w-full z-50 top-0 left-0 px-6 md:px-12 py-8 flex justify-between items-start bg-gradient-to-b from-bg via-bg/80 to-transparent pointer-events-none">
-    
-    <a href="/" class="text-xs font-bold tracking-[0.25em] uppercase hover:text-accent transition-colors z-50 pointer-events-auto mix-blend-difference text-white">
+
+<nav
+    aria-label="Primary navigation"
+    class="fixed w-full z-50 top-0 left-0 px-6 md:px-12 py-5 md:py-8 flex justify-between items-start bg-gradient-to-b from-bg via-bg/80 to-transparent pointer-events-none"
+>
+    <a
+        href="/"
+        class="min-h-11 inline-flex items-center text-xs font-bold tracking-[0.25em] uppercase hover:text-accent transition-colors z-50 pointer-events-auto mix-blend-difference text-white"
+    >
         Enoversa
     </a>
-    
+
     <div class="relative z-50 pointer-events-auto">
-        <button id="menu-btn" class="flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase hover:text-accent transition-colors focus:outline-none mix-blend-difference text-white">
+        <button
+            id="menu-btn"
+            type="button"
+            aria-expanded="false"
+            aria-controls="menu-dropdown"
+            aria-label="Open navigation menu"
+            class="min-h-11 px-2 flex items-center gap-2 font-mono text-[10px] tracking-widest uppercase hover:text-accent transition-colors mix-blend-difference text-white"
+        >
             <span id="menu-text">[ INDEX ]</span>
         </button>
 
-        <div id="menu-dropdown" class="absolute right-0 top-full mt-6 w-56 bg-surface border border-line p-6 menu-hidden shadow-2xl">
-            <div class="flex flex-col gap-4 font-mono text-[10px] tracking-widest uppercase text-text-muted">
-                <a href="/#pivot" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">00 Pivot</a>
-                <a href="/selections" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">01 Selections</a>
-                <a href="/portraits" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">02 Portraits</a>
-                <a href="/essays" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block">03 Essays</a>
+        <div
+            id="menu-dropdown"
+            aria-hidden="true"
+            class="absolute right-0 top-full mt-6 w-56 bg-surface border border-line p-6 menu-hidden shadow-2xl"
+        >
+            <div
+                class="flex flex-col gap-4 font-mono text-[10px] tracking-widest uppercase text-text-muted"
+            >
+                <a
+                    href="/#new-beginning"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    >00 A New Beginning</a
+                >
+                <a
+                    href="/selections"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    >01 Selections</a
+                >
+                <a
+                    href="/portraits"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    >02 Portraits</a
+                >
+                <a
+                    href="/essays"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    >03 Essays</a
+                >
                 <div class="h-px bg-line my-2"></div>
                 <!-- Points to the future subdomain -->
-                <a href="https://legacy.enoversa.com" target="_blank" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block text-text-dim">04 Legacy Archive ↗</a>
-                <a href="/about" class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block mt-2">About Us</a>
+                <a
+                    href="https://legacy.enoversa.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block text-text-dim"
+                    >04 Legacy Archive ↗</a
+                >
+                <a
+                    href="/about"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block mt-2"
+                    >About Us</a
+                >
+                <a
+                    href="/methodology"
+                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    >How We Taste</a
+                >
             </div>
         </div>
     </div>
@@ -29,7 +79,10 @@
 
 <style>
     #menu-dropdown {
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        transition:
+            opacity 0.3s ease,
+            transform 0.3s ease,
+            visibility 0.3s;
     }
     .menu-hidden {
         opacity: 0;
@@ -44,38 +97,52 @@
 </style>
 
 <script>
-    const menuBtn = document.getElementById('menu-btn');
-    const menuDropdown = document.getElementById('menu-dropdown');
-    const menuText = document.getElementById('menu-text');
+    const menuBtn = document.getElementById("menu-btn");
+    const menuDropdown = document.getElementById("menu-dropdown");
+    const menuText = document.getElementById("menu-text");
 
-    if(menuBtn && menuDropdown && menuText) {
-        menuBtn.addEventListener('click', () => {
-            if (menuDropdown.classList.contains('menu-hidden')) {
-                menuDropdown.classList.remove('menu-hidden');
-                menuDropdown.classList.add('menu-visible');
-                menuText.textContent = '[ CLOSE ]';
+    if (menuBtn && menuDropdown && menuText) {
+        const setMenuOpen = (isOpen: boolean) => {
+            menuBtn.setAttribute("aria-expanded", String(isOpen));
+            menuBtn.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu",
+            );
+            menuDropdown.setAttribute("aria-hidden", String(!isOpen));
+            if (isOpen) {
+                menuDropdown.classList.remove("menu-hidden");
+                menuDropdown.classList.add("menu-visible");
+                menuText.textContent = "[ CLOSE ]";
             } else {
-                menuDropdown.classList.remove('menu-visible');
-                menuDropdown.classList.add('menu-hidden');
-                menuText.textContent = '[ INDEX ]';
+                menuDropdown.classList.remove("menu-visible");
+                menuDropdown.classList.add("menu-hidden");
+                menuText.textContent = "[ INDEX ]";
             }
+        };
+
+        menuBtn.addEventListener("click", () => {
+            setMenuOpen(menuDropdown.classList.contains("menu-hidden"));
         });
-        
-        const links = menuDropdown.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                 menuDropdown.classList.remove('menu-visible');
-                 menuDropdown.classList.add('menu-hidden');
-                 menuText.textContent = '[ INDEX ]';
+
+        const links = menuDropdown.querySelectorAll("a");
+        links.forEach((link) => {
+            link.addEventListener("click", () => {
+                setMenuOpen(false);
             });
         });
 
-        document.addEventListener('click', (e) => {
+        document.addEventListener("click", (e) => {
             const target = e.target;
+            if (!(target instanceof Node)) return;
             if (!menuBtn.contains(target) && !menuDropdown.contains(target)) {
-                menuDropdown.classList.remove('menu-visible');
-                menuDropdown.classList.add('menu-hidden');
-                menuText.textContent = '[ INDEX ]';
+                setMenuOpen(false);
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && menuBtn.getAttribute("aria-expanded") === "true") {
+                setMenuOpen(false);
+                menuBtn.focus();
             }
         });
     }

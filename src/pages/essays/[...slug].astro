@@ -1,60 +1,51 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Navigation from '../../components/Navigation.astro';
+import BackLink from '../../components/BackLink.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('essays');
   return entries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
+    params: { slug: entry.id }, props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
-
-const getCardBg = (type) => {
-    const colors = {
-        'Culture': 'bg-[#4A3B32] text-[#E6E2DE]', 
-        'Terroir': 'bg-[#3A403A] text-[#E0E5E0]', 
-        'Travel': 'bg-[#5D5445] text-[#E6E2DE]',  
-        'Journal': 'bg-[#8C5E58] text-[#EBE5E4]'
-    };
-    return colors[type] || 'bg-[#1A1A1A] text-white';
-};
-
-const moodClass = getCardBg(entry.data.type);
+const { Content } = await render(entry);
 ---
 
 <MainLayout title={`${entry.data.title} | Enoversa`}>
     <Navigation />
 
-    <main class="min-h-screen pt-32 px-6 md:px-24 pb-24">
+    <main id="main-content" class="min-h-screen pt-28 md:pt-32 px-6 md:px-24 pb-24">
+        <div class="max-w-6xl mx-auto mb-10">
+            <BackLink href="/essays" label="All Essays" />
+        </div>
         
-        <header class="max-w-4xl mx-auto mb-24">
-            <div class="flex flex-col md:flex-row justify-between items-end border-b border-line pb-6 mb-12">
-                <div>
-                    <span class="font-mono text-xs text-accent uppercase tracking-widest mb-2 block">{entry.data.type}</span>
-                    <h1 class="text-4xl md:text-6xl font-light tracking-tighter text-white leading-tight">{entry.data.title}</h1>
-                </div>
-                <span class="font-mono text-xs text-text-dim uppercase mt-4 md:mt-0">{entry.data.location}</span>
-            </div>
+        <header class="max-w-6xl mx-auto mb-20 md:mb-28 border-y border-line py-10 md:py-16">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
+                <aside class="md:col-span-3 flex md:block justify-between items-start">
+                    <span class="font-mono text-[10px] text-accent uppercase tracking-[0.22em]">
+                        Essay / 01
+                    </span>
+                    <div class="md:mt-28 text-right md:text-left font-mono text-[10px] uppercase tracking-widest text-text-dim leading-relaxed">
+                        <span class="block">{entry.data.type}</span>
+                        {entry.data.location && <span class="block mt-1">{entry.data.location}</span>}
+                    </div>
+                </aside>
 
-            <!-- VIBE CARD (Consistent with Index) -->
-            <div class={`w-full aspect-[16/9] flex flex-col items-center justify-center rounded-sm relative overflow-hidden ${moodClass}`}>
-                
-                <!-- Tags -->
-                <div class="absolute top-6 left-6 flex gap-2 opacity-60">
-                    {entry.data.tags.map(tag => (
-                        <span class="font-mono text-[10px] uppercase tracking-widest border border-current px-2 py-0.5 rounded-full">
-                            {tag}
-                        </span>
-                    ))}
+                <div class="md:col-span-8 md:col-start-5">
+                    <h1 class="text-4xl sm:text-5xl md:text-7xl font-light tracking-tighter text-white leading-[1.02]">
+                        {entry.data.title}
+                    </h1>
+                    <p class="mt-8 max-w-2xl text-lg md:text-xl text-text-muted font-light leading-relaxed">
+                        {entry.data.excerpt}
+                    </p>
+                    <p class="mt-10 pt-5 border-t border-line/60 font-mono text-[10px] uppercase tracking-widest text-text-dim">
+                        {entry.data.tags.join(' · ')}
+                    </p>
                 </div>
-
-                <h2 class="text-3xl md:text-5xl font-sans font-medium tracking-tight uppercase text-center max-w-3xl px-8 leading-tight">
-                    {entry.data.vibe}
-                </h2>
             </div>
         </header>
 

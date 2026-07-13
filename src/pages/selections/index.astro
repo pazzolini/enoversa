@@ -5,11 +5,27 @@ import Navigation from '../../components/Navigation.astro';
 
 import { getMoodColor } from '../../utils/moodColors';
 
-// Fetch ALL selections and sort by TASTING DATE (newest first)
+// Fetch all selections and sort by tasting date (newest first)
 const allSelections = await getCollection('selections');
-const sortedSelections = allSelections.sort((a, b) => b.data.tastingDate.valueOf() - a.data.tastingDate.valueOf());
+const sortedSelections = [...allSelections].sort((a, b) => {
+    const dateDifference = b.data.tastingDate.valueOf() - a.data.tastingDate.valueOf();
+    return dateDifference || a.data.title.localeCompare(b.data.title);
+});
 
-// Helper to format date
+// FILTER DATA PREPARATION
+const typeOrder = ['Red', 'White', 'Sparkling', 'Rosé', 'Dessert'];
+const allTypes = typeOrder.filter(type => allSelections.some(selection => selection.data.type === type));
+const allCountries = [...new Set(allSelections.map(s => s.data.country))].sort();
+const allTags = [...new Set(allSelections.flatMap(s => s.data.tags))]
+    .filter(tag => !allTypes.includes(tag))
+    .sort();
+const priceIntervals = [
+    { label: '< 30€', min: 0, max: 30 },
+    { label: '30€ - 59€', min: 30, max: 60 },
+    { label: '60€ - 99€', min: 60, max: 100 },
+    { label: '100€ +', min: 100, max: 9999 }
+];
+
 // Helper to format date
 const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString('en-GB', {
@@ -18,41 +34,131 @@ const formatDate = (date: Date) => {
         year: 'numeric'
     });
 };
+
+// Helper to parse price for data attribute
+const parsePrice = (priceStr: string) => {
+    return parseFloat(priceStr.replace(',', '.').replace(/[^\d.]/g, ''));
+};
+
+const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics']) =>
+    metrics.liveliness +
+    metrics.drinkability +
+    metrics.balance +
+    metrics.complexity +
+    metrics.emotion;
 ---
 
 <MainLayout title="Selections | Enoversa">
     <Navigation />
 
-    <main class="min-h-screen pt-32 px-6 md:px-24 pb-24">
+    <main id="main-content" class="min-h-screen pt-28 md:pt-32 px-6 md:px-24 pb-24">
         
         <!-- HEADER -->
-        <header class="max-w-7xl mx-auto mb-24 border-b border-line pb-12">
-            <div class="flex flex-col md:flex-row justify-between items-end">
+        <header class="max-w-7xl mx-auto mb-8 md:mb-12 border-b border-line pb-8 md:pb-12">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
                 <div>
                     <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">01 / Index</span>
                     <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">Selections</h1>
                 </div>
-                <p class="text-text-muted font-light text-right mt-4 md:mt-0 max-w-xs">
-                    A complete archive of low-intervention wines, organized by tasting date.
+                <p class="text-text-muted font-light text-left md:text-right mt-4 md:mt-0 max-w-xs">
+                    {sortedSelections.length} wines, ordered by tasting date.
                 </p>
+            </div>
+
+            <!-- Filter Toggle -->
+            <div class="mt-8">
+                <button id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-wrapper" class="min-h-11 font-mono text-[10px] text-accent uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2">
+                    <span id="filter-toggle-text">[ FILTER ]</span>
+                </button>
             </div>
         </header>
 
+        <!-- FILTERS -->
+        <div id="filter-wrapper" class="max-w-7xl mx-auto overflow-hidden transition-all duration-500 max-h-0 opacity-0 mb-12">
+            <section class="space-y-6 select-none pb-8 border-b border-line/30" id="filter-container">
+                <!-- Type Filter -->
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Type</span>
+                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
+                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="type" data-value="all">All</button>
+                        <span class="text-text-dim/20">/</span>
+                        {allTypes.map((type, index) => (
+                            <>
+                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="type" data-value={type}>{type}</button>
+                                {index !== allTypes.length - 1 && <span class="text-text-dim/20">/</span>}
+                            </>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Country Filter -->
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Origin</span>
+                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
+                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="country" data-value="all">All</button>
+                        <span class="text-text-dim/20">/</span>
+                        {allCountries.map((country, index) => (
+                            <>
+                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="country" data-value={country}>{country}</button>
+                                {index !== allCountries.length - 1 && <span class="text-text-dim/20">/</span>}
+                            </>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Price Filter -->
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Price</span>
+                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
+                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="price" data-value="all">All</button>
+                        <span class="text-text-dim/20">/</span>
+                        {priceIntervals.map((interval, index) => (
+                            <>
+                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="price" data-value={JSON.stringify({min: interval.min, max: interval.max})}>{interval.label}</button>
+                                {index !== priceIntervals.length - 1 && <span class="text-text-dim/20">/</span>}
+                            </>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Tag Filter -->
+                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Tag</span>
+                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
+                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="tag" data-value="all">All</button>
+                        <span class="text-text-dim/20">/</span>
+                        {allTags.map((tag, index) => (
+                            <>
+                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="tag" data-value={tag}>{tag}</button>
+                                {index !== allTags.length - 1 && <span class="text-text-dim/20">/</span>}
+                            </>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <!-- THE GRID -->
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
+        <div id="grid-container" class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-12 md:gap-y-20">
             {sortedSelections.map(post => (
-                <article class="group cursor-pointer">
-                    <a href={`/selections/${post.slug}`} class="block">
+                <article
+                    class="group selection-card border-b border-line/40 pb-10 md:border-b-0 md:pb-0"
+                    data-type={post.data.type}
+                    data-country={post.data.country}
+                    data-tags={post.data.tags.join(',')}
+                    data-price={parsePrice(post.data.price)}
+                >
+                    <a href={`/selections/${post.id}`} class="block">
                         
                         <!-- THE VIBE CARD -->
-                        <div class={`aspect-[4/5] relative mb-6 overflow-hidden flex items-center justify-center px-6 py-8 transition duration-500 group-hover:scale-[1.02] ${getMoodColor(post.data.tags[0])}`}>
-                            <h3 class="font-sans text-2xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
+                        <div class={`aspect-[4/3] md:aspect-[4/5] relative mb-6 overflow-hidden rounded-sm flex items-center justify-center px-6 py-8 transition duration-500 group-hover:scale-[1.02] ${getMoodColor(post.data.tags[0])}`}>
+                            <p class="font-sans text-2xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
                                 {post.data.vibe}
-                            </h3>
+                            </p>
                             
                             <!-- Overlay Tags -->
                             <div class="absolute bottom-4 left-4 flex gap-2 flex-wrap">
-                                {post.data.tags.slice(0,2).map(tag => (
+                                {post.data.tags.map(tag => (
                                     <span class="font-mono text-[9px] uppercase tracking-widest border border-current px-1.5 py-0.5 rounded-full opacity-60">
                                         {tag}
                                     </span>
@@ -61,27 +167,224 @@ const formatDate = (date: Date) => {
                         </div>
 
                         <!-- Content -->
-                        <div class="flex justify-between items-baseline mb-2">
-                            <h3 class="text-2xl font-light text-white group-hover:text-accent transition-colors">{post.data.title}</h3>
-                            <span class="font-mono text-xs text-text-dim">{post.data.vintage}</span>
+                        <div class="flex justify-between items-start gap-4 mb-2">
+                            <h2 class="text-2xl font-light text-white group-hover:text-accent transition-colors leading-tight">{post.data.title}</h2>
+                            <span class="font-mono text-xs text-text-dim shrink-0 pt-1">{post.data.vintage}</span>
                         </div>
                         
-                        <div class="flex justify-between items-center mb-3">
+                        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 mb-3">
                             <span class="font-mono text-xs text-text-dim uppercase tracking-widest block">{post.data.producer}</span>
                             <span class="font-mono text-[10px] text-text-dim opacity-60">Tasted: {formatDate(post.data.tastingDate)}</span>
                         </div>
                         
                         <!-- Technical Preview -->
-                        <div class="flex gap-4 font-mono text-[10px] text-text-dim mb-4">
+                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] text-text-dim mb-4">
                             <span>{post.data.type}</span>
                             <span>•</span>
-                            <span>{post.data.country}</span>
+                            <span>{post.data.region}</span>
+                            <span>•</span>
+                            <span>{post.data.price}</span>
+                            <span>•</span>
+                            <span>{getTotalScore(post.data.metrics)}/10</span>
                         </div>
+
+                        <p class="text-sm text-text-muted font-light leading-relaxed">{post.data.excerpt}</p>
 
                     </a>
                 </article>
             ))}
         </div>
 
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-24">
+            <p class="text-text-muted font-light text-lg">No wines match the current filters.</p>
+            <button id="clear-filters" type="button" class="min-h-11 mt-4 font-mono text-xs text-accent uppercase tracking-widest border-b border-transparent hover:border-accent transition-all">Clear Filters</button>
+        </div>
+
     </main>
 </MainLayout>
+
+<script>
+    // Filter State Interface
+    interface FilterState {
+        type: string | null;
+        country: string | null;
+        tag: string | null;
+        price: string | null; // Stores JSON string of {min, max}
+        [key: string]: string | null;
+    }
+
+    let activeFilters: FilterState = {
+        type: null,
+        country: null,
+        tag: null,
+        price: null
+    };
+
+    // DOM Elements
+    const cards = document.querySelectorAll('.selection-card');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const emptyState = document.getElementById('empty-state');
+    const clearBtn = document.getElementById('clear-filters');
+    const filterToggleBtn = document.getElementById('filter-toggle');
+    const filterWrapper = document.getElementById('filter-wrapper');
+    const filterToggleText = document.getElementById('filter-toggle-text');
+
+    // Initialize
+    function init() {
+        // Read URL params
+        const params = new URLSearchParams(window.location.search);
+        activeFilters.type = params.get('type') || null;
+        activeFilters.country = params.get('country') || null;
+        activeFilters.tag = params.get('tag') || null;
+        activeFilters.price = params.get('price') || null;
+
+        // Auto-open filter if any filter is active
+        if (activeFilters.type || activeFilters.country || activeFilters.tag || activeFilters.price) {
+            if (filterWrapper && filterToggleText) {
+                filterWrapper.classList.remove('max-h-0', 'opacity-0');
+                filterWrapper.classList.add('max-h-[1200px]', 'opacity-100');
+                filterToggleText.textContent = '[ CLOSE ]';
+                filterToggleBtn?.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        updateUI();
+        applyFilters();
+    }
+
+    // Toggle Filter Visibility
+    if (filterToggleBtn && filterWrapper && filterToggleText) {
+        filterToggleBtn.addEventListener('click', () => {
+            if (filterWrapper.classList.contains('max-h-0')) {
+                filterWrapper.classList.remove('max-h-0', 'opacity-0');
+                filterWrapper.classList.add('max-h-[1200px]', 'opacity-100');
+                filterToggleText.textContent = '[ CLOSE ]';
+                filterToggleBtn.setAttribute('aria-expanded', 'true');
+            } else {
+                filterWrapper.classList.add('max-h-0', 'opacity-0');
+                filterWrapper.classList.remove('max-h-[1200px]', 'opacity-100');
+                filterToggleText.textContent = '[ FILTER ]';
+                filterToggleBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // Update Button Styles
+    function updateUI() {
+        filterBtns.forEach(btn => {
+            if (!(btn instanceof HTMLElement)) return;
+
+            const category = btn.dataset.category || '';
+            const value = btn.dataset.value || '';
+            const isActive = activeFilters[category] === value || (value === 'all' && !activeFilters[category]);
+
+            if (isActive) {
+                btn.classList.add('text-white', 'border-b', 'border-accent');
+                btn.classList.remove('text-text-muted');
+            } else {
+                btn.classList.remove('text-white', 'border-b', 'border-accent');
+                btn.classList.add('text-text-muted');
+            }
+        });
+    }
+
+    // Apply Filters to Grid
+    function applyFilters() {
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            if (!(card instanceof HTMLElement)) return;
+
+            const cardType = card.dataset.type;
+            const cardCountry = card.dataset.country;
+            const cardTags = (card.dataset.tags || '').split(',');
+            const cardPrice = parseFloat(card.dataset.price || '0');
+
+            // Price Match Logic
+            let matchPrice = true;
+            if (activeFilters.price) {
+                try {
+                    const range = JSON.parse(activeFilters.price);
+                    matchPrice = cardPrice >= range.min && cardPrice < range.max;
+                } catch (e) {
+                    // Fallback if parse fails
+                    matchPrice = true;
+                }
+            }
+
+            const matchType = !activeFilters.type || cardType === activeFilters.type;
+            const matchCountry = !activeFilters.country || cardCountry === activeFilters.country;
+            const matchTag = !activeFilters.tag || cardTags.includes(activeFilters.tag);
+
+            if (matchType && matchCountry && matchTag && matchPrice) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+
+        // Toggle Empty State
+        if (emptyState) {
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+            }
+        }
+
+        // Update URL
+        updateURL();
+    }
+
+    // Update URL Params
+    function updateURL() {
+        const params = new URLSearchParams();
+        if (activeFilters.type) params.set('type', activeFilters.type);
+        if (activeFilters.country) params.set('country', activeFilters.country);
+        if (activeFilters.tag) params.set('tag', activeFilters.tag);
+        if (activeFilters.price) params.set('price', activeFilters.price);
+
+        const newURL = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+        window.history.replaceState({}, '', newURL);
+    }
+
+    // Event Listeners
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (!(btn instanceof HTMLElement)) return;
+
+            const category = btn.dataset.category || '';
+            const value = btn.dataset.value || '';
+
+            if (value === 'all') {
+                activeFilters[category] = null;
+            } else {
+                if (activeFilters[category] === value) {
+                    activeFilters[category] = null;
+                } else {
+                    activeFilters[category] = value;
+                }
+            }
+
+            updateUI();
+            applyFilters();
+        });
+    });
+
+    if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+            activeFilters = { type: null, country: null, tag: null, price: null };
+            updateUI();
+            applyFilters();
+        });
+    }
+
+    // Run Init
+    init();
+
+    // Listen for back/forward navigation
+    window.addEventListener('popstate', init);
+
+</script>

@@ -16,7 +16,7 @@ export default {
 					muted: '#888888',
 					dim: '#444444'
 				},
-				accent: '#C04D3B'   // Deep clay/terracotta
+				accent: '#D66A57'   // Accessible clay/terracotta
 			},
 			spacing: {
 				'128': '32rem',

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://enoversa.com/sitemap-index.xml

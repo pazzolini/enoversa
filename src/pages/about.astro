@@ -10,14 +10,10 @@ const editors = [
         website: "vitorramalhosaferreira.com",
         url: "https://vitorramalhosaferreira.com",
         vintage: "1993",
-        bio: "Opens with intense notes of literary theory and electric energy. On the palate, it is deeply complex, layering high-voltage discourse with profound narrative depth. A demanding but ultimately rewarding vintage. Infinite finish.",
-        image: "/images/vitor-profile.jpg",
-        
-        // 🎵 VÍTOR'S ANTHEM
-        song: "https://open.spotify.com/track/1vr6OT3o3Amd1SXCr5TlWh", 
-        
+        bio: "Literary studies, data science, and an enduring interest in how language shapes taste. Curious, restless, occasionally over-extracted. Benefits from air.",
+        song: "https://open.spotify.com/track/1vr6OT3o3Amd1SXCr5TlWh",
         metrics: { liveliness: 2, drinkability: 2, balance: 2, complexity: 2, emotion: 2 },
-        total: "10/10"
+        total: "10/10",
     },
     {
         name: "Catarina",
@@ -25,14 +21,10 @@ const editors = [
         website: "catarinapatoiloteixeira.com",
         url: "https://catarinapatoiloteixeira.com",
         vintage: "1993",
-        bio: "A masterclass in structure and harmony. Deeply grounded with earthy notes of landscape architecture. The texture is smooth, reliable, and seamlessly integrated. A presence that brings order to the chaos and persists in the memory.",
-        image: "/images/catarina-profile.jpg",
-        
-        // 🎵 CATARINA'S ANTHEM (COBRAH - 10/10)
-        song: "https://open.spotify.com/track/6rCF7J07DTXu6xHwpNk2mQ", 
-        
+        bio: "Landscape architect with a close eye on place, ecology, and the structures behind what we taste. Grounded, precise, and usually responsible for bringing the blend back into balance.",
+        song: "https://open.spotify.com/track/6rCF7J07DTXu6xHwpNk2mQ",
         metrics: { liveliness: 2, drinkability: 2, balance: 2, complexity: 2, emotion: 2 },
-        total: "10/10"
+        total: "10/10",
     }
 ];
 ---
@@ -40,80 +32,85 @@ const editors = [
 <MainLayout title="About | Enoversa">
     <Navigation />
 
-    <main class="min-h-screen pt-32 px-6 md:px-24 pb-32">
+    <main id="main-content" class="min-h-screen pt-28 md:pt-32 px-6 md:px-24 pb-24 md:pb-32">
         
         <header class="max-w-7xl mx-auto mb-32 border-b border-line pb-12">
-            <div class="flex flex-col md:flex-row justify-between items-end">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
                 <div>
-                    <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">The Editors</span>
+                    <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">About</span>
                     <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">Human <span class="italic font-serif text-text-dim">Terroir.</span></h1>
                 </div>
                 <p class="text-text-muted font-light text-right mt-4 md:mt-0 max-w-sm">
-                    Two distinct personalities. One shared philosophy.
+                    Two editors. Both awarded 10/10 by an entirely independent panel.
                 </p>
             </div>
         </header>
 
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24">
-            {editors.map(editor => (
-                <div class="group relative">
-                    
-                    <div class="absolute -top-6 -right-6 z-20 rotate-12 mix-blend-hard-light pointer-events-none">
-                        <div class="border-2 border-accent rounded-full w-24 h-24 flex items-center justify-center bg-accent/10 backdrop-blur-sm">
-                            <span class="text-accent font-mono font-bold text-xs text-center leading-tight uppercase transform -rotate-12">
-                                Official<br>Selection<br>MUST TRY
-                            </span>
-                        </div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-16">
+            {editors.map((editor, index) => (
+                <article class="border-t border-line pt-8">
+                    <div class="flex items-center justify-between gap-4">
+                        <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest">
+                            0{index + 1} / Editor
+                        </span>
+                        <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest">
+                            Vintage {editor.vintage}
+                        </span>
                     </div>
 
-                    <div class="aspect-[4/5] bg-surface mb-8 flex items-center justify-center relative overflow-hidden border border-line group-hover:border-accent transition duration-500">
-                        <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition duration-700"></div>
-                        <div class="text-center space-y-2">
-                             <span class="font-mono text-xs text-text-dim uppercase tracking-widest block">[ PHOTO: {editor.name} ]</span>
-                             <span class="font-mono text-[10px] text-accent uppercase tracking-widest block">Vintage: {editor.vintage}</span>
-                        </div>
-                    </div>
+                    <h2 class="mt-8 text-4xl md:text-5xl font-light text-white">
+                        {editor.name}
+                    </h2>
+                    <p class="mt-2 font-mono text-xs text-accent uppercase tracking-widest">
+                        {editor.role}
+                    </p>
 
-                    <div class="border-b border-line pb-6 mb-8 flex justify-between items-end">
-                        <div>
-                            <h2 class="text-4xl font-light text-white mb-1">{editor.name}</h2>
-                            <span class="font-mono text-xs text-accent uppercase tracking-widest block mb-2">{editor.role}</span>
-                            <a href={editor.url} target="_blank" class="font-mono text-[10px] text-text-dim hover:text-white border-b border-line hover:border-white transition pb-0.5">
-                                {editor.website} ->
-                            </a>
-                        </div>
-                        
-                        <div class="text-right">
-                            <span class="block font-mono text-[10px] text-text-dim uppercase mb-1">Total Score</span>
-                            
-                            <a href={editor.song} target="_blank" class="group/link flex items-center justify-end gap-2 cursor-alias">
-                                
-                                <div class="w-6 h-6 rounded-full border border-accent flex items-center justify-center opacity-0 -translate-x-2 group-hover/link:opacity-100 group-hover/link:translate-x-0 transition-all duration-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3 text-accent">
-                                      <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653Z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-
-                                <span class="text-3xl font-sans font-medium text-white group-hover/link:text-accent transition-colors duration-300 border-b border-transparent group-hover/link:border-accent pb-1 leading-none">
-                                    {editor.total}
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <p class="text-text-muted font-light leading-relaxed mb-12 min-h-[80px]">
+                    <p class="mt-8 max-w-xl text-lg text-text-muted font-light leading-relaxed">
                         {editor.bio}
                     </p>
 
-                    <div class="bg-surface/30 p-8 border border-line/50 rounded-sm space-y-4 relative overflow-hidden">
-                        <div class="absolute inset-0 opacity-5 noise-bg pointer-events-none"></div>
-                        <div class="flex justify-between items-center"><span class="text-xs font-mono text-text-main uppercase">01 Liveliness</span><ScoreBar score={editor.metrics.liveliness} /></div>
-                        <div class="flex justify-between items-center"><span class="text-xs font-mono text-text-main uppercase">02 Drinkability</span><ScoreBar score={editor.metrics.drinkability} /></div>
-                        <div class="flex justify-between items-center"><span class="text-xs font-mono text-text-main uppercase">03 Balance</span><ScoreBar score={editor.metrics.balance} /></div>
-                        <div class="flex justify-between items-center"><span class="text-xs font-mono text-text-main uppercase">04 Complexity</span><ScoreBar score={editor.metrics.complexity} /></div>
-                        <div class="flex justify-between items-center"><span class="text-xs font-mono text-text-main uppercase">05 Emotion</span><ScoreBar score={editor.metrics.emotion} /></div>
+                    <div class="mt-10 p-6 md:p-8 bg-surface/30 border border-line/60 rounded-sm">
+                        <div class="flex items-start justify-between gap-6 mb-8 pb-5 border-b border-line">
+                            <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest">
+                                The Tasting Index
+                            </span>
+                            <a
+                                href={editor.song}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="group/song text-right"
+                                aria-label={`Play ${editor.name}'s 10 out of 10 song on Spotify`}
+                                title={`Play ${editor.name}'s 10/10 song`}
+                            >
+                                <span class="block text-3xl font-medium text-white leading-none group-hover/song:text-accent transition-colors">
+                                    {editor.total}
+                                </span>
+                                <span class="mt-2 block font-mono text-[9px] uppercase tracking-widest text-text-dim group-hover/song:text-accent transition-colors">
+                                    Play score ↗
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center gap-4"><span class="text-xs font-mono text-text-main uppercase">01 Energy</span><ScoreBar score={editor.metrics.liveliness} /></div>
+                            <div class="flex justify-between items-center gap-4"><span class="text-xs font-mono text-text-main uppercase">02 Drinkability</span><ScoreBar score={editor.metrics.drinkability} /></div>
+                            <div class="flex justify-between items-center gap-4"><span class="text-xs font-mono text-text-main uppercase">03 Balance</span><ScoreBar score={editor.metrics.balance} /></div>
+                            <div class="flex justify-between items-center gap-4"><span class="text-xs font-mono text-text-main uppercase">04 Complexity</span><ScoreBar score={editor.metrics.complexity} /></div>
+                            <div class="flex justify-between items-center gap-4"><span class="text-xs font-mono text-text-main uppercase">05 Emotion</span><ScoreBar score={editor.metrics.emotion} /></div>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="mt-6 pt-4 border-t border-line">
+                        <a
+                            href={editor.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="min-h-11 inline-flex items-center font-mono text-[10px] text-text-dim hover:text-white transition-colors"
+                        >
+                            {editor.website} ↗
+                        </a>
+                    </div>
+                </article>
             ))}
         </div>
 

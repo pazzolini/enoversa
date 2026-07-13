@@ -26,6 +26,7 @@ export const getMoodColor = (tag) => {
         // --- The Soils (Geology) ---
         Granite: "bg-[#6B665F] text-[#E6E2DE]", // Crystalline Stone / Taupe
         Limestone: "bg-[#75777B] text-[#EBEBEB]", // Chalk / Cool Grey
+        Chalk: "bg-[#8A8880] text-[#F2F0E8]", // Dry chalk / Warm mineral grey
         Schist: "bg-[#2D3035] text-[#C8CCD1]", // Dark Slate / Charcoal
         Clay: "bg-[#5C4033] text-[#E8DCC5]", // Dense Earth / Mud
         Sand: "bg-[#8F8776] text-[#262420]", // Pale Dune / Beige

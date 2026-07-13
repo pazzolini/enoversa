@@ -1,46 +1,85 @@
-name: Deploy to Hostinger
+name: Quality and Deploy
 
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: enoversa-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  quality:
+    name: Check, E2E and Lighthouse
     runs-on: ubuntu-latest
 
     steps:
-    - name: 🚚 Get latest code
+    - name: Check out repository
       uses: actions/checkout@v4
 
-    - name: 🟢 Setup Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22.12.0'
         cache: 'npm'
 
-    - name: 📦 Install Dependencies
-      run: npm install
+    - name: Install dependencies
+      run: npm ci
 
-    - name: 🛠 Build Project
+    - name: Audit production dependencies
+      run: npm run audit:production
+
+    - name: Validate content and Astro
+      run: npm run check
+
+    - name: Build site
       run: npm run build
 
-    - name: 📂 Sync to Hostinger via FTP
+    - name: Install Chromium
+      run: npx playwright install --with-deps chromium
+
+    - name: Run end-to-end tests
+      run: npm run test:e2e
+
+    - name: Run Lighthouse budgets
+      run: npm run test:lighthouse
+
+    - name: Store production build
+      if: github.event_name == 'push'
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-site
+        path: dist/
+        include-hidden-files: true
+        retention-days: 1
+
+  deploy:
+    name: Deploy to Hostinger
+    if: github.event_name == 'push'
+    needs: quality
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download validated build
+      uses: actions/download-artifact@v4
+      with:
+        name: production-site
+        path: dist/
+
+    - name: Sync to Hostinger via FTP
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        
-        # Astro builds the site into this folder:
         local-dir: ./dist/
-        
-        # WHERE TO UPLOAD:
-        # Use ./public_html/ if using the main Hostinger account.
-        # Use ./ if you created a specific FTP user locked to that folder.
         server-dir: ./public_html/
-        
-        # 🛡️ SAFETY ZONE: This prevents the legacy folder from being deleted
         exclude: |
           **/.git*
           **/.git*/**

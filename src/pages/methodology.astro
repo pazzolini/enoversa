@@ -3,26 +3,24 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/Navigation.astro";
 ---
 
-<MainLayout title="Tasting Methodology | Enoversa">
+<MainLayout title="How We Taste | Enoversa">
     <Navigation />
 
-    <main class="pt-32 pb-24 px-6 md:px-24 max-w-5xl mx-auto">
+    <main id="main-content" class="pt-28 md:pt-32 pb-24 px-6 md:px-24 max-w-5xl mx-auto">
         <header class="mb-24 border-b border-line pb-12">
             <span
                 class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block"
-                >The Framework</span
+                >The Tasting Index</span
             >
-            <h1 class="text-5xl md:text-7xl font-light tracking-tighter mb-8">
-                Structural <span class="italic font-serif text-text-dim"
-                    >Methodology.</span
-                >
+            <h1 class="text-4xl sm:text-5xl md:text-7xl font-light tracking-tighter mb-8">
+                How We <span class="italic font-serif text-text-dim">Taste.</span>
             </h1>
             <p
                 class="text-xl font-light text-text-muted max-w-2xl leading-relaxed"
             >
-                We do not score wines on a 100-point scale. Instead, we analyze
-                their kinetic and structural architecture using a precise
-                3-point index (0—2).
+                We score five aspects of every wine from 0 to 2. The numbers
+                are shorthand, not a verdict: the tasting note always matters
+                more.
             </p>
         </header>
 
@@ -30,34 +28,34 @@ import Navigation from "../components/Navigation.astro";
             <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <div class="md:col-span-4">
                     <h2 class="text-2xl font-light text-white mb-2">
-                        01. Liveliness / Energy
+                        01. Energy
                     </h2>
                     <p class="font-mono text-xs text-text-dim">
-                        KINETIC TENSION
+                        MOVEMENT & FRESHNESS
                     </p>
                 </div>
                 <div class="md:col-span-8 space-y-6">
                     <p class="text-text-muted font-light">
-                        How much kinetic tension does the wine have? Acidity,
-                        texture, aromatic movement, and overall projection off
-                        the palate.
+                        Does the wine feel alive in the glass? We look at
+                        acidity, movement, freshness, and how it changes after
+                        opening.
                     </p>
                     <div
-                        class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
+                        class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
                     >
                         <div>
-                            <span class="text-accent block mb-1">0 - Inert</span
-                            >Heavy, dull, closed; energy is static.
+                            <span class="text-accent block mb-1">0 - Flat</span
+                            >Heavy, tired, or static.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >1 - Active</span
-                            >Clear signs of tension and forward movement.
+                                >1 - Steady</span
+                            >Enough movement to hold our attention.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >2 - Crystalline</span
-                            >Vibrational purity, persistent lift and tension.
+                                >2 - Charged</span
+                            >Energetic from the first glass to the last.
                         </div>
                     </div>
                 </div>
@@ -66,36 +64,35 @@ import Navigation from "../components/Navigation.astro";
             <section class="grid grid-cols-1 md:grid-cols-12 gap-12">
                 <div class="md:col-span-4">
                     <h2 class="text-2xl font-light text-white mb-2">
-                        02. Drinkability / Purity
+                        02. Drinkability
                     </h2>
                     <p class="font-mono text-xs text-text-dim">
-                        FLUIDITY & TRANSPARENCY
+                        THE NEXT SIP
                     </p>
                 </div>
                 <div class="md:col-span-8 space-y-6">
                     <p class="text-text-muted font-light">
-                        How clean, unforced, and drinkable the wine feels.
-                        Absence of distractions (excess extraction, oak,
-                        chemical residue).
+                        Do we want to take another sip? Texture, alcohol,
+                        extraction, and faults can all affect how easily the
+                        wine moves.
                     </p>
                     <div
-                        class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
+                        class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
                     >
                         <div>
                             <span class="text-accent block mb-1"
-                                >0 - Obfuscated</span
-                            >Flawed, fatiguing, or dominated by non-terroir
-                            elements.
-                        </div>
-                        <div>
-                            <span class="text-accent block mb-1">1 - Clear</span
-                            >Good purity; minimal interventionist residue.
+                                >0 - Tiring</span
+                            >Difficult to finish.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >2 - Absolute</span
-                            >Phenomenological transparency; seamless fluid
-                            architecture.
+                                >1 - Drinkable</span
+                            >Enjoyable, with some reservations.
+                        </div>
+                        <div>
+                            <span class="text-accent block mb-1"
+                                >2 - Compelling</span
+                            >The glass empties quickly.
                         </div>
                     </div>
                 </div>
@@ -107,32 +104,31 @@ import Navigation from "../components/Navigation.astro";
                         03. Balance
                     </h2>
                     <p class="font-mono text-xs text-text-dim">
-                        STRUCTURAL HARMONY
+                        PROPORTION
                     </p>
                 </div>
                 <div class="md:col-span-8 space-y-6">
                     <p class="text-text-muted font-light">
-                        Harmony among structural components (acid, tannin,
-                        alcohol, texture) and between nose & palate.
+                        Does any element dominate the wine? We consider
+                        acidity, tannin, alcohol, fruit, oak, and texture.
                     </p>
                     <div
-                        class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
+                        class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
                     >
                         <div>
                             <span class="text-accent block mb-1"
-                                >0 - Dissonant</span
-                            >Elements clash; structural conflict or domination.
+                                >0 - Disjointed</span
+                            >One or more elements get in the way.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >1 - Resolved</span
-                            >Mostly integrated; minor structural seams are
-                            perceptible.
+                                >1 - Mostly together</span
+                            >Balanced, though the seams are visible.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
                                 >2 - Integrated</span
-                            >A seamless, unified structural whole.
+                            >Nothing feels out of place.
                         </div>
                     </div>
                 </div>
@@ -144,33 +140,31 @@ import Navigation from "../components/Navigation.astro";
                         04. Complexity
                     </h2>
                     <p class="font-mono text-xs text-text-dim">
-                        RANGE & EVOLUTION
+                        CHANGE OVER TIME
                     </p>
                 </div>
                 <div class="md:col-span-8 space-y-6">
                     <p class="text-text-muted font-light">
-                        Range and evolution of aromas, textures, and flavours
-                        over time. A measure of the wine's potential to sustain
-                        a critical reading.
+                        Does the wine change in the glass? We look for new
+                        aromas, textures, and flavours as it opens.
                     </p>
                     <div
-                        class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
+                        class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
                     >
                         <div>
                             <span class="text-accent block mb-1"
-                                >0 - Monolithic</span
-                            >One-dimensional; a static text.
+                                >0 - Simple</span
+                            >One clear idea, with little development.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
                                 >1 - Layered</span
-                            >Multi-dimensional; gentle, perceptible evolution.
+                            >More appears with time.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >2 - Intertextual</span
-                            >A dense field of references; prolonged temporality
-                            and depth.
+                                >2 - Evolving</span
+                            >It continues to change throughout the bottle.
                         </div>
                     </div>
                 </div>
@@ -181,34 +175,44 @@ import Navigation from "../components/Navigation.astro";
                     <h2 class="text-2xl font-light text-white mb-2">
                         05. Emotion
                     </h2>
-                    <p class="font-mono text-xs text-text-dim">RESONANCE</p>
+                    <p class="font-mono text-xs text-text-dim">WHAT REMAINS</p>
                 </div>
                 <div class="md:col-span-8 space-y-6">
                     <p class="text-text-muted font-light">
-                        How deeply the wine resonates beyond its technical
-                        qualities — its ability to create affective trace or
-                        intellectual contemplation.
+                        Did the wine leave an impression beyond its technical
+                        qualities?
                     </p>
                     <div
-                        class="grid grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
+                        class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs border-t border-line pt-4"
                     >
                         <div>
-                            <span class="text-accent block mb-1">0 - Inert</span
-                            >Purely functional; non-resonant experience.
+                            <span class="text-accent block mb-1"
+                                >0 - Forgettable</span
+                            >Little remains after the glass.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >1 - Suggestive</span
-                            >Prompts immediate reflection or nostalgia.
+                                >1 - Distinctive</span
+                            >Something about it stays with us.
                         </div>
                         <div>
                             <span class="text-accent block mb-1"
-                                >2 - Profound</span
-                            >A lasting aesthetic or intellectual event.
+                                >2 - Memorable</span
+                            >We are still thinking about it the next day.
                         </div>
                     </div>
                 </div>
             </section>
+
+            <aside class="border-y border-line py-10 md:ml-[33.333%]">
+                <span class="font-mono text-[10px] text-accent uppercase tracking-widest">
+                    About the total
+                </span>
+                <p class="mt-4 max-w-2xl text-lg font-light leading-relaxed text-text-muted">
+                    The total is a summary, not a ranking. Two wines with the
+                    same score may offer completely different experiences.
+                </p>
+            </aside>
         </div>
     </main>
 </MainLayout>

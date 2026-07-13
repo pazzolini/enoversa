@@ -1,43 +1,55 @@
-# Astro Starter Kit: Minimal
+# Enoversa
+
+Editorial journal about low-intervention wines, built as a static Astro site.
+
+## Requirements
+
+- Node.js 22.12 or newer (the pinned local version is in `.nvmrc`)
+- npm
+
+## Local development
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The local site is available at `http://localhost:4321`.
 
-## 🚀 Project Structure
+## Validation
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+npm run test:quality
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+This runs the production dependency audit, Astro validation, static build, desktop and mobile Playwright tests, and Lighthouse budgets. The production output is written to `dist/`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Content
 
-Any static assets, like images, can be placed in the `public/` directory.
+Markdown entries live in:
 
-## 🧞 Commands
+- `src/content/selections/`
+- `src/content/portraits/`
+- `src/content/essays/`
 
-All commands are run from the root of the project, from a terminal:
+Their frontmatter schemas and loaders are defined in `src/content.config.ts`. A schema validation error stops the build, preventing malformed content from being published.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Deployment notes
 
-## 👀 Want to learn more?
+The GitHub Actions workflow validates the site before every deployment to `main`. If validation passes, the exact tested `dist/` artifact is uploaded to Hostinger by FTP.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The repository needs these GitHub Actions secrets:
+
+- `FTP_SERVER`
+- `FTP_USERNAME`
+- `FTP_PASSWORD`
+
+The corresponding FTP credentials are available in the Hostinger hPanel. On Hostinger, keep SSL and Force HTTPS enabled for both `enoversa.com` and `legacy.enoversa.com`. After the first deployment containing new security headers, clear the Hostinger CDN cache and verify the response headers.
+
+The site is statically generated. The production host must:
+
+- serve the generated `dist/` directory;
+- return `dist/404.html` for unknown routes;
+- preserve the `.htaccess` file included in `dist/`.
+
+The canonical production origin is configured in `astro.config.mjs`. Security headers are defined in `public/.htaccess` and copied into the root of every production build.

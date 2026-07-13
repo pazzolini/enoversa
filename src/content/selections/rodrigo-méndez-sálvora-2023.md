@@ -7,28 +7,23 @@ vintage: "2023"
 type: "White"
 grapes: "Albariño"
 price: "37,00 €"
-tags: ["Saline", "White", "Low Intervention", "Granite"]
-vibe: "Tea-like. Deep. Saline"
+tags: ["Saline", "Old Vines", "Barrel Aged"]
+vibe: "Tea. Salt. Patience."
 metrics:
   liveliness: 1
   drinkability: 2
   balance: 2
   complexity: 2
   emotion: 1
-excerpt: "A tea-like, saline white wine with a deep, mineral profile."
+excerpt: "Tighter than the 2022, with tea-like aromas and a long saline finish."
 date: 2025-11-30
 tastingDate: 2025-11-30
 ---
 
-### Between Salt and Granite
+The 2023 Sálvora was tighter and less immediate than the [2022](/selections/rodrigo-méndez-sálvora-2022). It comes from old Albariño vines in Meaño and spent 12 months fermenting and ageing in 600-litre barrels.
 
-**Rodrigo Méndez** presents us with a precisely articulated Albariño, operating within a register of controlled tension rather than overt declaration. Initial tasting reveals a wine that prioritizes structural integrity over immediate kinetic flash.
+It opened quietly, with tea, chamomile, lemon, and a little spice. The palate had firm acidity and a strong saline character that continued through the finish.
 
-The aromatic profile, delicate and reminiscent of fine herbal tea, suggests a transparency that is absolute. There is a purity of expression here, allowing the elemental voice of the Rías Baixas terroir to emerge. This translates directly to an unimpeded flow on the palate, confirming an exceptional Drinkability.
+More appeared after an hour in the glass, but the wine never felt as open or ready as the previous vintage. The balance and complexity were already there; it simply needed more time.
 
-While not as electric as imagined, the kinetic energy is actively present but channeled, a liveliness that hums beneath the surface. This energy is masterfully integrated, particularly in the acidity, which exhibits remarkable composure. The presence of oak is noted, yet it acts not as an obfuscating layer but as a structural counterpoint. This seamless resolution of potentially competing elements underscores a profound Structural Coherence.
-
-The wine's most defining material characteristic is its intense saline presence. This is not merely a flavor but a kinetic actuator, stimulating a profound salivation that extends the finish and imbues the wine with an immense, deep-set presence on the palate. This saline thrust, coupled with the initial tightness inherent to the 2023 vintage, creates exceptional depth. This is a wine that demands and rewards temporal engagement. It unfolds and develops layers as it aerates in the glass.
-
-Despite its young age, the Sálvora already offers a powerful affective trace. The intense salinity, in particular, triggers an immediate recognition, a connection to the maritime origins that is Suggestive of greater resonance to come. It operates as a testament to Albariño's capacity for structural complexity and intellectual engagement.
-
+Drink the 2022 now. Keep the 2023 a little longer.

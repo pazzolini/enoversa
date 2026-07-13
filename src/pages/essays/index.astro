@@ -5,60 +5,61 @@ import Navigation from '../../components/Navigation.astro';
 
 const allEssays = await getCollection('essays');
 const sortedEssays = allEssays.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-// Helper for Card Backgrounds (La Cabra Style)
-const getCardBg = (type) => {
-    const colors = {
-        'Culture': 'bg-[#4A3B32] text-[#E6E2DE]',  // Arts/Books
-        'Terroir': 'bg-[#3A403A] text-[#E0E5E0]',  // Nature/Grapes
-        'Travel': 'bg-[#5D5445] text-[#E6E2DE]',   // Places/Visits
-        'Journal': 'bg-[#8C5E58] text-[#EBE5E4]'   // Thoughts
-    };
-    return colors[type] || 'bg-[#1A1A1A] text-white';
-};
 ---
 
 <MainLayout title="Essays | Enoversa">
     <Navigation />
 
-    <main class="min-h-screen pt-32 px-6 md:px-24 pb-24">
+    <main id="main-content" class="min-h-screen pt-28 md:pt-32 px-6 md:px-24 pb-24">
         
         <header class="max-w-7xl mx-auto mb-24 border-b border-line pb-12">
-            <div class="flex flex-col md:flex-row justify-between items-end">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end">
                 <div>
                     <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">03 / Index</span>
                     <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">Essays</h1>
                 </div>
-                <p class="text-text-muted font-light text-right mt-4 md:mt-0 max-w-xs">
-                    Context, Culture, and Place.
+                <p class="text-text-muted font-light text-left md:text-right mt-4 md:mt-0 max-w-xs">
+                    Books, places, and longer arguments about wine.
                 </p>
             </div>
         </header>
 
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-            {sortedEssays.map(post => (
-                <article class="group cursor-pointer">
-                    <a href={`/essays/${post.slug}`} class="block">
-                        
-                        <!-- Vibe Card -->
-                        <div class={`aspect-video relative mb-6 overflow-hidden flex items-center justify-center px-8 transition duration-500 group-hover:scale-[1.02] ${getCardBg(post.data.type)}`}>
-                            <h3 class="font-sans text-3xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
-                                {post.data.vibe}
-                            </h3>
+        <div class="max-w-7xl mx-auto">
+            {sortedEssays.map((post, index) => (
+                <article class="group border-y border-line">
+                    <a
+                        href={`/essays/${post.id}`}
+                        class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 py-10 md:py-16"
+                    >
+                        <div class="md:col-span-3 flex md:block justify-between items-start">
+                            <span class="block text-6xl md:text-8xl font-light tracking-tighter text-line group-hover:text-accent transition-colors">
+                                {String(index + 1).padStart(2, '0')}
+                            </span>
+                            <div class="md:mt-10 font-mono text-[10px] uppercase tracking-widest text-text-dim text-right md:text-left leading-relaxed">
+                                <span class="block text-accent">{post.data.type}</span>
+                                {post.data.location && <span class="block mt-1">{post.data.location}</span>}
+                            </div>
                         </div>
 
-                        <div class="flex justify-between items-baseline mb-2">
-                            <h3 class="text-2xl font-light text-white group-hover:text-accent transition-colors">{post.data.title}</h3>
-                            <span class="font-mono text-xs text-text-dim">{post.data.type}</span>
+                        <div class="md:col-span-8 md:col-start-5 md:pt-2">
+                            <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-text-dim mb-5">
+                                Essay / Enoversa
+                            </p>
+                            <h2 class="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white group-hover:text-accent transition-colors leading-[1.08]">
+                                {post.data.title}
+                            </h2>
+                            <p class="mt-6 max-w-2xl text-base md:text-lg text-text-muted font-light leading-relaxed">
+                                {post.data.excerpt}
+                            </p>
+                            <div class="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-t border-line/60 pt-5">
+                                <p class="font-mono text-[10px] uppercase tracking-widest text-text-dim">
+                                    {post.data.tags.join(' · ')}
+                                </p>
+                                <span class="font-mono text-[10px] uppercase tracking-widest text-text-dim group-hover:text-accent transition-colors shrink-0">
+                                    Read essay →
+                                </span>
+                            </div>
                         </div>
-                        
-                        <p class="text-text-muted font-light text-sm leading-relaxed mb-4 line-clamp-2">
-                            {post.data.excerpt}
-                        </p>
-
-                        <span class="text-xs font-mono uppercase tracking-wider text-text-dim border-b border-transparent group-hover:border-accent group-hover:text-accent transition inline-block pb-0.5">
-                            Read Essay ->
-                        </span>
                     </a>
                 </article>
             ))}

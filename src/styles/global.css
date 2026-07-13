@@ -1,3 +1,6 @@
+@import "@fontsource-variable/manrope/wght.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
+
 /* Tailwind v4 Import */
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
@@ -11,10 +14,10 @@
   --color-line: #222222;
   
   --color-text-main: #EAEAEA;
-  --color-text-muted: #888888;
-  --color-text-dim: #444444;
+  --color-text-muted: #A3A3A3;
+  --color-text-dim: #777777;
   
-  --color-accent: #C04D3B;
+  --color-accent: #D66A57;
   
   --spacing-128: 32rem;
 }
@@ -23,12 +26,11 @@
 html, body {
     background-color: var(--color-bg);
     color: var(--color-text-main);
-    /* Esconder o cursor padrão do sistema */
-    cursor: none; 
 }
 
 /* O cursor personalizado (um ponto pequeno) */
 .custom-cursor {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -52,8 +54,55 @@ body.hovering .custom-cursor {
 }
 
 /* Garantir que links não mostrem a mãozinha nativa */
-a, button, .cursor-pointer {
-    cursor: none !important;
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    html,
+    body,
+    a,
+    button,
+    .cursor-pointer {
+        cursor: none !important;
+    }
+
+    .custom-cursor {
+        display: block;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+}
+
+.skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 10000;
+    transform: translateY(-200%);
+    background: var(--color-text-main);
+    color: var(--color-bg);
+    padding: 0.75rem 1rem;
+    font: 0.75rem var(--font-mono);
+    text-transform: uppercase;
+}
+
+.skip-link:focus {
+    transform: translateY(0);
 }
 
 /* Noise Overlay */
@@ -64,6 +113,10 @@ a, button, .cursor-pointer {
     pointer-events: none; z-index: 50; opacity: 0.4;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 0px; background: transparent; }
 .sticky-label { position: sticky; top: 8rem; }
+
+@media (max-width: 767px) {
+    .sticky-label {
+        position: static;
+    }
+}
