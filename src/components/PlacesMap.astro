@@ -1,0 +1,217 @@
+---
+import type { CollectionEntry } from "astro:content";
+import "maplibre-gl/dist/maplibre-gl.css";
+
+interface Props {
+    places: CollectionEntry<"places">[];
+}
+
+const { places } = Astro.props;
+const mapPlaces = places.map((place, index) => ({
+    id: `place-${place.id}`,
+    number: String(index + 1).padStart(2, "0"),
+    title: place.data.title,
+    categories: place.data.categories,
+    city: place.data.city,
+    longitude: place.data.coordinates.longitude,
+    latitude: place.data.coordinates.latitude,
+}));
+---
+
+<div class="home-map-shell relative overflow-hidden border-y border-line bg-surface">
+    <div
+        id="home-addresses-map"
+        class="absolute inset-0"
+        data-places={JSON.stringify(mapPlaces)}
+        role="region"
+        aria-label="Interactive preview of Enoversa addresses. Drag to move, zoom with the controls or select a marker."
+    >
+        <p class="home-map-loading absolute inset-0 grid place-items-center font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
+            Loading interactive map…
+        </p>
+    </div>
+
+    <p class="absolute top-5 left-5 z-10 pointer-events-none font-mono text-[9px] uppercase tracking-[0.18em] text-text-muted">
+        Drag to move / Select a marker
+    </p>
+
+    <a
+        href="/addresses"
+        class="absolute bottom-5 left-5 z-10 border border-line bg-bg/90 px-4 py-3 font-mono text-[9px] uppercase tracking-widest text-text-muted hover:text-accent hover:border-accent transition-colors"
+    >
+        Open all addresses →
+    </a>
+
+    <p class="map-credit absolute bottom-2 right-3 z-10 font-mono text-[7px] uppercase tracking-wider text-text-dim/70">
+        © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+        · <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>
+        · <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>
+    </p>
+</div>
+
+<style>
+    .home-map-shell {
+        aspect-ratio: 16 / 9;
+        min-height: 28rem;
+    }
+
+    #home-addresses-map {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    :global(.maplibregl-map) {
+        font-family: var(--font-sans);
+    }
+
+    :global(.maplibregl-canvas:focus-visible) {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+    }
+
+    :global(.maplibregl-ctrl-group) {
+        overflow: hidden;
+        border: 1px solid #3a3a3a;
+        border-radius: 0;
+        background: rgb(13 13 13 / 92%);
+        box-shadow: none;
+    }
+
+    :global(.maplibregl-ctrl-group button) {
+        width: 44px;
+        height: 44px;
+    }
+
+    :global(.maplibregl-ctrl-icon) {
+        filter: invert(1);
+    }
+
+    :global(.maplibregl-ctrl-attrib) {
+        display: none !important;
+    }
+
+    .map-credit {
+        text-shadow: 0 1px 3px #050505;
+    }
+
+    .map-credit a:hover {
+        color: var(--color-text-muted);
+    }
+
+    :global(.home-map-marker) {
+        width: 2.75rem;
+        height: 2.75rem;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--color-accent);
+        border-radius: 999px;
+        background: var(--color-accent);
+        color: var(--color-bg);
+        font: 600 9px var(--font-mono);
+        letter-spacing: 0.08em;
+        box-shadow: 0 0 0 5px rgb(5 5 5 / 55%);
+        transition: scale 180ms ease, background 180ms ease;
+    }
+
+    :global(.home-map-marker:hover),
+    :global(.home-map-marker:focus-visible) {
+        scale: 1.18;
+        background: #eaeaea;
+        border-color: #eaeaea;
+    }
+
+    @media (max-width: 639px) {
+        .home-map-shell {
+            aspect-ratio: 4 / 5;
+            min-height: 0;
+        }
+    }
+</style>
+
+<script>
+    import type { Map as MapLibreMap } from "maplibre-gl";
+
+    type HomeMapPlace = {
+        id: string;
+        number: string;
+        title: string;
+        categories: string[];
+        city: string;
+        longitude: number;
+        latitude: number;
+    };
+
+    const mapElement = document.getElementById("home-addresses-map");
+    let map: MapLibreMap | undefined;
+
+    const initialiseMap = async () => {
+        if (!mapElement || map) return;
+
+        const places = JSON.parse(mapElement.dataset.places ?? "[]") as HomeMapPlace[];
+        const { default: maplibregl } = await import("maplibre-gl");
+
+        map = new maplibregl.Map({
+            container: mapElement,
+            style: "https://tiles.openfreemap.org/styles/dark",
+            center: [-9.5, 35],
+            zoom: 3.5,
+            minZoom: 2.5,
+            maxZoom: 17,
+            cooperativeGestures: true,
+            attributionControl: false,
+        });
+
+        map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+
+        places.forEach((place) => {
+            const markerContainer = document.createElement("div");
+            markerContainer.setAttribute("role", "presentation");
+            const marker = document.createElement("a");
+            marker.className = "home-map-marker";
+            marker.href = `/addresses#${place.id}`;
+            marker.textContent = place.number;
+            marker.dataset.homePlaceMarker = "";
+            marker.title = `${place.title} — ${place.categories.join(" / ")}`;
+            marker.setAttribute("aria-label", `${place.number}: ${place.title}, ${place.city}. Open address.`);
+            markerContainer.append(marker);
+
+            const nearbyPlaces = places.filter((candidate) => (
+                Math.abs(candidate.latitude - place.latitude) < 0.5
+                && Math.abs(candidate.longitude - place.longitude) < 0.5
+            ));
+            const nearbyIndex = nearbyPlaces.findIndex((candidate) => candidate.id === place.id);
+            const horizontalOffset = (nearbyIndex - (nearbyPlaces.length - 1) / 2) * 54;
+
+            new maplibregl.Marker({ element: markerContainer, offset: [horizontalOffset, 0] })
+                .setLngLat([place.longitude, place.latitude])
+                .addTo(map!);
+
+            markerContainer.removeAttribute("tabindex");
+        });
+
+        map.on("load", () => {
+            if (places.length > 1) {
+                const bounds = places.reduce(
+                    (area, place) => area.extend([place.longitude, place.latitude]),
+                    new maplibregl.LngLatBounds(),
+                );
+                map?.fitBounds(bounds, { padding: 70, maxZoom: 6, duration: 0 });
+            }
+
+            mapElement.dataset.ready = "true";
+            mapElement.querySelector(".home-map-loading")?.remove();
+        });
+    };
+
+    if (mapElement) {
+        const observer = new IntersectionObserver((entries) => {
+            if (!entries.some((entry) => entry.isIntersecting)) return;
+            observer.disconnect();
+            void initialiseMap();
+        }, { rootMargin: "200px" });
+
+        observer.observe(mapElement);
+    }
+</script>

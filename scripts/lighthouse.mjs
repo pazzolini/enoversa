@@ -11,6 +11,7 @@ const baseUrl = `http://127.0.0.1:${previewPort}`;
 const routes = [
   '/',
   '/selections',
+  '/addresses',
   '/portraits/claudio-miguel-marzagana-elementales',
 ];
 const minimumScores = {

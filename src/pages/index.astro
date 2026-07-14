@@ -1,6 +1,7 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/Navigation.astro";
+import PlacesMap from "../components/PlacesMap.astro";
 import { getCollection } from "astro:content";
 
 const allSelections = await getCollection("selections");
@@ -17,6 +18,9 @@ const allEssays = await getCollection("essays");
 const featuredEssays = allEssays
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
     .slice(0, 2);
+
+const featuredPlaces = (await getCollection("places"))
+    .sort((a, b) => a.data.city.localeCompare(b.data.city));
 
 import { getMoodColor } from "../utils/moodColors";
 
@@ -434,6 +438,37 @@ const legacyUrl = "https://legacy.enoversa.com";
                             >View All Essays -></a
                         >
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            id="addresses"
+            class="px-6 md:px-24 py-20 md:py-36 border-b border-line bg-surface/40"
+        >
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 max-w-7xl mx-auto">
+                <div class="md:col-span-3 relative">
+                    <div class="sticky-label">
+                        <span class="font-mono text-xs text-accent mb-2 block">04</span>
+                        <h2 class="text-sm font-medium tracking-widest uppercase text-text-muted">
+                            Addresses
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="md:col-span-9">
+                    <div class="grid grid-cols-1 lg:grid-cols-9 gap-10 lg:gap-16 mb-12">
+                        <p class="lg:col-span-5 text-text-muted font-light max-w-xl text-base leading-relaxed">
+                            Wineries, wine shops, bars and restaurants we would return to.
+                        </p>
+                        <div class="lg:col-span-4 border-l border-line pl-6 font-mono text-[10px] uppercase tracking-widest text-text-dim leading-loose">
+                            <span class="block text-accent">No ratings</span>
+                            <span class="block">No paid placements</span>
+                            <span class="block">Only personal recommendations</span>
+                        </div>
+                    </div>
+
+                    <PlacesMap places={featuredPlaces} />
                 </div>
             </div>
         </section>

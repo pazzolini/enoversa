@@ -61,4 +61,23 @@ const essays = defineCollection({
     }),
 });
 
-export const collections = { selections, portraits, essays };
+const places = defineCollection({
+    loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/places" }),
+    schema: z.object({
+        title: z.string(),
+        categories: z.array(z.enum(["Winery", "Wine Shop", "Bar", "Restaurant"])).min(1),
+        city: z.string(),
+        country: z.string(),
+        coordinates: z.object({
+            latitude: z.number().min(-90).max(90),
+            longitude: z.number().min(-180).max(180),
+        }),
+        note: z.string(),
+        address: z.string().optional(),
+        website: z.url().optional(),
+        mapsUrl: z.url(),
+        relatedUrl: z.string().optional(),
+    }),
+});
+
+export const collections = { selections, portraits, essays, places };
