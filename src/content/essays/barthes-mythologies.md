@@ -3,23 +3,27 @@ title: "Wine and Milk, after Roland Barthes"
 type: "Culture"
 location: "France, 1957"
 tags: ["Mythology", "Wine Culture", "Roland Barthes"]
-vibe: "Wine. Myth. Contradiction."
-excerpt: "In Mythologies, Barthes takes wine as an example of how French habits come to feel natural."
+vibe: "Wine. Milk. Myth."
+excerpt: "Barthes called wine a totem-drink: national, transformative and, at its best, the prolongation of a pleasure."
 date: 2025-02-20
 ---
 
-In “Wine and Milk,” one of the short essays collected in *Mythologies*, Roland Barthes is not interested in how wine tastes. He is interested in what France has decided wine means.
+When I first wrote about this book, I placed these notes in a chapter called “Wine in Art,” although *Mythologies* (1957) is not a work of art. The category was loose. Barthes himself described the pieces collected here as reflections, written between 1954 and 1956, on the myths of everyday French life. Their material could be an article, a photograph, a film, a performance or an exhibition. The subject, he admitted, was simply his own present.
 
-Wine appears as a substance of conversion. It can make the weak feel strong, the quiet become talkative, and an ordinary situation feel briefly transformed. Its symbolic power matters more than the liquid itself.
+One of those reflections concerns wine. “Wine and Milk” runs to barely four pages, but Barthes finds more in the glass than most longer books on the subject. Wine is a “totem-drink,” a “mythical substance,” and something through which France recognises itself. His chosen opposite is not water but milk.
 
-Milk is its opposite. Where wine changes, milk restores. It is associated with calm, purity, and childhood innocence. Barthes is not proposing a tasting comparison; he is showing how two everyday drinks can carry completely different social meanings.
+The distinction is wonderfully physical. Wine cuts, unsettles and transforms. Milk binds, covers and restores. Its whiteness belongs to childhood, innocence and a calm kind of strength. Milk, however, remains exotic in the French imagination. Wine is national.
 
-Wine also belongs to the nation before it belongs to the individual drinker. It represents conviviality, courage, work, and a recognisable idea of Frenchness. Drinking it requires no explanation. Refusing it often does.
+Seventy years later, a text so deliberately tied to its moment will inevitably show its age. Some of its observations now feel less secure, or at least less exclusively French. Yet Barthes was already unwilling to let the beauty of wine conceal the conditions of its production. If wine was a fine and good substance, he wrote, it also carried considerable weight within French capitalism.
 
-But the essay is not a toast to wine. Barthes ends by returning the myth to its material conditions. French wine was tied to private capital and to colonial agriculture in Algeria, where vineyards occupied dispossessed land while the local population lacked basic food. The national symbol depended on a history that the symbol itself helped conceal.
+The sentence has not aged badly. Wine in the twenty-first century can be an agricultural product, a luxury object, an investment, a lifestyle and a piece of content, sometimes all at once. It is difficult not to wonder what Barthes would have made of our own version of the industry, or of the ease with which commerce now borrows the language of nature, authenticity and resistance.
 
-This is where Barthes becomes useful for natural wine. Words such as “living,” “honest,” “pure,” and “untouched” may describe real choices in the vineyard or cellar, but they can also become myths of their own. They can make labour, ownership, price, access, and commercial interests disappear behind a reassuring image of authenticity.
+Still, the essay is most enjoyable when Barthes concentrates on what wine supposedly does to us. Red or white (champagne is a conspicuous absence in a text about France), wine is a substance of conversion. It can turn situations and states inside out, drawing the opposite from what is already there. The weak man becomes courageous; the silent one starts talking. Wine retains an old alchemical inheritance, a power of transmutation and of creation *ex nihilo*.
 
-Low intervention is not automatically innocent because it presents itself as natural. Treating it that way would repeat the mechanism Barthes was trying to expose.
+This is the tremendous liquid repeated in folklore, proverbs, conversation and literature. The important thing is not whether wine really performs every transformation attributed to it. Myth does not need that kind of proof. It becomes effective through repetition, until drinking wine feels less like one choice among others and more like the natural continuation of work, food, courage, sociability or celebration.
 
-Barthes does not prevent us from enjoying wine. He simply makes innocent enjoyment harder. Every bottle carries a story, but also the conditions that allowed that story to be told. The useful question is not only whether wine can transform us, but what has been transformed to produce it, and for whom.
+Barthes makes another distinction that is harder to accept without qualification. In France, he argues, wine is not consumed in order to become drunk in the way that whisky might be. Drunkenness is a possible, perhaps probable, consequence, but never the purpose. Whether or not the claim survives scrutiny, it says something revealing about the image France wished to keep of its own drinking. Wine could transform the drinker while remaining part of ordinary life. Intoxication was incidental to the ritual, not its stated end.
+
+That is why the definition Barthes offers midway through the essay remains the one I like best. For all the mythology, national identity, capitalism and transmutation gathered around it, wine can also be something much simpler: “the prolongation of a pleasure.”
+
+*Roland Barthes, Mythologies (1957). Portuguese edition: Mitologias, translated and prefaced by José Augusto Seabra (Lisbon: Edições 70, 1997).*
