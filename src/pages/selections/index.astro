@@ -67,7 +67,7 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
 
             <!-- Filter Toggle -->
             <div class="mt-8">
-                <button id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-wrapper" class="min-h-11 font-mono text-[10px] text-accent uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2">
+                <button id="filter-toggle" type="button" aria-expanded="false" aria-controls="filter-wrapper" class="min-h-11 px-4 border border-line font-mono text-[10px] text-text-dim uppercase tracking-widest hover:text-white hover:border-text-dim transition-colors flex items-center gap-2">
                     <span id="filter-toggle-text">[ FILTER ]</span>
                 </button>
             </div>
@@ -75,63 +75,47 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
 
         <!-- FILTERS -->
         <div id="filter-wrapper" class="max-w-7xl mx-auto overflow-hidden transition-all duration-500 max-h-0 opacity-0 mb-12">
-            <section class="space-y-6 select-none pb-8 border-b border-line/30" id="filter-container">
+            <section class="space-y-5 select-none pb-8 border-b border-line/30" id="filter-container">
                 <!-- Type Filter -->
-                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3">
-                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Type</span>
-                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
-                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="type" data-value="all">All</button>
-                        <span class="text-text-dim/20">/</span>
-                        {allTypes.map((type, index) => (
-                            <>
-                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="type" data-value={type}>{type}</button>
-                                {index !== allTypes.length - 1 && <span class="text-text-dim/20">/</span>}
-                            </>
+                <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Type</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="type" data-value="all">All</button>
+                        {allTypes.map((type) => (
+                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="type" data-value={type}>{type}</button>
                         ))}
                     </div>
                 </div>
 
                 <!-- Country Filter -->
-                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3">
-                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Origin</span>
-                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
-                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="country" data-value="all">All</button>
-                        <span class="text-text-dim/20">/</span>
-                        {allCountries.map((country, index) => (
-                            <>
-                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="country" data-value={country}>{country}</button>
-                                {index !== allCountries.length - 1 && <span class="text-text-dim/20">/</span>}
-                            </>
+                <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Origin</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="country" data-value="all">All</button>
+                        {allCountries.map((country) => (
+                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="country" data-value={country}>{country}</button>
                         ))}
                     </div>
                 </div>
 
                 <!-- Price Filter -->
-                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3">
-                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Price</span>
-                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
-                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="price" data-value="all">All</button>
-                        <span class="text-text-dim/20">/</span>
-                        {priceIntervals.map((interval, index) => (
-                            <>
-                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="price" data-value={JSON.stringify({min: interval.min, max: interval.max})}>{interval.label}</button>
-                                {index !== priceIntervals.length - 1 && <span class="text-text-dim/20">/</span>}
-                            </>
+                <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Price</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="price" data-value="all">All</button>
+                        {priceIntervals.map((interval) => (
+                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="price" data-value={JSON.stringify({min: interval.min, max: interval.max})}>{interval.label}</button>
                         ))}
                     </div>
                 </div>
 
                 <!-- Tag Filter -->
-                <div class="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest w-20 shrink-0 opacity-50">Tag</span>
-                    <div class="flex flex-wrap items-center gap-x-3 text-xs font-mono uppercase tracking-widest">
-                        <button type="button" class="filter-btn min-h-11 text-white border-b border-accent" data-category="tag" data-value="all">All</button>
-                        <span class="text-text-dim/20">/</span>
-                        {allTags.map((tag, index) => (
-                            <>
-                                <button type="button" class="filter-btn min-h-11 text-text-muted hover:text-white transition-colors" data-category="tag" data-value={tag}>{tag}</button>
-                                {index !== allTags.length - 1 && <span class="text-text-dim/20">/</span>}
-                            </>
+                <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-start">
+                    <span class="pt-4 font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Tag</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="tag" data-value="all">All</button>
+                        {allTags.map((tag) => (
+                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="tag" data-value={tag}>{tag}</button>
                         ))}
                     </div>
                 </div>
@@ -198,11 +182,26 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
         <!-- Empty State -->
         <div id="empty-state" class="hidden text-center py-24">
             <p class="text-text-muted font-light text-lg">No wines match the current filters.</p>
-            <button id="clear-filters" type="button" class="min-h-11 mt-4 font-mono text-xs text-accent uppercase tracking-widest border-b border-transparent hover:border-accent transition-all">Clear Filters</button>
+            <button id="clear-filters" type="button" class="min-h-11 mt-4 px-4 border border-line font-mono text-[10px] text-text-dim uppercase tracking-widest hover:text-white hover:border-text-dim transition-colors">Clear Filters</button>
         </div>
 
     </main>
 </MainLayout>
+
+<style>
+    .filter-btn[aria-pressed="true"],
+    #filter-toggle[aria-expanded="true"] {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+        color: var(--color-bg);
+    }
+
+    .filter-btn[aria-pressed="false"] {
+        border-color: var(--color-line);
+        background: transparent;
+        color: var(--color-text-dim);
+    }
+</style>
 
 <script>
     // Filter State Interface
@@ -279,13 +278,7 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
             const value = btn.dataset.value || '';
             const isActive = activeFilters[category] === value || (value === 'all' && !activeFilters[category]);
 
-            if (isActive) {
-                btn.classList.add('text-white', 'border-b', 'border-accent');
-                btn.classList.remove('text-text-muted');
-            } else {
-                btn.classList.remove('text-white', 'border-b', 'border-accent');
-                btn.classList.add('text-text-muted');
-            }
+            btn.setAttribute('aria-pressed', String(isActive));
         });
     }
 
