@@ -45,10 +45,12 @@ test('the addresses map filters places and fits a mobile viewport', async ({ pag
   await expect(page.getByRole('button', { name: 'Zoom in' })).toBeVisible();
   await page.getByRole('button', { name: 'Bar', exact: true }).click();
 
-  await expect(page.locator('[data-place-card]:visible')).toHaveCount(3);
+  const expectedBarCount = await page.locator('[data-place-card][data-place-categories*="Bar"]').count();
+  await expect(page.locator('[data-place-card]:visible')).toHaveCount(expectedBarCount);
   await expect(page.getByRole('heading', { level: 3, name: 'Cera — Bistro & Wine Bar' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 3, name: 'Madame! Wine Shop & Bar' })).toBeVisible();
   await expect(page.getByRole('heading', { level: 3, name: 'Junior Wine Bar & Cheese Shop' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 3, name: 'ajar' })).toBeVisible();
 
   const madame = page.locator('[data-place-card]:visible').filter({ hasText: 'Madame!' });
   await madame.getByRole('button', { name: 'Show on map ↑' }).click();
@@ -66,7 +68,8 @@ test('the homepage addresses section is an interactive map', async ({ page }) =>
   const map = page.getByRole('region', { name: /Interactive preview of Enoversa addresses/ });
   await map.scrollIntoViewIfNeeded();
   await expect(map.locator('.maplibregl-canvas')).toBeVisible();
-  await expect(map.locator('[data-home-place-marker]')).toHaveCount(4);
+  const expectedPlaceCount = JSON.parse((await map.getAttribute('data-places')) ?? '[]').length;
+  await expect(map.locator('[data-home-place-marker]')).toHaveCount(expectedPlaceCount);
   await expect(map.getByRole('link', { name: /Marzagana Elementales/ })).toHaveAttribute(
     'href',
     '/addresses#place-marzagana-elementales',
