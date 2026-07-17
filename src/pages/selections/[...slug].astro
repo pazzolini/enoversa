@@ -18,6 +18,12 @@ import { getMoodColor } from "../../utils/moodColors";
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { metrics } = entry.data;
+const serviceDetails = [
+    { label: "Glass", value: entry.data.service?.glass },
+    { label: "Decant", value: entry.data.service?.decant },
+    { label: "Temperature", value: entry.data.service?.temperature },
+    { label: "Tasted over", value: entry.data.service?.tastedOver },
+].filter((detail): detail is { label: string; value: string } => Boolean(detail.value));
 
 // Calculate Total Score
 const totalScore =
@@ -177,6 +183,28 @@ const moodClass = getMoodColor(entry.data.tags[0]);
                         >
                     </div>
                 </div>
+
+                {
+                    serviceDetails.length > 0 && (
+                        <div class="mt-8 pt-6 border-t border-line">
+                            <h3 class="mb-5 font-mono text-[10px] text-text-dim uppercase tracking-widest">
+                                Service
+                            </h3>
+                            <dl class="space-y-4">
+                                {serviceDetails.map((detail) => (
+                                    <div class="flex justify-between gap-4 text-xs">
+                                        <dt class="font-mono text-[9px] text-text-dim uppercase tracking-widest">
+                                            {detail.label}
+                                        </dt>
+                                        <dd class="text-right font-light text-text-main">
+                                            {detail.value}
+                                        </dd>
+                                    </div>
+                                ))}
+                            </dl>
+                        </div>
+                    )
+                }
             </aside>
 
             <!-- RIGHT: NARRATIVE -->

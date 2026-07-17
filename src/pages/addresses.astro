@@ -36,7 +36,7 @@ const mapPlaces = mappedPlaces.map((place) => ({
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-end">
                 <div class="md:col-span-8">
                     <span class="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">
-                        04 / Field Notes
+                        04 / Index
                     </span>
                     <h1 class="text-5xl md:text-7xl font-light tracking-tighter text-white">
                         Addresses
@@ -48,17 +48,8 @@ const mapPlaces = mappedPlaces.map((place) => ({
             </div>
         </header>
 
-        <section class="max-w-7xl mx-auto" aria-labelledby="map-heading">
-            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-8">
-                <div>
-                    <h2 id="map-heading" class="font-mono text-[10px] uppercase tracking-[0.22em] text-text-dim">
-                        Atlantic Europe / Selected places
-                    </h2>
-                    <p class="mt-3 text-sm text-text-muted font-light max-w-xl">
-                        The map is deliberately selective. It records recommendations, not coverage.
-                    </p>
-                </div>
-
+        <section class="max-w-7xl mx-auto" aria-label="Address map">
+            <div class="flex justify-end mb-8">
                 <div class="flex flex-wrap gap-2" aria-label="Filter addresses by category">
                     <button
                         type="button"

@@ -24,6 +24,12 @@ const selections = defineCollection({
             complexity: z.number().min(0).max(2),
             emotion: z.number().min(0).max(2),
         }),
+        service: z.object({
+            glass: z.string().optional(),
+            decant: z.string().optional(),
+            temperature: z.string().optional(),
+            tastedOver: z.string().optional(),
+        }).optional(),
         excerpt: z.string(),
         image: z.string().default("/favicon.png"),
     }),
