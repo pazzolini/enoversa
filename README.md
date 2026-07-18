@@ -2,6 +2,10 @@
 
 Editorial journal about low-intervention wines, built as a static Astro site.
 
+## Start here
+
+The complete project, editorial, content, social-media and deployment documentation is in [`docs/PROJECT_GUIDE.md`](docs/PROJECT_GUIDE.md). Coding agents must also follow [`AGENTS.md`](AGENTS.md).
+
 ## Requirements
 
 - Node.js 22.12 or newer (the pinned local version is in `.nvmrc`)
@@ -31,8 +35,19 @@ Markdown entries live in:
 - `src/content/selections/`
 - `src/content/portraits/`
 - `src/content/essays/`
+- `src/content/places/`
 
 Their frontmatter schemas and loaders are defined in `src/content.config.ts`. A schema validation error stops the build, preventing malformed content from being published.
+
+## Social assets
+
+Instagram assets are rendered deterministically from `scripts/render-instagram-assets.mjs`:
+
+```sh
+npm run render:social
+```
+
+Final exports are stored in `social/instagram/` and are not included in the website build.
 
 ## Deployment notes
 

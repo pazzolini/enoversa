@@ -14,6 +14,7 @@
     "test:e2e": "playwright test",
     "test:lighthouse": "node scripts/lighthouse.mjs",
     "test:quality": "npm run audit:production && npm run check && npm run build && npm run test:e2e && npm run test:lighthouse",
+    "render:social": "node scripts/render-instagram-assets.mjs",
     "astro": "astro"
   },
   "dependencies": {

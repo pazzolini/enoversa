@@ -31,7 +31,7 @@ const selections = defineCollection({
             tastedOver: z.string().optional(),
         }).optional(),
         excerpt: z.string(),
-        image: z.string().default("/favicon.png"),
+        image: z.string().default("/og-image.png"),
     }),
 });
 
