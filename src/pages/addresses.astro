@@ -3,8 +3,9 @@ import { getCollection } from "astro:content";
 import "maplibre-gl/dist/maplibre-gl.css";
 import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/Navigation.astro";
+import { comparePlaces } from "../utils/placeSort";
 
-const places = (await getCollection("places")).sort((a, b) => a.data.city.localeCompare(b.data.city));
+const places = (await getCollection("places")).sort(comparePlaces);
 
 const categoryOrder = ["Winery", "Wine Shop", "Bar", "Restaurant"] as const;
 const availableCategories = new Set(places.flatMap((place) => place.data.categories));

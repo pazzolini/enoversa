@@ -215,6 +215,8 @@ relatedUrl: "/portraits/example"
 
 Allowed categories are `Winery`, `Wine Shop`, `Bar` and `Restaurant`. A place may use more than one category. Coordinates and URLs must be verified from the supplied map location or an authoritative source. Notes describe the place and why it is useful; avoid generic travel-copy language.
 
+Addresses follow an explicit geographical progression from Portugal: Portugal, Spain, France and Ireland. Countries not yet listed in that sequence appear afterwards in alphabetical order until their position is decided. Within each country, entries are ordered by city and then by place name. Use the shared comparator in `src/utils/placeSort.ts` so the Addresses page and homepage map remain consistent as places are added.
+
 ## 7. Editorial voice
 
 The desired voice is personal, precise, sober and occasionally funny. It should sound like an editor with a real memory of the wine or place.
@@ -366,4 +368,3 @@ Do not commit, push, deploy, change production settings or contact external serv
 - Prices in new notes are rounded to whole euros.
 - Portraits and Essays do not reuse the three-word Selection card.
 - The Instagram feed begins with the three Volume II transition posts, followed by the Marzagana Elementales Portrait.
-

@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Navigation from "../components/Navigation.astro";
 import PlacesMap from "../components/PlacesMap.astro";
 import { getCollection } from "astro:content";
+import { comparePlaces } from "../utils/placeSort";
 
 const allSelections = await getCollection("selections");
 const featuredSelections = allSelections
@@ -20,7 +21,7 @@ const featuredEssays = allEssays
     .slice(0, 2);
 
 const featuredPlaces = (await getCollection("places"))
-    .sort((a, b) => a.data.city.localeCompare(b.data.city));
+    .sort(comparePlaces);
 
 import { getMoodColor } from "../utils/moodColors";
 
