@@ -2,6 +2,44 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
+const deprecatedVibeDescriptors = new Map([
+    ["oily", "Oil"],
+    ["saline", "Salt"],
+    ["salty", "Salt"],
+    ["lifted", "Lift"],
+    ["grippy", "Grip"],
+    ["floral", "Flowers"],
+    ["chalky", "Chalk"],
+    ["briny", "Brine"],
+    ["juicy", "Juice"],
+    ["oxidative", "Oxidation"],
+    ["acidic", "Acidity"],
+]);
+
+const selectionVibe = z.string().superRefine((value, context) => {
+    const descriptors = value
+        .split(".")
+        .map((descriptor) => descriptor.trim())
+        .filter(Boolean);
+
+    if (descriptors.length !== 3) {
+        context.addIssue({
+            code: "custom",
+            message: "Selection vibes must contain exactly three full-stop-separated descriptors.",
+        });
+    }
+
+    for (const descriptor of descriptors) {
+        const replacement = deprecatedVibeDescriptors.get(descriptor.toLowerCase());
+        if (replacement) {
+            context.addIssue({
+                code: "custom",
+                message: `Use the canonical descriptor “${replacement}” instead of “${descriptor}”.`,
+            });
+        }
+    }
+});
+
 const selections = defineCollection({
     loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/selections" }),
     schema: z.object({
@@ -16,7 +54,7 @@ const selections = defineCollection({
         date: z.coerce.date(),
         tastingDate: z.coerce.date(),
         tags: z.array(z.string()),
-        vibe: z.string(),
+        vibe: selectionVibe,
         metrics: z.object({
             liveliness: z.number().min(0).max(2),
             drinkability: z.number().min(0).max(2),

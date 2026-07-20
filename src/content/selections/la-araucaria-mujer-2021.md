@@ -8,7 +8,7 @@ type: "Red"
 grapes: "Vijariego Negro"
 price: "35,00 €"
 tags: ["Volcanic", "Animal", "Natural"]
-vibe: "Animal. Tense. Mineral."
+vibe: "Animal. Tension. Mineral."
 metrics:
   liveliness: 2
   drinkability: 1

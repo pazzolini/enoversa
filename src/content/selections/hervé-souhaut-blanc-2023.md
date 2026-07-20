@@ -8,7 +8,7 @@ type: "White"
 grapes: "Viognier, Roussanne"
 price: "29,00 €"
 tags: ["Low Intervention"]
-vibe: "Peach. Flowers. Texture."
+vibe: "Peach. Flowers. Coating."
 metrics:
   liveliness: 1
   drinkability: 2

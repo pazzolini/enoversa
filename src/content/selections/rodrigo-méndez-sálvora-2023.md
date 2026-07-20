@@ -7,7 +7,7 @@ vintage: "2023"
 type: "White"
 grapes: "Albariño"
 price: "37,00 €"
-tags: ["Saline", "Old Vines", "Barrel Aged"]
+tags: ["Salt", "Old Vines", "Barrel Aged"]
 vibe: "Tea. Salt. Patience."
 metrics:
   liveliness: 1

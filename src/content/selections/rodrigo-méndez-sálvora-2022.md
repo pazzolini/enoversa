@@ -7,8 +7,8 @@ vintage: "2022"
 type: "White"
 grapes: "Albariño"
 price: "37,00 €"
-tags: ["Saline", "Old Vines", "Barrel Aged"]
-vibe: "Sharp. Saline. Ready."
+tags: ["Salt", "Old Vines", "Barrel Aged"]
+vibe: "Sharp. Salt. Ready."
 metrics:
   liveliness: 2
   drinkability: 2

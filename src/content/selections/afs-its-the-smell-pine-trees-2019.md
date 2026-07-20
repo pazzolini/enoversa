@@ -7,8 +7,8 @@ vintage: "2019"
 type: "White"
 grapes: "Pinot Noir, Pinot Gris, Gewürztraminer" 
 price: "65,00 €"
-tags: ["Oxidation", "Saline", "Natural"]
-vibe: "Oxidative. Dry. Saline."
+tags: ["Oxidation", "Salt", "Natural"]
+vibe: "Oxidation. Dry. Salt."
 metrics:
   liveliness: 2
   drinkability: 1

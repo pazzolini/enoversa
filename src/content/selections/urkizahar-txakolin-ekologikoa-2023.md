@@ -7,8 +7,8 @@ vintage: "2023"
 type: "White"
 grapes: "Hondarrabi Zuri"
 price: "30,00 €"
-tags: ["Saline", "Amphora", "Reduction"]
-vibe: "Mineral. Acidic. Austere."
+tags: ["Salt", "Amphora", "Reduction"]
+vibe: "Mineral. Acidity. Austere."
 metrics:
   liveliness: 2
   drinkability: 1

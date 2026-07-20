@@ -8,7 +8,7 @@ type: "White"
 grapes: "Bical"
 price: "30 €"
 tags: ["Limestone", "Biodynamic", "Old Vines"]
-vibe: "Mineral. Pear. Chalky."
+vibe: "Acidity. Pear. Chalk."
 metrics:
   liveliness: 2
   drinkability: 2

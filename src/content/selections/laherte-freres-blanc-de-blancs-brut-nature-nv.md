@@ -8,7 +8,7 @@ type: "Sparkling"
 grapes: "Chardonnay"
 price: "54 €"
 tags: ["Chalk", "Brut Nature", "Grower Champagne"]
-vibe: "Chalky. Persistent. Electric."
+vibe: "Chalk. Length. Energy."
 metrics:
   liveliness: 2
   drinkability: 2

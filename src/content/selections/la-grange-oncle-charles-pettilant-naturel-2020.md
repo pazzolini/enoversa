@@ -8,7 +8,7 @@ type: "Sparkling"
 grapes: "Auxerrois"
 price: "15,00 €"
 tags: ["Pet Nat", "Natural"]
-vibe: "Citrus. Soft. Joyful."
+vibe: "Citrus. Ease. Joy."
 metrics:
   liveliness: 2
   drinkability: 2

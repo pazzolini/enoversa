@@ -125,8 +125,8 @@ vintage: "2024"
 type: "White" # Red, White, Sparkling, Rosé or Dessert
 grapes: "Variety or blend"
 price: "23 €"
-tags: ["Saline", "Granite"]
-vibe: "Sharp. Saline. Ready."
+tags: ["Salt", "Granite"]
+vibe: "Sharp. Salt. Ready."
 metrics:
   liveliness: 2
   drinkability: 2
@@ -159,6 +159,8 @@ Price rules:
 The optional `service` block is only included when the information was recorded at the tasting. Do not backfill old notes with assumptions.
 
 The first tag controls the colour of the selection card through `src/utils/moodColors.js`. Add a new colour mapping deliberately when introducing a new leading tag; otherwise the card receives the default black treatment.
+
+Selection vibes use exactly three full-stop-separated descriptors. Prefer concrete nouns where they sound natural. Canonical forms include `Oil`, `Salt`, `Lift`, `Grip`, `Flowers`, `Chalk`, `Brine` and `Juice`; the schema rejects their competing adjective forms. Do not force awkward nominalisations: deliberate descriptors such as `Dry`, `Sharp`, `Ready` and `Austere` may remain. When a concept appears in both tags and vibes, use the same canonical form.
 
 ### 6.2 Portraits
 

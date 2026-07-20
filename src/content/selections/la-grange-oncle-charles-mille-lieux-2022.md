@@ -8,7 +8,7 @@ type: "White"
 grapes: "Blend of 13 Alsatian grapes"
 price: "20,00 €"
 tags: ["Natural", "Field Blend"]
-vibe: "Citrus. Floral. Seamless."
+vibe: "Citrus. Flowers. Harmony."
 metrics:
   liveliness: 2
   drinkability: 2

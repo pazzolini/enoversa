@@ -8,7 +8,7 @@ type: "Red"
 grapes: "Rufete"
 price: "23,00 €"
 tags: ["Natural", "Granite"]
-vibe: "Redcurrant. Fresh. Lifted."
+vibe: "Redcurrant. Acidity. Lift."
 metrics:
   liveliness: 2
   drinkability: 2

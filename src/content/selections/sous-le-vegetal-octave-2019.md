@@ -8,7 +8,7 @@ type: "White"
 grapes: "Muscat à Petits Grains"
 price: "29 €"
 tags: ["Skin Contact", "Amphora", "Volcanic"]
-vibe: "Oily. Briny. Orange Blossom."
+vibe: "Oil. Brine. Orange Blossom."
 metrics:
   liveliness: 2
   drinkability: 2

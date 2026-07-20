@@ -16,7 +16,7 @@ export const getMoodColor = (tag) => {
         // --- Structural & Sensory Conditions (Tension and Materiality) ---
         Oxidation: "bg-[#7D6B4E] text-[#F3ECD4]", // Patina/Historical Gold - Intentional age and decay.
         Reduction: "bg-[#33353A] text-[#E7E7E7]", // Sulfur/Sealed Grey - Restraint and tension.
-        Saline: "bg-[#4A5B63] text-[#E6F0F4]", // Sea Spray / Blue-Grey - Maritime/volcanic influence.
+        Salt: "bg-[#4A5B63] text-[#E6F0F4]", // Sea Spray / Blue-Grey - Maritime/volcanic influence.
 
         // --- The Terroir/Structure (Specifics) ---
         Amphora: "bg-[#594239] text-[#E8DCCA]", // Terracotta

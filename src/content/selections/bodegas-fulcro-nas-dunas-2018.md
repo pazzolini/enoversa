@@ -7,8 +7,8 @@ vintage: "2018"
 type: "White"
 grapes: "Albariño"
 price: "85 €"
-tags: ["Sand", "Saline", "Barrel Aged"]
-vibe: "Solar. Elegant. White Chocolate."
+tags: ["Sand", "Salt", "Barrel Aged"]
+vibe: "Solar. Restraint. White Chocolate."
 metrics:
   liveliness: 2
   drinkability: 2

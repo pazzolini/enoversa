@@ -8,7 +8,7 @@ type: "Red"
 grapes: "Garnacha Negra"
 price: "23 €"
 tags: ["Carbonic", "Natural"]
-vibe: "Pomegranate. Mineral. Juicy."
+vibe: "Pomegranate. Mineral. Juice."
 metrics:
   liveliness: 2
   drinkability: 2

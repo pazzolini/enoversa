@@ -8,7 +8,7 @@ type: "White"
 grapes: "Godello"
 price: "38,00 €"
 tags: ["Low Intervention", "Limestone"]
-vibe: "Quince. Broad. Composed."
+vibe: "Quince. Weight. Intensity."
 metrics:
   liveliness: 1
   drinkability: 2

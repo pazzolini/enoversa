@@ -8,7 +8,7 @@ type: "White"
 grapes: "Verdejo"
 price: "28,00 €"
 tags: ["Skin Contact", "Amphora", "Natural"]
-vibe: "Pear. Juicy. Grippy."
+vibe: "Pear. Juice. Grip."
 metrics:
   liveliness: 2
   drinkability: 2
