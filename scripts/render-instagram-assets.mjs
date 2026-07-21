@@ -319,65 +319,46 @@ const works = [
   {
     path: "social/instagram/selections/french-disko-2023/01-card.png",
     html: `
-      <main class="artboard selection-card">
-        <div class="frame"></div>
+      <main class="artboard website-selection-card">
         <header>
-          <span class="kicker">Selection / 001</span>
-          <span class="kicker">21.07.2026</span>
+          <div>
+            <span class="kicker">Domaine Matassa</span>
+            <h1>French Disko</h1>
+          </div>
+          <span class="mono tasted-date">Tasted 21 Jul 2026</span>
         </header>
-        <section class="selection-title">
-          <p class="mono">Domaine Matassa</p>
-          <h1>French<br>Disko</h1>
+        <section class="website-vibe-card">
+          <div class="vibe-tags"><span>Carbonic</span><span>Natural</span></div>
+          <p>Redcurrant.<br>Sanguine.<br>Spices.</p>
         </section>
-        <section class="selection-vibe">
-          <span>Redcurrant.</span>
-          <span>Spice.</span>
-          <span>Weightless.</span>
-        </section>
-        <footer>
-          <span class="mono">Cinsault · Roussillon · 2023</span>
-          <span class="mono">Red / 10% ABV</span>
+        <footer class="website-data-strip">
+          <div><span>Vintage</span><strong>2023</strong></div>
+          <div><span>Type</span><strong>Red</strong></div>
+          <div><span>Origin</span><strong>France / Roussillon</strong></div>
+          <div><span>Grapes</span><strong>Cinsault</strong></div>
         </footer>
       </main>
     `,
     css: `
-      .selection-card { background: var(--carbonic); color: var(--carbonic-ink); }
-      .selection-card::after { opacity: .11; }
-      .selection-card header { position: absolute; top: 86px; left: 86px; right: 86px; display: flex; justify-content: space-between; }
-      .selection-title { position: absolute; top: 254px; left: 86px; right: 86px; }
-      .selection-title p { margin: 0 0 24px 7px; font-size: 18px; opacity: .72; }
-      .selection-title h1 { margin: 0; font-size: 150px; font-weight: 680; line-height: .82; letter-spacing: -.075em; }
-      .selection-vibe { position: absolute; top: 760px; left: 86px; right: 86px; padding: 42px 0 46px; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; display: flex; flex-direction: column; gap: 8px; font-size: 61px; font-weight: 450; line-height: 1.05; letter-spacing: -.045em; }
-      .selection-card footer { position: absolute; left: 86px; right: 86px; bottom: 86px; display: flex; justify-content: space-between; font-size: 16px; opacity: .72; }
+      .website-selection-card { background: var(--black); color: var(--paper); }
+      .website-selection-card::after { opacity: .08; }
+      .website-selection-card header { position: absolute; top: 82px; left: 70px; right: 70px; display: flex; justify-content: space-between; align-items: end; }
+      .website-selection-card header .kicker { color: var(--terracotta); }
+      .website-selection-card h1 { margin: 15px 0 0; font-size: 76px; font-weight: 280; line-height: .96; letter-spacing: -.06em; }
+      .tasted-date { padding-bottom: 7px; color: var(--muted); font-size: 14px; }
+      .website-vibe-card { position: absolute; top: 278px; left: 70px; right: 70px; height: 870px; overflow: hidden; border-radius: 2px; background: var(--carbonic); color: var(--carbonic-ink); display: flex; align-items: center; justify-content: center; text-align: center; }
+      .website-vibe-card p { margin: 0; padding: 80px; font-size: 76px; font-weight: 540; line-height: 1.12; letter-spacing: -.055em; text-transform: uppercase; }
+      .vibe-tags { position: absolute; left: 28px; bottom: 28px; display: flex; gap: 11px; }
+      .vibe-tags span { padding: 7px 12px 6px; border: 1px solid currentColor; border-radius: 999px; opacity: .64; font: 500 13px/1 "JetBrains Mono"; text-transform: uppercase; letter-spacing: .1em; }
+      .website-data-strip { position: absolute; left: 70px; right: 70px; bottom: 72px; padding-top: 26px; border-top: 1px solid var(--line); display: grid; grid-template-columns: .7fr .7fr 1.6fr 1fr; gap: 22px; }
+      .website-data-strip div { min-width: 0; }
+      .website-data-strip span, .website-data-strip strong { display: block; font: 500 12px/1.35 "JetBrains Mono"; text-transform: uppercase; letter-spacing: .1em; }
+      .website-data-strip span { margin-bottom: 9px; color: #777; }
+      .website-data-strip strong { color: var(--paper); font-weight: 450; }
     `,
   },
   {
-    path: "social/instagram/selections/french-disko-2023/02-tasting-note.png",
-    html: `
-      <main class="artboard tasting-note">
-        <div class="frame"></div>
-        <header class="kicker">Tasting note / French Disko 2023</header>
-        <section>
-          <p>It started closed, with a brief note of leather. Then it began to move. Redcurrant and spice appeared, followed by a sanguine character and the natural acidity of red fruit.</p>
-          <p>It was agile, intensely mouth-watering, and never heavy. A daytime wine, full of life and very easy to drink.</p>
-          <p>French Disko is a fitting name. This is a wine that dances. A real pleasure.</p>
-        </section>
-        <footer class="mono">Domaine Matassa · Roussillon</footer>
-      </main>
-    `,
-    css: `
-      .tasting-note { background: var(--black); color: var(--paper); }
-      .tasting-note::before { content: ""; position: absolute; top: 0; right: 0; width: 168px; height: 100%; background: var(--carbonic); }
-      .tasting-note::after { opacity: .09; }
-      .tasting-note header { position: absolute; top: 88px; left: 86px; color: var(--terracotta); }
-      .tasting-note section { position: absolute; top: 252px; left: 86px; width: 760px; }
-      .tasting-note p { margin: 0 0 42px; font-size: 43px; font-weight: 300; line-height: 1.18; letter-spacing: -.04em; }
-      .tasting-note p:last-child { margin-bottom: 0; color: #c9c5be; }
-      .tasting-note footer { position: absolute; left: 86px; bottom: 88px; color: var(--muted); font-size: 15px; }
-    `,
-  },
-  {
-    path: "social/instagram/selections/french-disko-2023/03-bottle-and-glasses.png",
+    path: "social/instagram/selections/french-disko-2023/02-bottle-and-glasses.png",
     html: `
       <main class="artboard selection-photo">
         <img src="${jpegDataUrl(frenchDiskoBottle)}" alt="" />
@@ -389,7 +370,7 @@ const works = [
     `,
   },
   {
-    path: "social/instagram/selections/french-disko-2023/04-wine-and-food.png",
+    path: "social/instagram/selections/french-disko-2023/03-wine-and-food.png",
     html: `
       <main class="artboard selection-photo">
         <img src="${jpegDataUrl(frenchDiskoTable)}" alt="" />
@@ -401,46 +382,58 @@ const works = [
     `,
   },
   {
-    path: "social/instagram/selections/french-disko-2023/05-score.png",
+    path: "social/instagram/selections/french-disko-2023/04-score.png",
     html: `
-      <main class="artboard selection-index">
-        <div class="frame"></div>
+      <main class="artboard website-selection-index">
         <header>
-          <span class="kicker">The Tasting Index</span>
-          <span class="kicker">French Disko / 2023</span>
+          <div>
+            <span class="kicker">Domaine Matassa</span>
+            <h1>French Disko</h1>
+          </div>
+          <span class="mono index-vintage">2023</span>
         </header>
-        <section class="index-total">
-          <strong>8</strong><span>/10</span>
+        <section class="website-index-panel">
+          <div class="panel-heading"><span class="kicker">The Tasting Index</span><span class="mono">How we taste →</span></div>
+          <div class="website-metrics">
+            <div class="website-metric"><span>Energy</span><div><i></i><i></i></div></div>
+            <div class="website-metric"><span>Drinkability</span><div><i></i><i></i></div></div>
+            <div class="website-metric"><span>Balance</span><div><i></i><i></i></div></div>
+            <div class="website-metric"><span>Complexity</span><div><i></i><i class="off"></i></div></div>
+            <div class="website-metric"><span>Emotion</span><div><i></i><i class="off"></i></div></div>
+          </div>
+          <div class="website-total"><span class="mono">Total</span><strong>8<small>/10</small></strong></div>
+          <div class="website-service">
+            <span class="mono">Glass <b>Spiegelau Definition Bordeaux</b></span>
+            <span class="mono">Decant <b>15 minutes</b></span>
+            <span class="mono">Temperature <b>13 °C</b></span>
+          </div>
         </section>
-        <section class="index-metrics">
-          <div class="metric"><span>Energy</span><div><i></i><i></i></div><b>2</b></div>
-          <div class="metric"><span>Drinkability</span><div><i></i><i></i></div><b>2</b></div>
-          <div class="metric"><span>Balance</span><div><i></i><i></i></div><b>2</b></div>
-          <div class="metric"><span>Complexity</span><div><i></i><i class="off"></i></div><b>1</b></div>
-          <div class="metric"><span>Emotion</span><div><i></i><i class="off"></i></div><b>1</b></div>
-        </section>
-        <footer>
-          <span class="mono">Full note</span>
-          <span class="mono">enoversa.com</span>
-        </footer>
+        <footer class="mono">Full note · enoversa.com</footer>
       </main>
     `,
     css: `
-      .selection-index { background: var(--paper); color: var(--black); }
-      .selection-index::before { content: ""; position: absolute; left: 0; top: 0; width: 242px; height: 100%; background: var(--carbonic); }
-      .selection-index::after { opacity: .08; }
-      .selection-index header { position: absolute; top: 88px; left: 86px; right: 86px; display: flex; justify-content: space-between; }
-      .index-total { position: absolute; top: 230px; left: 86px; width: 140px; color: var(--carbonic-ink); }
-      .index-total strong { font-size: 245px; font-weight: 680; line-height: .82; letter-spacing: -.09em; }
-      .index-total span { position: absolute; top: 220px; left: 47px; font: 500 20px/1 "JetBrains Mono"; }
-      .index-metrics { position: absolute; top: 540px; left: 316px; right: 86px; border-top: 1px solid rgba(5,5,5,.45); }
-      .metric { height: 124px; border-bottom: 1px solid rgba(5,5,5,.32); display: grid; grid-template-columns: 1fr auto 38px; align-items: center; gap: 28px; }
-      .metric > span { font-size: 29px; font-weight: 400; letter-spacing: -.025em; }
-      .metric > div { display: flex; gap: 9px; }
-      .metric i { display: block; width: 76px; height: 18px; background: var(--carbonic); }
-      .metric i.off { background: #cbc5bd; }
-      .metric b { font: 500 19px/1 "JetBrains Mono"; text-align: right; }
-      .selection-index footer { position: absolute; left: 316px; right: 86px; bottom: 88px; display: flex; justify-content: space-between; font-size: 15px; }
+      .website-selection-index { background: var(--black); color: var(--paper); }
+      .website-selection-index::after { opacity: .08; }
+      .website-selection-index > header { position: absolute; top: 82px; left: 70px; right: 70px; display: flex; justify-content: space-between; align-items: end; }
+      .website-selection-index > header .kicker { color: var(--terracotta); }
+      .website-selection-index h1 { margin: 15px 0 0; font-size: 76px; font-weight: 280; line-height: .96; letter-spacing: -.06em; }
+      .index-vintage { padding-bottom: 7px; color: var(--muted); font-size: 14px; }
+      .website-index-panel { position: absolute; top: 280px; left: 70px; right: 70px; padding: 42px 48px 40px; border: 1px solid var(--line); border-radius: 2px; background: rgba(18,18,18,.72); }
+      .panel-heading { padding-bottom: 28px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; color: var(--muted); }
+      .panel-heading .mono { color: var(--terracotta); font-size: 12px; }
+      .website-metrics { padding: 17px 0; }
+      .website-metric { min-height: 112px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(34,34,34,.75); }
+      .website-metric > span { font-size: 25px; font-weight: 300; }
+      .website-metric > div { display: flex; gap: 11px; }
+      .website-metric i { display: block; width: 92px; height: 16px; background: var(--paper); }
+      .website-metric i.off { background: #303030; }
+      .website-total { padding: 34px 0 28px; display: flex; justify-content: space-between; align-items: end; border-bottom: 1px solid var(--line); }
+      .website-total > span { padding-bottom: 6px; color: var(--muted); font-size: 13px; }
+      .website-total strong { font-size: 77px; font-weight: 280; line-height: .8; letter-spacing: -.06em; }
+      .website-total small { margin-left: 7px; color: #777; font: 500 17px/1 "JetBrains Mono"; letter-spacing: 0; }
+      .website-service { padding-top: 28px; display: grid; grid-template-columns: 1.5fr .8fr .6fr; gap: 20px; color: #777; font-size: 10px; line-height: 1.55; }
+      .website-service b { display: block; margin-top: 5px; color: var(--paper); font-weight: 450; }
+      .website-selection-index footer { position: absolute; left: 70px; bottom: 72px; color: var(--muted); font-size: 14px; }
     `,
   },
 ];
