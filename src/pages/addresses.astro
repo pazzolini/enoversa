@@ -74,7 +74,7 @@ const mapPlaces = mappedPlaces.map((place) => ({
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 border-y border-line">
-                <div class="map-panel relative z-0 overflow-hidden lg:col-span-8 lg:border-r border-line py-5 lg:py-0">
+                <div class="map-panel relative z-0 min-w-0 overflow-hidden lg:col-span-8 lg:border-r border-line py-5 lg:py-0">
                     <div class="map-shell relative overflow-hidden bg-surface">
                         <div
                             id="addresses-map"
@@ -86,6 +86,21 @@ const mapPlaces = mappedPlaces.map((place) => ({
                             <p class="map-loading absolute inset-0 grid place-items-center font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
                                 Loading interactive map…
                             </p>
+                            <div
+                                class="map-error absolute inset-0 z-10 hidden place-items-center bg-surface px-8 text-center"
+                                role="status"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >
+                                <div>
+                                    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-muted">
+                                        Interactive map unavailable
+                                    </p>
+                                    <p class="mt-3 text-sm font-light text-text-dim">
+                                        The address list and external map links remain available.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="map-instruction absolute left-5 top-5 pointer-events-none">
@@ -95,9 +110,9 @@ const mapPlaces = mappedPlaces.map((place) => ({
                         </div>
 
                         <p class="map-credit absolute bottom-2 right-3 z-10 font-mono text-[7px] uppercase tracking-wider text-text-dim/70">
-                            © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
-                            · <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>
-                            · <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>
+                            © <a data-touch-target href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+                            · <a data-touch-target href="https://www.openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>
+                            · <a data-touch-target href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>
                         </p>
                     </div>
                 </div>
@@ -139,14 +154,16 @@ const mapPlaces = mappedPlaces.map((place) => ({
                                         data-place-target={`place-${place.id}`}
                                         data-place-longitude={place.data.coordinates.longitude}
                                         data-place-latitude={place.data.coordinates.latitude}
-                                        class="font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
+                                        data-touch-target
+                                        class="inline-flex min-h-11 items-center font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
                                     >
                                         Show on map ↑
                                     </button>
                                     {place.data.relatedUrl && (
                                         <a
                                             href={place.data.relatedUrl}
-                                            class="font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
+                                            data-touch-target
+                                            class="inline-flex min-h-11 items-center font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
                                         >
                                             Related story →
                                         </a>
@@ -156,7 +173,8 @@ const mapPlaces = mappedPlaces.map((place) => ({
                                             href={place.data.website}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            class="font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
+                                            data-touch-target
+                                            class="inline-flex min-h-11 items-center font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
                                         >
                                             Website ↗
                                         </a>
@@ -165,7 +183,8 @@ const mapPlaces = mappedPlaces.map((place) => ({
                                         href={place.data.mapsUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        class="font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
+                                        data-touch-target
+                                        class="inline-flex min-h-11 items-center font-mono text-[10px] uppercase tracking-widest text-text-dim hover:text-accent transition-colors"
                                     >
                                         Google Maps ↗
                                     </a>
@@ -173,7 +192,7 @@ const mapPlaces = mappedPlaces.map((place) => ({
                         </article>
                     ))}
 
-                    <p id="place-count" class="p-6 md:p-8 font-mono text-[10px] uppercase tracking-widest text-text-dim">
+                    <p id="place-count" aria-live="polite" aria-atomic="true" class="p-6 md:p-8 font-mono text-[10px] uppercase tracking-widest text-text-dim">
                         {mappedPlaces.length} addresses shown
                     </p>
                 </div>
@@ -190,8 +209,9 @@ const mapPlaces = mappedPlaces.map((place) => ({
 
 <style>
     .map-shell {
-        aspect-ratio: 1200 / 760;
-        min-height: 32rem;
+        width: 100%;
+        min-width: 0;
+        height: clamp(32rem, 52.78vw, 47.5rem);
     }
 
     #addresses-map {
@@ -247,6 +267,12 @@ const mapPlaces = mappedPlaces.map((place) => ({
         color: var(--color-text-muted);
     }
 
+    .map-credit a {
+        display: inline-flex;
+        min-height: 1.5625rem;
+        align-items: center;
+    }
+
     :global(.map-marker) {
         width: 2.75rem;
         height: 2.75rem;
@@ -285,7 +311,7 @@ const mapPlaces = mappedPlaces.map((place) => ({
     @media (max-width: 1023px) {
         .map-shell {
             aspect-ratio: 4 / 5;
-            min-height: 0;
+            height: auto;
         }
     }
 
@@ -303,6 +329,7 @@ const mapPlaces = mappedPlaces.map((place) => ({
     const placeCards = document.querySelectorAll<HTMLElement>("[data-place-card]");
     const placeCount = document.getElementById("place-count");
     const mapElement = document.getElementById("addresses-map");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     type MapPlace = {
         id: string;
@@ -315,6 +342,18 @@ const mapPlaces = mappedPlaces.map((place) => ({
     };
 
     let map: MapLibreMap | undefined;
+    let loadTimeout: number | undefined;
+
+    const scrollBehavior = () => reducedMotion.matches ? "auto" : "smooth";
+
+    const showMapError = () => {
+        if (!mapElement || mapElement.dataset.ready === "true") return;
+
+        if (loadTimeout) window.clearTimeout(loadTimeout);
+        mapElement.dataset.error = "true";
+        mapElement.querySelector(".map-loading")?.remove();
+        mapElement.querySelector<HTMLElement>(".map-error")?.classList.replace("hidden", "grid");
+    };
 
     const selectPlace = (targetId: string) => {
         const placeMarkers = document.querySelectorAll<HTMLButtonElement>("[data-place-marker]");
@@ -329,13 +368,17 @@ const mapPlaces = mappedPlaces.map((place) => ({
         if (marker) marker.dataset.active = "true";
 
         if (window.matchMedia("(max-width: 1023px)").matches) {
-            card.scrollIntoView({ behavior: "smooth", block: "center" });
+            card.scrollIntoView({ behavior: scrollBehavior(), block: "center" });
         }
     };
 
     const focusMap = (targetId: string, longitude: number, latitude: number) => {
         selectPlace(targetId);
-        map?.flyTo({ center: [longitude, latitude], zoom: 10, duration: 1100 });
+        map?.flyTo({
+            center: [longitude, latitude],
+            zoom: 10,
+            duration: reducedMotion.matches ? 0 : 1100,
+        });
     };
 
     document.addEventListener("click", (event) => {
@@ -348,7 +391,10 @@ const mapPlaces = mappedPlaces.map((place) => ({
         if (!targetId || !Number.isFinite(longitude) || !Number.isFinite(latitude)) return;
 
         focusMap(targetId, longitude, latitude);
-        document.getElementById("addresses-map")?.scrollIntoView({ behavior: "smooth", block: "center" });
+        document.getElementById("addresses-map")?.scrollIntoView({
+            behavior: scrollBehavior(),
+            block: "center",
+        });
     });
 
     filterButtons.forEach((button) => {
@@ -382,66 +428,81 @@ const mapPlaces = mappedPlaces.map((place) => ({
     const initialiseMap = async () => {
         if (!mapElement || map) return;
 
-        const places = JSON.parse(mapElement.dataset.places ?? "[]") as MapPlace[];
-        const { default: maplibregl } = await import("maplibre-gl");
+        if (!navigator.onLine) {
+            showMapError();
+            return;
+        }
 
-        map = new maplibregl.Map({
-            container: mapElement,
-            style: "https://tiles.openfreemap.org/styles/dark",
-            center: [-7.5, 39.5],
-            zoom: 3.7,
-            minZoom: 2.5,
-            maxZoom: 17,
-            cooperativeGestures: true,
-            attributionControl: false,
-        });
+        try {
+            const places = JSON.parse(mapElement.dataset.places ?? "[]") as MapPlace[];
+            const { default: maplibregl } = await import("maplibre-gl");
 
-        map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-
-        places.forEach((place) => {
-            const marker = document.createElement("button");
-            marker.type = "button";
-            marker.className = "map-marker";
-            marker.textContent = place.number;
-            marker.dataset.placeMarker = "";
-            marker.dataset.placeCategories = place.categories.join("|");
-            marker.dataset.placeTarget = place.id;
-            marker.setAttribute("aria-label", `${place.number}: ${place.title}, ${place.city}`);
-
-            marker.addEventListener("click", () => {
-                focusMap(place.id, place.longitude, place.latitude);
+            map = new maplibregl.Map({
+                container: mapElement,
+                style: "https://tiles.openfreemap.org/styles/dark",
+                center: [-7.5, 39.5],
+                zoom: 3.7,
+                minZoom: 2.5,
+                maxZoom: 17,
+                cooperativeGestures: true,
+                attributionControl: false,
             });
 
-            const nearbyPlaces = places.filter((candidate) => (
-                Math.abs(candidate.latitude - place.latitude) < 0.5
-                && Math.abs(candidate.longitude - place.longitude) < 0.5
-            ));
-            const nearbyIndex = nearbyPlaces.findIndex((candidate) => candidate.id === place.id);
-            const horizontalOffset = (nearbyIndex - (nearbyPlaces.length - 1) / 2) * 54;
+            map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 
-            new maplibregl.Marker({ element: marker, offset: [horizontalOffset, 0] })
-                .setLngLat([place.longitude, place.latitude])
-                .addTo(map!);
-        });
+            places.forEach((place) => {
+                const marker = document.createElement("button");
+                marker.type = "button";
+                marker.className = "map-marker";
+                marker.textContent = place.number;
+                marker.dataset.placeMarker = "";
+                marker.dataset.placeCategories = place.categories.join("|");
+                marker.dataset.placeTarget = place.id;
+                marker.setAttribute("aria-label", `${place.number}: ${place.title}, ${place.city}`);
 
-        map.on("load", () => {
-            if (places.length > 1) {
-                const bounds = places.reduce(
-                    (area, place) => area.extend([place.longitude, place.latitude]),
-                    new maplibregl.LngLatBounds(),
-                );
-                map?.fitBounds(bounds, { padding: 70, maxZoom: 5, duration: 0 });
-            }
+                marker.addEventListener("click", () => {
+                    focusMap(place.id, place.longitude, place.latitude);
+                });
 
-            mapElement.dataset.ready = "true";
-            mapElement.querySelector(".map-loading")?.remove();
+                const nearbyPlaces = places.filter((candidate) => (
+                    Math.abs(candidate.latitude - place.latitude) < 0.5
+                    && Math.abs(candidate.longitude - place.longitude) < 0.5
+                ));
+                const nearbyIndex = nearbyPlaces.findIndex((candidate) => candidate.id === place.id);
+                const horizontalOffset = (nearbyIndex - (nearbyPlaces.length - 1) / 2) * 54;
 
-            const initialTarget = window.location.hash.slice(1);
-            const initialPlace = places.find((place) => place.id === initialTarget);
-            if (initialPlace) {
-                focusMap(initialPlace.id, initialPlace.longitude, initialPlace.latitude);
-            }
-        });
+                new maplibregl.Marker({ element: marker, offset: [horizontalOffset, 0] })
+                    .setLngLat([place.longitude, place.latitude])
+                    .addTo(map!);
+            });
+
+            loadTimeout = window.setTimeout(showMapError, 10_000);
+            map.on("error", () => {
+                if (loadTimeout) window.clearTimeout(loadTimeout);
+                loadTimeout = window.setTimeout(showMapError, 1500);
+            });
+            map.on("load", () => {
+                if (loadTimeout) window.clearTimeout(loadTimeout);
+                if (places.length > 1) {
+                    const bounds = places.reduce(
+                        (area, place) => area.extend([place.longitude, place.latitude]),
+                        new maplibregl.LngLatBounds(),
+                    );
+                    map?.fitBounds(bounds, { padding: 70, maxZoom: 5, duration: 0 });
+                }
+
+                mapElement.dataset.ready = "true";
+                mapElement.querySelector(".map-loading")?.remove();
+
+                const initialTarget = window.location.hash.slice(1);
+                const initialPlace = places.find((place) => place.id === initialTarget);
+                if (initialPlace) {
+                    focusMap(initialPlace.id, initialPlace.longitude, initialPlace.latitude);
+                }
+            });
+        } catch {
+            showMapError();
+        }
     };
 
     if (mapElement) {

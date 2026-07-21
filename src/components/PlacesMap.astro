@@ -29,6 +29,21 @@ const mapPlaces = places.map((place, index) => ({
         <p class="home-map-loading absolute inset-0 grid place-items-center font-mono text-[10px] uppercase tracking-[0.2em] text-text-dim">
             Loading interactive map…
         </p>
+        <div
+            class="home-map-error absolute inset-0 z-10 hidden place-items-center bg-surface px-8 text-center"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+        >
+            <div>
+                <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-text-muted">
+                    Interactive map unavailable
+                </p>
+                <p class="mt-3 text-sm font-light text-text-dim">
+                    The complete address index remains available.
+                </p>
+            </div>
+        </div>
     </div>
 
     <p class="absolute top-5 left-5 z-10 pointer-events-none font-mono text-[9px] uppercase tracking-[0.18em] text-text-muted">
@@ -43,16 +58,17 @@ const mapPlaces = places.map((place, index) => ({
     </a>
 
     <p class="map-credit absolute bottom-2 right-3 z-10 font-mono text-[7px] uppercase tracking-wider text-text-dim/70">
-        © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
-        · <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>
-        · <a href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>
+        © <a data-touch-target href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+        · <a data-touch-target href="https://www.openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>
+        · <a data-touch-target href="https://openfreemap.org/" target="_blank" rel="noopener noreferrer">OpenFreeMap</a>
     </p>
 </div>
 
 <style>
     .home-map-shell {
-        aspect-ratio: 16 / 9;
-        min-height: 28rem;
+        width: 100%;
+        min-width: 0;
+        height: clamp(28rem, 42vw, 36rem);
     }
 
     #home-addresses-map {
@@ -100,6 +116,12 @@ const mapPlaces = places.map((place, index) => ({
         color: var(--color-text-muted);
     }
 
+    .map-credit a {
+        display: inline-flex;
+        min-height: 1.5625rem;
+        align-items: center;
+    }
+
     :global(.home-map-marker) {
         width: 2.75rem;
         height: 2.75rem;
@@ -125,7 +147,7 @@ const mapPlaces = places.map((place, index) => ({
     @media (max-width: 639px) {
         .home-map-shell {
             aspect-ratio: 4 / 5;
-            min-height: 0;
+            height: auto;
         }
     }
 </style>
@@ -145,64 +167,89 @@ const mapPlaces = places.map((place, index) => ({
 
     const mapElement = document.getElementById("home-addresses-map");
     let map: MapLibreMap | undefined;
+    let loadTimeout: number | undefined;
+
+    const showMapError = () => {
+        if (!mapElement || mapElement.dataset.ready === "true") return;
+
+        if (loadTimeout) window.clearTimeout(loadTimeout);
+        mapElement.dataset.error = "true";
+        mapElement.querySelector(".home-map-loading")?.remove();
+        mapElement.querySelector<HTMLElement>(".home-map-error")?.classList.replace("hidden", "grid");
+    };
 
     const initialiseMap = async () => {
         if (!mapElement || map) return;
 
-        const places = JSON.parse(mapElement.dataset.places ?? "[]") as HomeMapPlace[];
-        const { default: maplibregl } = await import("maplibre-gl");
+        if (!navigator.onLine) {
+            showMapError();
+            return;
+        }
 
-        map = new maplibregl.Map({
-            container: mapElement,
-            style: "https://tiles.openfreemap.org/styles/dark",
-            center: [-9.5, 35],
-            zoom: 3.5,
-            minZoom: 2.5,
-            maxZoom: 17,
-            cooperativeGestures: true,
-            attributionControl: false,
-        });
+        try {
+            const places = JSON.parse(mapElement.dataset.places ?? "[]") as HomeMapPlace[];
+            const { default: maplibregl } = await import("maplibre-gl");
 
-        map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+            map = new maplibregl.Map({
+                container: mapElement,
+                style: "https://tiles.openfreemap.org/styles/dark",
+                center: [-9.5, 35],
+                zoom: 3.5,
+                minZoom: 2.5,
+                maxZoom: 17,
+                cooperativeGestures: true,
+                attributionControl: false,
+            });
 
-        places.forEach((place) => {
-            const markerContainer = document.createElement("div");
-            markerContainer.setAttribute("role", "presentation");
-            const marker = document.createElement("a");
-            marker.className = "home-map-marker";
-            marker.href = `/addresses#${place.id}`;
-            marker.textContent = place.number;
-            marker.dataset.homePlaceMarker = "";
-            marker.title = `${place.title} — ${place.categories.join(" / ")}`;
-            marker.setAttribute("aria-label", `${place.number}: ${place.title}, ${place.city}. Open address.`);
-            markerContainer.append(marker);
+            map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
 
-            const nearbyPlaces = places.filter((candidate) => (
-                Math.abs(candidate.latitude - place.latitude) < 0.5
-                && Math.abs(candidate.longitude - place.longitude) < 0.5
-            ));
-            const nearbyIndex = nearbyPlaces.findIndex((candidate) => candidate.id === place.id);
-            const horizontalOffset = (nearbyIndex - (nearbyPlaces.length - 1) / 2) * 54;
+            places.forEach((place) => {
+                const markerContainer = document.createElement("div");
+                markerContainer.setAttribute("role", "presentation");
+                const marker = document.createElement("a");
+                marker.className = "home-map-marker";
+                marker.href = `/addresses#${place.id}`;
+                marker.textContent = place.number;
+                marker.dataset.homePlaceMarker = "";
+                marker.title = `${place.title} — ${place.categories.join(" / ")}`;
+                marker.setAttribute("aria-label", `${place.number}: ${place.title}, ${place.city}. Open address.`);
+                markerContainer.append(marker);
 
-            new maplibregl.Marker({ element: markerContainer, offset: [horizontalOffset, 0] })
-                .setLngLat([place.longitude, place.latitude])
-                .addTo(map!);
+                const nearbyPlaces = places.filter((candidate) => (
+                    Math.abs(candidate.latitude - place.latitude) < 0.5
+                    && Math.abs(candidate.longitude - place.longitude) < 0.5
+                ));
+                const nearbyIndex = nearbyPlaces.findIndex((candidate) => candidate.id === place.id);
+                const horizontalOffset = (nearbyIndex - (nearbyPlaces.length - 1) / 2) * 54;
 
-            markerContainer.removeAttribute("tabindex");
-        });
+                new maplibregl.Marker({ element: markerContainer, offset: [horizontalOffset, 0] })
+                    .setLngLat([place.longitude, place.latitude])
+                    .addTo(map!);
 
-        map.on("load", () => {
-            if (places.length > 1) {
-                const bounds = places.reduce(
-                    (area, place) => area.extend([place.longitude, place.latitude]),
-                    new maplibregl.LngLatBounds(),
-                );
-                map?.fitBounds(bounds, { padding: 70, maxZoom: 6, duration: 0 });
-            }
+                markerContainer.removeAttribute("tabindex");
+            });
 
-            mapElement.dataset.ready = "true";
-            mapElement.querySelector(".home-map-loading")?.remove();
-        });
+            loadTimeout = window.setTimeout(showMapError, 10_000);
+            map.on("error", () => {
+                if (loadTimeout) window.clearTimeout(loadTimeout);
+                loadTimeout = window.setTimeout(showMapError, 1500);
+            });
+            map.on("load", () => {
+                if (loadTimeout) window.clearTimeout(loadTimeout);
+                if (places.length > 1) {
+                    const bounds = places.reduce(
+                        (area, place) => area.extend([place.longitude, place.latitude]),
+                        new maplibregl.LngLatBounds(),
+                    );
+                    map?.fitBounds(bounds, { padding: 70, maxZoom: 6, duration: 0 });
+                }
+
+                mapElement.dataset.ready = "true";
+                mapElement.querySelector(".home-map-loading")?.remove();
+            });
+        } catch {
+            showMapError();
+        }
     };
 
     if (mapElement) {

@@ -54,6 +54,12 @@ social/instagram/          Exported Instagram assets; not deployed
 tests/e2e/                 Playwright tests
 .github/workflows/         Quality and Hostinger deployment workflow
 docs/PROJECT_GUIDE.md      This guide
+docs/AI_ASSISTED_WEB_DESIGN_GUIDE.md
+                            Design process, anti-slop criteria and evaluation framework
+docs/AI_ASSISTED_WEB_DESIGN_AUDIT.md
+                            Current conformance audit and remediation priorities
+docs/HUMAN_USABILITY_TEST_PROTOCOL.md
+                            Repeatable human comprehension and task-test record
 AGENTS.md                   Mandatory repository instructions for agents
 ```
 
@@ -245,6 +251,10 @@ When editing existing prose, preserve the editor's meaning and idiosyncratic phr
 
 ## 8. Visual system
 
+`docs/AI_ASSISTED_WEB_DESIGN_GUIDE.md` is the companion specification for design and implementation work. Use it to make design intent explicit, test accessibility and responsive behaviour, and evaluate finished work. The Enoversa-specific editorial, visual and technical decisions in this project guide remain authoritative where the documents overlap.
+
+The current design thesis is: **Enoversa behaves like a restrained field journal in which each editorial section uses its own form of evidence—scores, documentary photography, bibliography or geography—inside one precise typographic system.** The primary user job is to discover and read independent wine writing; the content, rather than effects, remains the centre of the experience.
+
 Core colours are defined in `src/styles/global.css`:
 
 - background: `#050505`
@@ -315,15 +325,21 @@ Do not weaken the CSP broadly to make a third-party integration work.
 The current Playwright suite covers:
 
 - navigation to Selections;
+- skip-link and Index operation by keyboard;
 - selection filters and URL state;
 - portrait image loading and overflow;
 - address-map filters and mobile layout;
-- the homepage interactive map;
+- homepage reflow at tablet and 200%-zoom-equivalent widths;
+- minimum standalone navigation targets;
+- reduced-motion CSS behaviour;
+- interactive-map success and explicit failure states;
 - RSS and sitemap generation.
 
 Lighthouse checks `/`, `/selections`, `/addresses` and the Marzagana portrait. Minimum scores are 80 for performance and 90 for accessibility, best practices and SEO.
 
 Add or update tests when changing navigation, filters, map behaviour, content routes, responsive layouts, feeds or deployment-critical output.
+
+For a material navigation, information-architecture or release-candidate review, run and record `docs/HUMAN_USABILITY_TEST_PROTOCOL.md`. Human results must come from real participants; never infer or fabricate them from automated tests.
 
 ## 13. Deployment
 

@@ -31,31 +31,36 @@
             class="absolute right-0 top-full mt-6 w-56 bg-surface border border-line p-6 menu-hidden shadow-2xl"
         >
             <div
-                class="flex flex-col gap-4 font-mono text-[10px] tracking-widest uppercase text-text-muted"
+                class="flex flex-col gap-2 font-mono text-[10px] tracking-widest uppercase text-text-muted"
             >
                 <a
                     href="/#new-beginning"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >00 A New Beginning</a
                 >
                 <a
                     href="/selections"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >01 Selections</a
                 >
                 <a
                     href="/portraits"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >02 Portraits</a
                 >
                 <a
                     href="/essays"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >03 Essays</a
                 >
                 <a
                     href="/addresses"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >04 Addresses</a
                 >
                 <div class="h-px bg-line my-2"></div>
@@ -64,17 +69,20 @@
                     href="https://legacy.enoversa.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block text-text-dim"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent text-text-dim"
                     >05 Legacy Archive ↗</a
                 >
                 <a
                     href="/about"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block mt-2"
+                    data-touch-target
+                    class="mt-2 inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >About Us</a
                 >
                 <a
                     href="/methodology"
-                    class="hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent block"
+                    data-touch-target
+                    class="inline-flex min-h-7 items-center hover:text-white hover:pl-2 transition-all border-l border-transparent hover:border-accent"
                     >How We Taste</a
                 >
             </div>
@@ -86,8 +94,7 @@
     #menu-dropdown {
         transition:
             opacity 0.3s ease,
-            transform 0.3s ease,
-            visibility 0.3s;
+            transform 0.3s ease;
     }
     .menu-hidden {
         opacity: 0;
@@ -125,11 +132,12 @@
             }
         };
 
+        const links = menuDropdown.querySelectorAll("a");
         menuBtn.addEventListener("click", () => {
-            setMenuOpen(menuDropdown.classList.contains("menu-hidden"));
+            const isOpening = menuDropdown.classList.contains("menu-hidden");
+            setMenuOpen(isOpening);
         });
 
-        const links = menuDropdown.querySelectorAll("a");
         links.forEach((link) => {
             link.addEventListener("click", () => {
                 setMenuOpen(false);

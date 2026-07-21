@@ -3,7 +3,8 @@ import { expect, test } from '@playwright/test';
 test('the main navigation reaches the selections index', async ({ page }) => {
   await page.goto('/');
 
-  const menuButton = page.getByRole('button', { name: 'Open navigation menu' });
+  await expect(page.getByRole('button', { name: 'Open navigation menu' })).toBeVisible();
+  const menuButton = page.locator('#menu-btn');
   await menuButton.click();
   await page.getByRole('link', { name: '01 Selections' }).click();
 
@@ -74,6 +75,115 @@ test('the homepage addresses section is an interactive map', async ({ page }) =>
     'href',
     '/addresses#place-marzagana-elementales',
   );
+});
+
+test('the homepage reflows at tablet widths and a 200%-zoom equivalent viewport', async ({ page }) => {
+  for (const width of [640, 768, 1024]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await expect(page.getByRole('heading', { level: 1, name: 'Narratives of Soil & Craft.' })).toBeVisible();
+
+    const hasHorizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    );
+    expect(hasHorizontalOverflow, `horizontal overflow at ${width}px`).toBe(false);
+  }
+});
+
+test('keyboard users can skip content and operate the navigation menu', async ({ page }) => {
+  await page.goto('/');
+
+  await page.keyboard.press('Tab');
+  const skipLink = page.getByRole('link', { name: 'Skip to content' });
+  await expect(skipLink).toBeFocused();
+  await expect(skipLink).toBeVisible();
+  await page.keyboard.press('Enter');
+  await expect(page).toHaveURL(/#main-content$/);
+
+  await expect(page.getByRole('button', { name: 'Open navigation menu' })).toBeVisible();
+  const menuButton = page.locator('#menu-btn');
+  await menuButton.focus();
+  await page.keyboard.press('Enter');
+  await expect(menuButton).toHaveAttribute('aria-expanded', 'true');
+
+  const firstMenuLink = page.getByRole('link', { name: '00 A New Beginning' });
+  await expect(firstMenuLink).toBeVisible();
+  await page.keyboard.press('Tab');
+  await expect(firstMenuLink).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(menuButton).toHaveAttribute('aria-expanded', 'false');
+  await expect(menuButton).toBeFocused();
+});
+
+test('standalone navigation targets meet the 24px minimum', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Open navigation menu' }).click();
+
+  const undersizedHomeTargets = await page.locator('[data-touch-target]:visible').evaluateAll((targets) =>
+    targets
+      .map((target) => {
+        const bounds = target.getBoundingClientRect();
+        return {
+          label: target.getAttribute('aria-label') ?? target.textContent?.trim() ?? '',
+          width: bounds.width,
+          height: bounds.height,
+        };
+      })
+      .filter(({ width, height }) => width < 24 || height < 24),
+  );
+  expect(undersizedHomeTargets).toEqual([]);
+
+  await page.goto('/addresses');
+  const undersizedAddressTargets = await page.locator('[data-touch-target]:visible').evaluateAll((targets) =>
+    targets
+      .map((target) => {
+        const bounds = target.getBoundingClientRect();
+        return {
+          label: target.textContent?.trim() ?? '',
+          width: bounds.width,
+          height: bounds.height,
+        };
+      })
+      .filter(({ width, height }) => width < 24 || height < 24),
+  );
+  expect(undersizedAddressTargets).toEqual([]);
+});
+
+test('reduced motion removes smooth scrolling and perceptible CSS motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+
+  const motionStyles = await page.evaluate(() => {
+    const pulse = document.querySelector('.animate-pulse');
+    if (!pulse) throw new Error('Expected homepage pulse indicator');
+
+    return {
+      scrollBehavior: getComputedStyle(document.documentElement).scrollBehavior,
+      animationDuration: Number.parseFloat(getComputedStyle(pulse).animationDuration),
+      transitionDuration: Number.parseFloat(getComputedStyle(pulse).transitionDuration),
+    };
+  });
+
+  expect(motionStyles.scrollBehavior).toBe('auto');
+  expect(motionStyles.animationDuration).toBeLessThanOrEqual(0.00001);
+  expect(motionStyles.transitionDuration).toBeLessThanOrEqual(0.00001);
+});
+
+test('the homepage map exposes a useful failure state', async ({ page }) => {
+  await page.route('https://tiles.openfreemap.org/**', (route) => route.abort('failed'));
+  await page.goto('/');
+
+  const map = page.getByRole('region', { name: /Interactive preview of Enoversa addresses/ });
+  await map.scrollIntoViewIfNeeded();
+  await expect(map).toHaveAttribute('data-error', 'true', { timeout: 5_000 });
+  await expect(map.getByRole('status')).toContainText('Interactive map unavailable');
+  await expect(page.getByRole('link', { name: 'Open all addresses →' })).toBeVisible();
+
+  await page.goto('/addresses');
+  const addressMap = page.getByRole('region', { name: /Interactive map of selected addresses/ });
+  await expect(addressMap).toHaveAttribute('data-error', 'true', { timeout: 5_000 });
+  await expect(addressMap.getByRole('status')).toContainText('The address list and external map links remain available.');
+  await expect(page.getByRole('heading', { level: 3, name: 'Cera — Bistro & Wine Bar' })).toBeVisible();
 });
 
 test('RSS and sitemap endpoints are generated', async ({ request }) => {
