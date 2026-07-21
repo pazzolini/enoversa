@@ -8,8 +8,11 @@ const jetbrains = await readFile(resolve(root, "node_modules/@fontsource-variabl
 const claudioPortrait = await readFile(resolve(root, "public/images/portraits/marzagana-elementales/claudio-miguel-2400.webp"));
 const wines2022 = await readFile(resolve(root, "public/images/portraits/marzagana-elementales/wines-2022-2400.webp"));
 const barrelsOutside = await readFile(resolve(root, "public/images/portraits/marzagana-elementales/barrels-outside-2400.webp"));
+const frenchDiskoBottle = await readFile(resolve(root, "social/instagram/french-disko/01-bottle-and-glasses-3x4.jpeg"));
+const frenchDiskoTable = await readFile(resolve(root, "social/instagram/french-disko/05-wine-and-food-3x4.jpeg"));
 
 const webpDataUrl = (image) => `data:image/webp;base64,${image.toString("base64")}`;
+const jpegDataUrl = (image) => `data:image/jpeg;base64,${image.toString("base64")}`;
 
 const fontCss = `
   @font-face {
@@ -35,6 +38,8 @@ const sharedCss = `
     --terracotta: #d66a57;
     --sand: #8f8776;
     --sand-ink: #262420;
+    --carbonic: #6e2c2c;
+    --carbonic-ink: #f2e6e6;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; width: 1080px; height: 1440px; overflow: hidden; }
@@ -309,6 +314,133 @@ const works = [
       .portrait-wines section { position: absolute; left: 70px; right: 70px; top: 824px; bottom: 70px; }
       .portrait-wines section > p { margin: 42px 0 0; max-width: 900px; font-size: 53px; font-weight: 300; line-height: 1.18; letter-spacing: -.045em; }
       .portrait-wines footer { position: absolute; left: 0; bottom: 0; font-size: 15px; color: #5c5a55; }
+    `,
+  },
+  {
+    path: "social/instagram/selections/french-disko-2023/01-card.png",
+    html: `
+      <main class="artboard selection-card">
+        <div class="frame"></div>
+        <header>
+          <span class="kicker">Selection / 001</span>
+          <span class="kicker">21.07.2026</span>
+        </header>
+        <section class="selection-title">
+          <p class="mono">Domaine Matassa</p>
+          <h1>French<br>Disko</h1>
+        </section>
+        <section class="selection-vibe">
+          <span>Redcurrant.</span>
+          <span>Spice.</span>
+          <span>Weightless.</span>
+        </section>
+        <footer>
+          <span class="mono">Cinsault · Roussillon · 2023</span>
+          <span class="mono">Red / 10% ABV</span>
+        </footer>
+      </main>
+    `,
+    css: `
+      .selection-card { background: var(--carbonic); color: var(--carbonic-ink); }
+      .selection-card::after { opacity: .11; }
+      .selection-card header { position: absolute; top: 86px; left: 86px; right: 86px; display: flex; justify-content: space-between; }
+      .selection-title { position: absolute; top: 254px; left: 86px; right: 86px; }
+      .selection-title p { margin: 0 0 24px 7px; font-size: 18px; opacity: .72; }
+      .selection-title h1 { margin: 0; font-size: 150px; font-weight: 680; line-height: .82; letter-spacing: -.075em; }
+      .selection-vibe { position: absolute; top: 760px; left: 86px; right: 86px; padding: 42px 0 46px; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; display: flex; flex-direction: column; gap: 8px; font-size: 61px; font-weight: 450; line-height: 1.05; letter-spacing: -.045em; }
+      .selection-card footer { position: absolute; left: 86px; right: 86px; bottom: 86px; display: flex; justify-content: space-between; font-size: 16px; opacity: .72; }
+    `,
+  },
+  {
+    path: "social/instagram/selections/french-disko-2023/02-tasting-note.png",
+    html: `
+      <main class="artboard tasting-note">
+        <div class="frame"></div>
+        <header class="kicker">Tasting note / French Disko 2023</header>
+        <section>
+          <p>It started closed, with a brief note of leather. Then it began to move. Redcurrant and spice appeared, followed by a sanguine character and the natural acidity of red fruit.</p>
+          <p>It was agile, intensely mouth-watering, and never heavy. A daytime wine, full of life and very easy to drink.</p>
+          <p>French Disko is a fitting name. This is a wine that dances. A real pleasure.</p>
+        </section>
+        <footer class="mono">Domaine Matassa · Roussillon</footer>
+      </main>
+    `,
+    css: `
+      .tasting-note { background: var(--black); color: var(--paper); }
+      .tasting-note::before { content: ""; position: absolute; top: 0; right: 0; width: 168px; height: 100%; background: var(--carbonic); }
+      .tasting-note::after { opacity: .09; }
+      .tasting-note header { position: absolute; top: 88px; left: 86px; color: var(--terracotta); }
+      .tasting-note section { position: absolute; top: 252px; left: 86px; width: 760px; }
+      .tasting-note p { margin: 0 0 42px; font-size: 43px; font-weight: 300; line-height: 1.18; letter-spacing: -.04em; }
+      .tasting-note p:last-child { margin-bottom: 0; color: #c9c5be; }
+      .tasting-note footer { position: absolute; left: 86px; bottom: 88px; color: var(--muted); font-size: 15px; }
+    `,
+  },
+  {
+    path: "social/instagram/selections/french-disko-2023/03-bottle-and-glasses.png",
+    html: `
+      <main class="artboard selection-photo">
+        <img src="${jpegDataUrl(frenchDiskoBottle)}" alt="" />
+      </main>
+    `,
+    css: `
+      .selection-photo::after { display: none; }
+      .selection-photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    `,
+  },
+  {
+    path: "social/instagram/selections/french-disko-2023/04-wine-and-food.png",
+    html: `
+      <main class="artboard selection-photo">
+        <img src="${jpegDataUrl(frenchDiskoTable)}" alt="" />
+      </main>
+    `,
+    css: `
+      .selection-photo::after { display: none; }
+      .selection-photo img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    `,
+  },
+  {
+    path: "social/instagram/selections/french-disko-2023/05-score.png",
+    html: `
+      <main class="artboard selection-index">
+        <div class="frame"></div>
+        <header>
+          <span class="kicker">The Tasting Index</span>
+          <span class="kicker">French Disko / 2023</span>
+        </header>
+        <section class="index-total">
+          <strong>8</strong><span>/10</span>
+        </section>
+        <section class="index-metrics">
+          <div class="metric"><span>Energy</span><div><i></i><i></i></div><b>2</b></div>
+          <div class="metric"><span>Drinkability</span><div><i></i><i></i></div><b>2</b></div>
+          <div class="metric"><span>Balance</span><div><i></i><i></i></div><b>2</b></div>
+          <div class="metric"><span>Complexity</span><div><i></i><i class="off"></i></div><b>1</b></div>
+          <div class="metric"><span>Emotion</span><div><i></i><i class="off"></i></div><b>1</b></div>
+        </section>
+        <footer>
+          <span class="mono">Full note</span>
+          <span class="mono">enoversa.com</span>
+        </footer>
+      </main>
+    `,
+    css: `
+      .selection-index { background: var(--paper); color: var(--black); }
+      .selection-index::before { content: ""; position: absolute; left: 0; top: 0; width: 242px; height: 100%; background: var(--carbonic); }
+      .selection-index::after { opacity: .08; }
+      .selection-index header { position: absolute; top: 88px; left: 86px; right: 86px; display: flex; justify-content: space-between; }
+      .index-total { position: absolute; top: 230px; left: 86px; width: 140px; color: var(--carbonic-ink); }
+      .index-total strong { font-size: 245px; font-weight: 680; line-height: .82; letter-spacing: -.09em; }
+      .index-total span { position: absolute; top: 220px; left: 47px; font: 500 20px/1 "JetBrains Mono"; }
+      .index-metrics { position: absolute; top: 540px; left: 316px; right: 86px; border-top: 1px solid rgba(5,5,5,.45); }
+      .metric { height: 124px; border-bottom: 1px solid rgba(5,5,5,.32); display: grid; grid-template-columns: 1fr auto 38px; align-items: center; gap: 28px; }
+      .metric > span { font-size: 29px; font-weight: 400; letter-spacing: -.025em; }
+      .metric > div { display: flex; gap: 9px; }
+      .metric i { display: block; width: 76px; height: 18px; background: var(--carbonic); }
+      .metric i.off { background: #cbc5bd; }
+      .metric b { font: 500 19px/1 "JetBrains Mono"; text-align: right; }
+      .selection-index footer { position: absolute; left: 316px; right: 86px; bottom: 88px; display: flex; justify-content: space-between; font-size: 15px; }
     `,
   },
 ];
