@@ -26,6 +26,6 @@ tastingDate: 2026-07-21
 
 French Disko is 100% Cinsault from the Roussillon. The 2023 saw a short maceration and nine months in concrete, and comes in at just 10% alcohol.
 
-It started closed, with something animal to it, a light trace of leather. The first impression on the palate was bitterness. Then it opened and came alive: profoundly sanguine, agile, a dancing wine that only got better as the meal went on. It rose to meet the muhammara, the tomatoes, and the pine nuts on sourdough, lifting each one. Beneath it all were very fresh red fruit and gorgeous acidity, natural and seamlessly integrated.
+It started closed, with something animal to it, a light trace of leather. The first impression on the palate was bitterness. Then it opened and came alive: profoundly sanguine, agile, a dancing wine that only got better as the meal went on. We were eating muhammara, tomatoes, and pine nuts on sourdough, and the wine rose to meet them, lifting each one. Beneath it all were very fresh red fruit and gorgeous acidity, natural and seamlessly integrated.
 
-A wine of joy, for the daytime, without a gram of weight. Weightless, with an inspiring delicacy. French Disko earns its name.
+A wine of joy, for the daytime, without a gram of weight. Weightless, with an inspiring delicacy. French Disko truly earns its name.
