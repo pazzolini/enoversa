@@ -28,4 +28,4 @@ French Disko is 100% Cinsault from the Roussillon. The 2023 saw a short macerati
 
 It started closed, with something animal to it, a light trace of leather. The first impression on the palate was bitterness. Then it opened and came alive: profoundly sanguine, agile, a dancing wine that only got better as the meal went on. With time it began to show a spiced side too, some pepper, carried by a very delicate herbal note. We were eating muhammara, tomatoes, and pine nuts on sourdough, and the wine rose to meet them, lifting each ingredient. It showed very fresh red fruit and gorgeous acidity, natural and seamlessly integrated.
 
-A wine of joy, for the daytime, without a gram of weight. Truly weightless, with an inspiring delicacy. French Disko is a very suitable name.
+A wine of joy, for the daytime, without a gram of weight. Truly weightless. The name recalls Stereolab's *French Disko*, and the association feels right. Like the song, this is lightness without withdrawal. It insists on dancing against the day's gravity.
