@@ -268,7 +268,7 @@ const works = [
       .portrait-place { color: var(--paper); background: var(--black); }
       .portrait-place::after { display: none; }
       .portrait-place > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-      .portrait-place::before { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,.5), transparent 24%, transparent 68%, rgba(5,5,5,.75)); }
+      .portrait-place::before { content: ""; position: absolute; z-index: 1; inset: 0; background: linear-gradient(180deg, rgba(5,5,5,.68), transparent 27%, transparent 68%, rgba(5,5,5,.75)); }
       .portrait-place header { position: absolute; z-index: 2; top: 70px; left: 70px; right: 70px; }
       .portrait-place footer { position: absolute; z-index: 2; left: 70px; right: 70px; bottom: 70px; font-size: 16px; line-height: 1.5; }
     `,
@@ -313,7 +313,7 @@ const works = [
       .portrait-wines .photo-panel img { width: 100%; height: 100%; object-fit: cover; object-position: 52% 50%; display: block; }
       .portrait-wines section { position: absolute; left: 70px; right: 70px; top: 824px; bottom: 70px; }
       .portrait-wines section > p { margin: 42px 0 0; max-width: 900px; font-size: 53px; font-weight: 300; line-height: 1.18; letter-spacing: -.045em; }
-      .portrait-wines footer { position: absolute; left: 0; bottom: 0; font-size: 15px; color: #5c5a55; }
+      .portrait-wines footer { position: absolute; left: 0; bottom: 24px; font-size: 18px; color: #4a4844; }
     `,
   },
   {
@@ -329,7 +329,7 @@ const works = [
         </header>
         <section class="website-vibe-card">
           <div class="vibe-tags"><span>Carbonic</span><span>Natural</span></div>
-          <p>Redcurrant.<br>Sanguine.<br>Spices.</p>
+          <p>Redcurrant.<br>Sanguine.<br>Weightless.</p>
         </section>
         <footer class="website-data-strip">
           <div><span>Vintage</span><strong>2023</strong></div>
