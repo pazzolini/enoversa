@@ -1,3 +1,9 @@
+Options -Indexes
+
+<FilesMatch "(^\.|~$|\.(bak|conf|env|ini|json|key|lock|log|map|md|pem|sql|toml|ya?ml)$)">
+  Require all denied
+</FilesMatch>
+
 <IfModule mod_headers.c>
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   Header always set X-Content-Type-Options "nosniff"

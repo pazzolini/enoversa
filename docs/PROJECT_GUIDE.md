@@ -47,6 +47,7 @@ public/
   images/                  Production website images
   .htaccess                Hostinger security headers
 scripts/
+  audit-dist.mjs            Production output allowlist and sensitive-data audit
   lighthouse.mjs           Automated Lighthouse budgets
   render-instagram-assets.mjs
                             Deterministic social asset renderer
@@ -85,6 +86,7 @@ Useful commands:
 ```sh
 npm run check          # Astro and content-schema validation
 npm run build          # production build in dist/
+npm run audit:dist     # verify that dist/ contains only approved public output
 npm run preview        # serve the production build locally
 npm run test:e2e       # Playwright tests
 npm run test:lighthouse
@@ -335,7 +337,7 @@ The current Playwright suite covers:
 - interactive-map success and explicit failure states;
 - RSS and sitemap generation.
 
-Lighthouse checks `/`, `/selections`, `/addresses` and the Marzagana portrait. Minimum scores are 80 for performance and 90 for accessibility, best practices and SEO.
+Lighthouse checks `/`, `/selections`, `/addresses` and the Marzagana portrait. Minimum scores are 80 for performance and 90 for accessibility, best practices and SEO. `npm run audit:dist` rejects source maps, repository files, unexpected top-level paths, symlinks and sensitive local or deployment data before an artifact can be uploaded.
 
 Add or update tests when changing navigation, filters, map behaviour, content routes, responsive layouts, feeds or deployment-critical output.
 
@@ -349,10 +351,11 @@ Pushes to `main` trigger `.github/workflows/deploy.yml`:
 2. audit production dependencies;
 3. validate Astro and content;
 4. build the static site;
-5. run Playwright;
-6. run Lighthouse;
-7. upload the validated `dist/` artifact;
-8. deploy that artifact to Hostinger by FTP.
+5. audit the public production surface;
+6. run Playwright;
+7. run Lighthouse;
+8. upload the validated `dist/` artifact;
+9. deploy that artifact to Hostinger by FTP.
 
 Required GitHub secrets:
 
@@ -361,6 +364,8 @@ Required GitHub secrets:
 - `FTP_PASSWORD`
 
 The FTP action deploys to the FTP account root, which must correspond to the production `public_html`. The workflow excludes `legacy/**`; never remove that exclusion while the old site remains at `legacy.enoversa.com`.
+
+Only the contents of `dist/` are deployed, not the `dist` directory itself. Apache directory indexes are disabled, and dotfiles, source maps, documentation, configuration, lock, log, backup and key files are denied even if one is accidentally present on the server.
 
 After changing `.htaccess`, clear the Hostinger CDN cache and verify the live response headers. Keep SSL and Force HTTPS enabled for both the main and legacy domains.
 

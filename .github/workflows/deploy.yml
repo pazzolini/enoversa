@@ -41,6 +41,9 @@ jobs:
     - name: Build site
       run: npm run build
 
+    - name: Audit production surface
+      run: npm run audit:dist
+
     - name: Install Chromium
       run: npx playwright install --with-deps chromium
 

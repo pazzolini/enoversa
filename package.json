@@ -11,9 +11,10 @@
     "check": "astro check",
     "preview": "astro preview",
     "audit:production": "npm audit --omit=dev",
+    "audit:dist": "node scripts/audit-dist.mjs",
     "test:e2e": "playwright test",
     "test:lighthouse": "node scripts/lighthouse.mjs",
-    "test:quality": "npm run audit:production && npm run check && npm run build && npm run test:e2e && npm run test:lighthouse",
+    "test:quality": "npm run audit:production && npm run check && npm run build && npm run audit:dist && npm run test:e2e && npm run test:lighthouse",
     "render:social": "node scripts/render-instagram-assets.mjs",
     "astro": "astro"
   },
