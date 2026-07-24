@@ -22,6 +22,35 @@ test('the selections filters work and update the URL', async ({ page }) => {
   await expect(page.locator('.selection-card.hidden')).not.toHaveCount(0);
 });
 
+test('selection classification and typed tag filters stay separate', async ({ page }) => {
+  await page.goto('/selections');
+  await page.getByRole('button', { name: '[ FILTER ]' }).click();
+
+  await expect(page.locator('button[data-category="colour"][data-value="Red"]')).toBeVisible();
+  await expect(page.locator('button[data-category="effervescence"][data-value="Sparkling"]')).toBeVisible();
+  await expect(page.locator('button[data-category="tag"][data-value="Carbonic Maceration"]')).toBeVisible();
+  await expect(page.locator('button[data-category="tag"][data-value="Co-fermented"]')).toHaveCount(0);
+
+  await page.locator('button[data-category="colour"][data-value="Red"]').click();
+  await page.locator('button[data-category="tag"][data-value="Carbonic Maceration"]').click();
+
+  await expect(page).toHaveURL(/colour=Red/);
+  await expect(page).toHaveURL(/tag=Carbonic\+Maceration/);
+  await expect(page.locator('.selection-card:not(.hidden)')).toHaveCount(2);
+  await expect(page.locator('.selection-card:not(.hidden)[data-colour="Red"]')).toHaveCount(2);
+});
+
+test('an individual selection groups factual tags apart from the vibe', async ({ page }) => {
+  await page.goto('/selections/domaine-matassa-french-disko-2023');
+
+  await expect(page.getByText('Colour', { exact: true })).toBeVisible();
+  await expect(page.getByText('Effervescence', { exact: true })).toBeVisible();
+  await expect(page.getByText('Vinification', { exact: true })).toBeVisible();
+  await expect(page.getByText('Carbonic Maceration', { exact: true })).toBeVisible();
+  await expect(page.getByText('Natural', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 2, name: 'REDCURRANT. SANGUINE. WEIGHTLESS.' })).toBeVisible();
+});
+
 test('the portrait hero loads without horizontal overflow', async ({ page }) => {
   await page.goto('/portraits/claudio-miguel-marzagana-elementales');
 

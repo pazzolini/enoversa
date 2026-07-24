@@ -4,11 +4,19 @@ producer: "Bodegas Fulcro"
 country: "Spain"
 region: "Rías Baixas"
 vintage: "2018"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Albariño"
 price: "85 €"
-tags: ["Sand", "Salt", "Barrel Aged"]
-vibe: "Solar. Restraint. White Chocolate."
+tags:
+  site: ["Sand", "Clay"]
+  vineyard: ["Single Vineyard"]
+  vinification: ["Native Yeast"]
+  vessel: ["Barrel"]
+vibe: ["Solar", "Restraint", "White Chocolate"]
+palette: "Gold"
 metrics:
   liveliness: 2
   drinkability: 2

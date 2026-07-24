@@ -4,11 +4,21 @@ producer: "Sous le Végétal"
 country: "Greece"
 region: "Samos"
 vintage: "2019"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  sweetness: "Dry"
+  fortified: false
 grapes: "Muscat à Petits Grains"
 price: "29 €"
-tags: ["Skin Contact", "Amphora", "Volcanic"]
-vibe: "Oil. Brine. Orange Blossom."
+tags:
+  site: ["Schist", "Quartz", "Limestone", "Basalt"]
+  vineyard: ["Terraced Vineyard"]
+  farming: ["Organic Farming", "Hand Harvested"]
+  vinification: ["Native Yeast", "No Added Sulphites", "Unfined", "Unfiltered"]
+  vessel: ["Amphora", "Concrete"]
+vibe: ["Oil", "Brine", "Orange Blossom"]
+palette: "Amber"
 metrics:
   liveliness: 2
   drinkability: 2
@@ -20,7 +30,7 @@ date: 2026-05-16
 tastingDate: 2026-05-16
 ---
 
-Octave brings together Muscat à Petits Grains from eight old-vine parcels across Samos, on a mix of schist, quartz, limestone, and basalt. The 2019 spent 40 days on its skins before ageing in small clay amphorae and a concrete egg, followed by another year in bottle.
+Octave brings together Muscat à Petits Grains from eight parcels across Samos, on a mix of schist, quartz, limestone, and basalt. The 2019 was vinified in equal parts 750-litre amphorae and 1,400-litre concrete tanks, without added sulphites, fining, or filtration.
 
 The texture was the wine. Dense and coating, it felt closer to drinking olive oil than a conventional white wine. Orange blossom came first, followed by brine and salt.
 

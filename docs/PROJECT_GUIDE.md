@@ -42,7 +42,9 @@ src/
   layouts/                 Shared HTML shell, metadata and footer
   pages/                   Route entry points
   styles/global.css        Fonts, palette and global behaviour
-  utils/moodColors.js      Selection-card colours keyed by first tag
+  utils/
+    selectionPalettes.ts   Accessible, editorial Selection-card palettes
+    selectionTaxonomy.ts   Typed Selection tags and display helpers
 public/
   images/                  Production website images
   .htaccess                Hostinger security headers
@@ -130,11 +132,18 @@ producer: "Producer"
 country: "Country"
 region: "Region"
 vintage: "2024"
-type: "White" # Red, White, Sparkling, Rosé or Dessert
+classification:
+  colour: "White" # White, Rosé or Red
+  effervescence: "Still" # Still or Sparkling
+  sweetness: "Dry" # optional: Dry, Medium-dry, Semi-sweet or Sweet
+  fortified: false
 grapes: "Variety or blend"
 price: "23 €"
-tags: ["Salt", "Granite"]
-vibe: "Sharp. Salt. Ready."
+tags:
+  site: ["Granite"]
+  vessel: ["Barrel"]
+vibe: ["Sharp", "Salt", "Ready"]
+palette: "Marine"
 metrics:
   liveliness: 2
   drinkability: 2
@@ -166,9 +175,33 @@ Price rules:
 
 The optional `service` block is only included when the information was recorded at the tasting. Do not backfill old notes with assumptions.
 
-The first tag controls the colour of the selection card through `src/utils/moodColors.js`. Add a new colour mapping deliberately when introducing a new leading tag; otherwise the card receives the default black treatment.
+Classification is deliberately multi-axis:
 
-Selection vibes use exactly three full-stop-separated descriptors. Prefer concrete nouns where they sound natural. Canonical forms include `Oil`, `Salt`, `Lift`, `Grip`, `Flowers`, `Chalk`, `Brine` and `Juice`; the schema rejects their competing adjective forms. Do not force awkward nominalisations: deliberate descriptors such as `Dry`, `Sharp`, `Ready` and `Austere` may remain. When a concept appears in both tags and vibes, use the same canonical form.
+- `colour` records the product family, not the observed hue. A skin-contact white remains `White`; `Skin Contact` belongs to `vinification`.
+- `effervescence` is either `Still` or `Sparkling`. Pétillant and semi-sparkling wines use `Sparkling`; the note or style tag carries the finer distinction.
+- `sweetness` is optional and is only recorded from declared or analytical information, not inferred from the tasting. Its technical categories are `Dry`, `Medium-dry`, `Semi-sweet` and `Sweet`.
+- `fortified` is a required boolean. Mistelles are outside the wine schema.
+
+Selection tags are auditable production facts, grouped into fixed facets. Exact, case-sensitive vocabularies live in `src/utils/selectionTaxonomy.ts` and are validated at build time:
+
+| Facet | Scope |
+| --- | --- |
+| `site` | Verified soil or geology, such as Granite, Limestone or Volcanic |
+| `vineyard` | Vineyard structure, such as Field Blend, Ungrafted or Bush Vines |
+| `farming` | Specific practices or certifications, such as Dry Farmed or Certified Organic |
+| `vinification` | Fermentation and cellar processes, such as Skin Contact or Carbonic Maceration |
+| `vessel` | A vessel used at any production stage, such as Amphora, Barrel or Concrete |
+| `ageing` | Verified maturation regimes, such as Lees Ageing, Flor Ageing or Solera |
+| `style` | Recognised styles and declarations, such as Pét-Nat, Brut Nature or Passito |
+| `producer` | Producer models: Estate Grown, Estate Bottled, Négociant or Cooperative |
+
+Do not use sensory impressions, vague philosophies or promotional language as tags. `Salt`, `Animal`, `Reduction` and sensory `Oxidation` belong in the vibe or prose. `Natural`, `Low Intervention`, `Old Vines`, `Sustainable`, `Regenerative`, `Artisanal` and similar undefined terms are not allowed. A deliberate, verified process is named precisely: for example, `Oxidative Ageing`, not `Oxidation`.
+
+Selection vibes are arrays of exactly three editorial descriptors. Prefer concrete nouns where they sound natural. Canonical forms include `Oil`, `Salt`, `Lift`, `Grip`, `Flowers`, `Chalk`, `Brine` and `Juice`; the schema rejects their competing adjective forms. Do not force awkward nominalisations: deliberate descriptors such as `Dry`, `Sharp`, `Ready` and `Austere` may remain.
+
+The required `palette` is an editorial visual choice, completely independent of classification and tags. Allowed palettes are `Burgundy`, `Rose`, `Gold`, `Amber`, `Moss`, `Marine`, `Slate`, `Earth`, `Plum` and `Void`. Their accessible colour pairs live in `src/utils/selectionPalettes.ts`; do not add or modify a palette without checking normal and small-text contrast.
+
+Cards show populated tags without facet labels. Individual Selection pages group them by facet. A tag only becomes a filter when it occurs on at least two wines; singleton tags remain visible on the individual page. Empty facets and filter groups are never rendered.
 
 ### 6.2 Portraits
 

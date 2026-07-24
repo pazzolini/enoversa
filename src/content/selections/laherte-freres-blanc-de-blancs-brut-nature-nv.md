@@ -4,11 +4,23 @@ producer: "Laherte Frères"
 country: "France"
 region: "Champagne"
 vintage: "NV"
-type: "Sparkling"
+classification:
+  colour: "White"
+  effervescence: "Sparkling"
+  sweetness: "Dry"
+  fortified: false
 grapes: "Chardonnay"
 price: "54 €"
-tags: ["Chalk", "Brut Nature", "Grower Champagne"]
-vibe: "Chalk. Length. Energy."
+tags:
+  site: ["Chalk", "Clay"]
+  farming: ["Biodynamic Farming", "Hand Harvested"]
+  vinification: ["Direct Press", "Native Yeast", "Malolactic Fermentation"]
+  vessel: ["Barrel", "Foudre"]
+  ageing: ["Lees Ageing", "Bâtonnage"]
+  style: ["Traditional Method", "Brut Nature", "Blanc de Blancs"]
+  producer: ["Estate Grown"]
+vibe: ["Chalk", "Length", "Energy"]
+palette: "Slate"
 metrics:
   liveliness: 2
   drinkability: 2

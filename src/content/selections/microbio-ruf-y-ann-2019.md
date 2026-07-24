@@ -4,11 +4,20 @@ producer: "MicroBioWines"
 country: "Spain"
 region: "Sierra de Salamanca"
 vintage: "2019"
-type: "Red"
+classification:
+  colour: "Red"
+  effervescence: "Still"
+  fortified: false
 grapes: "Rufete"
 price: "23,00 €"
-tags: ["Natural", "Granite"]
-vibe: "Redcurrant. Acidity. Lift."
+tags:
+  site: ["Granite", "Slate"]
+  vineyard: ["Single Vineyard"]
+  farming: ["Organic Farming", "Hand Harvested"]
+  vinification: ["Semi-carbonic Maceration", "Whole Cluster", "Destemmed", "Native Yeast", "No Added Sulphites", "Unfined", "Unfiltered"]
+  vessel: ["Barrel"]
+vibe: ["Redcurrant", "Acidity", "Lift"]
+palette: "Rose"
 metrics:
   liveliness: 2
   drinkability: 2

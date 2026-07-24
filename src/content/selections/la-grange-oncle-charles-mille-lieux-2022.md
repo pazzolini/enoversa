@@ -4,11 +4,21 @@ producer: "La Grange de l'Oncle Charles"
 country: "France"
 region: "Alsace"
 vintage: "2022"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Blend of 13 Alsatian grapes"
 price: "20,00 €"
-tags: ["Natural", "Field Blend"]
-vibe: "Citrus. Flowers. Harmony."
+tags:
+  site: ["Granite", "Sandstone", "Marl"]
+  vineyard: ["Field Blend"]
+  farming: ["Organic Farming", "Biodynamic Farming", "Hand Harvested", "Horse Ploughed"]
+  vinification: ["Direct Press", "Co-fermented", "Native Yeast", "No Added Sulphites", "Unfined", "Unfiltered"]
+  vessel: ["Barrel"]
+  ageing: ["Lees Ageing"]
+vibe: ["Citrus", "Flowers", "Harmony"]
+palette: "Moss"
 metrics:
   liveliness: 2
   drinkability: 2

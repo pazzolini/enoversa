@@ -4,6 +4,11 @@ import Navigation from "../components/Navigation.astro";
 import PlacesMap from "../components/PlacesMap.astro";
 import { getCollection } from "astro:content";
 import { comparePlaces } from "../utils/placeSort";
+import { getSelectionPalette } from "../utils/selectionPalettes";
+import {
+    flattenSelectionTags,
+    formatSelectionVibe,
+} from "../utils/selectionTaxonomy";
 
 const allSelections = await getCollection("selections");
 const featuredSelections = allSelections
@@ -22,8 +27,6 @@ const featuredEssays = allEssays
 
 const featuredPlaces = (await getCollection("places"))
     .sort(comparePlaces);
-
-import { getMoodColor } from "../utils/moodColors";
 
 const formatPortraitDate = (date: Date) => new Intl.DateTimeFormat("en", {
     month: "long",
@@ -229,10 +232,10 @@ const legacyUrl = "https://legacy.enoversa.com";
                                 <article class="group cursor-pointer">
                                     <a href={`/selections/${post.id}`}>
                                         <div
-                                            class={`aspect-[4/3] relative mb-6 overflow-hidden flex items-center justify-center px-6 transition duration-500 group-hover:scale-[1.02] ${getMoodColor(post.data.tags[0])}`}
+                                            class={`aspect-[4/3] relative mb-6 overflow-hidden flex items-center justify-center px-6 transition duration-500 group-hover:scale-[1.02] ${getSelectionPalette(post.data.palette)}`}
                                         >
-                                            <h3 class="font-sans text-2xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
-                                                {post.data.vibe}
+                                            <h3 class="font-sans text-2xl font-medium uppercase text-center tracking-tight leading-tight">
+                                                {formatSelectionVibe(post.data.vibe)}
                                             </h3>
                                         </div>
 
@@ -247,13 +250,13 @@ const legacyUrl = "https://legacy.enoversa.com";
                                         <p class="text-text-muted font-light leading-relaxed mb-4 line-clamp-3">
                                             {post.data.excerpt}
                                         </p>
-                                        <div class="flex justify-between items-center">
-                                            <span
-                                                class={`font-mono text-[10px] uppercase tracking-widest ${getMoodColor(post.data.tags[0])}`}
-                                            >
-                                                {post.data.tags[0]}
-                                            </span>
-                                            <span class="text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">
+                                        <div class="flex justify-between items-center gap-4">
+                                            {flattenSelectionTags(post.data.tags).length > 0 && (
+                                                <span class="font-mono text-[10px] uppercase tracking-widest text-text-dim">
+                                                    {flattenSelectionTags(post.data.tags).join(" · ")}
+                                                </span>
+                                            )}
+                                            <span class="ml-auto shrink-0 text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">
                                                 Read Notes ->
                                             </span>
                                         </div>

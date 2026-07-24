@@ -4,11 +4,19 @@ producer: "Domaine Matassa"
 country: "France"
 region: "Roussillon"
 vintage: "2023"
-type: "Red"
+classification:
+  colour: "Red"
+  effervescence: "Still"
+  fortified: false
 grapes: "Cinsault"
 price: "42 €"
-tags: ["Carbonic", "Natural"]
-vibe: "Redcurrant. Sanguine. Weightless."
+tags:
+  vineyard: ["Single Vineyard"]
+  farming: ["Certified Organic", "Biodynamic Farming", "Hand Harvested", "Cover Crops"]
+  vinification: ["Carbonic Maceration", "Native Yeast", "No Added Sulphites", "Unfined", "Unfiltered"]
+  vessel: ["Concrete"]
+vibe: ["Redcurrant", "Sanguine", "Weightless"]
+palette: "Burgundy"
 metrics:
   liveliness: 2
   drinkability: 2

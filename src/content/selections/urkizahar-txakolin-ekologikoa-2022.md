@@ -3,12 +3,20 @@ title: "Txakolin Ekologikoa"
 producer: "Urkizahar"
 country: "Spain"
 region: "Getariako Txakolina"
-vintage: "2023"
-type: "White"
+vintage: "2022"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Hondarrabi Zuri"
 price: "30,00 €"
-tags: ["Salt", "Amphora", "Reduction"]
-vibe: "Mineral. Acidity. Austere."
+tags:
+  site: ["Schist", "Limestone", "Sand"]
+  farming: ["Organic Farming", "Biodynamic Farming", "Hand Harvested"]
+  vessel: ["Amphora"]
+  producer: ["Estate Grown"]
+vibe: ["Mineral", "Acidity", "Austere"]
+palette: "Marine"
 metrics:
   liveliness: 2
   drinkability: 1

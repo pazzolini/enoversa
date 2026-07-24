@@ -4,11 +4,21 @@ producer: "Le Batossay"
 country: "France"
 region: "Loire"
 vintage: "2020"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Grolleau Gris"
 price: "20,00 €"
-tags: ["Natural", "Direct Press"]
-vibe: "Lemon. Stone. Salt."
+tags:
+  site: ["Clay", "Silt"]
+  vineyard: ["Single Vineyard"]
+  farming: ["Certified Organic", "Biodynamic Farming", "Hand Harvested", "Horse Ploughed"]
+  vinification: ["Direct Press", "Native Yeast", "Malolactic Fermentation", "No Added Sulphites", "Unfined", "Unfiltered"]
+  vessel: ["Foudre", "Fibreglass", "Barrel"]
+  producer: ["Estate Grown"]
+vibe: ["Lemon", "Stone", "Salt"]
+palette: "Marine"
 metrics:
   liveliness: 2
   drinkability: 2

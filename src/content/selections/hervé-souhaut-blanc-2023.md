@@ -4,11 +4,20 @@ producer: "Hervé Souhaut"
 country: "France"
 region: "Ardèche"
 vintage: "2023"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Viognier, Roussanne"
 price: "29,00 €"
-tags: ["Low Intervention"]
-vibe: "Peach. Flowers. Coating."
+tags:
+  site: ["Granite"]
+  farming: ["Certified Organic", "Biodynamic Farming", "Hand Harvested"]
+  vinification: ["Direct Press", "Native Yeast", "Unfined", "Unfiltered"]
+  vessel: ["Barrel"]
+  ageing: ["Lees Ageing"]
+vibe: ["Peach", "Flowers", "Coating"]
+palette: "Gold"
 metrics:
   liveliness: 1
   drinkability: 2

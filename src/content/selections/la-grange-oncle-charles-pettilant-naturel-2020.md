@@ -4,11 +4,18 @@ producer: "La Grange de l'Oncle Charles"
 country: "France"
 region: "Alsace"
 vintage: "2020"
-type: "Sparkling"
+classification:
+  colour: "White"
+  effervescence: "Sparkling"
+  fortified: false
 grapes: "Auxerrois"
 price: "15,00 €"
-tags: ["Pet Nat", "Natural"]
-vibe: "Citrus. Ease. Joy."
+tags:
+  farming: ["Organic Farming", "Biodynamic Farming", "Hand Harvested", "Horse Ploughed"]
+  vinification: ["Direct Press", "Native Yeast", "Unfiltered"]
+  style: ["Pét-Nat", "Ancestral Method"]
+vibe: ["Citrus", "Ease", "Joy"]
+palette: "Marine"
 metrics:
   liveliness: 2
   drinkability: 2

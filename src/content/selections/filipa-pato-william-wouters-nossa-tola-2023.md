@@ -4,11 +4,21 @@ producer: "Filipa Pato & William Wouters"
 country: "Portugal"
 region: "Bairrada"
 vintage: "2023"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Bical"
 price: "30 €"
-tags: ["Limestone", "Biodynamic", "Old Vines"]
-vibe: "Acidity. Pear. Chalk."
+tags:
+  site: ["Limestone"]
+  vineyard: ["Single Vineyard"]
+  farming: ["Certified Organic", "Certified Biodynamic", "Dry Farmed", "Hand Harvested"]
+  vinification: ["Direct Press", "Native Yeast", "Unfined", "Unfiltered"]
+  vessel: ["Barrel", "Stainless Steel"]
+  ageing: ["Lees Ageing"]
+vibe: ["Acidity", "Pear", "Chalk"]
+palette: "Slate"
 metrics:
   liveliness: 2
   drinkability: 2

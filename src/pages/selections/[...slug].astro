@@ -4,6 +4,11 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import Navigation from "../../components/Navigation.astro";
 import ScoreBar from "../../components/ScoreBar.astro";
 import BackLink from "../../components/BackLink.astro";
+import { getSelectionPalette } from "../../utils/selectionPalettes";
+import {
+    formatSelectionVibe,
+    getSelectionTagGroups,
+} from "../../utils/selectionTaxonomy";
 
 export async function getStaticPaths() {
     const entries = await getCollection("selections");
@@ -13,11 +18,25 @@ export async function getStaticPaths() {
     }));
 }
 
-import { getMoodColor } from "../../utils/moodColors";
-
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { metrics } = entry.data;
+const tagGroups = getSelectionTagGroups(entry.data.tags);
+const paletteClass = getSelectionPalette(entry.data.palette);
+const classificationDetails = [
+    { label: "Vintage", value: entry.data.vintage },
+    { label: "Colour", value: entry.data.classification.colour },
+    { label: "Effervescence", value: entry.data.classification.effervescence },
+    entry.data.classification.sweetness
+        ? { label: "Sweetness", value: entry.data.classification.sweetness }
+        : null,
+    entry.data.classification.fortified
+        ? { label: "Fortification", value: "Fortified" }
+        : null,
+    { label: "Origin", value: `${entry.data.country} / ${entry.data.region}` },
+    { label: "Grapes", value: entry.data.grapes },
+    { label: "Price", value: entry.data.price },
+].filter((detail): detail is { label: string; value: string } => Boolean(detail));
 const serviceDetails = [
     { label: "Glass", value: entry.data.service?.glass },
     { label: "Decant", value: entry.data.service?.decant },
@@ -33,7 +52,6 @@ const totalScore =
     metrics.complexity +
     metrics.emotion;
 
-const moodClass = getMoodColor(entry.data.tags[0]);
 ---
 
 <MainLayout title={`${entry.data.title} | Enoversa`}>
@@ -66,56 +84,42 @@ const moodClass = getMoodColor(entry.data.tags[0]);
             <!-- 2. The Technical Data Strip -->
             <div class="border-y border-line py-6 mb-12">
                 <div
-                    class="grid grid-cols-2 md:grid-cols-6 gap-8 font-mono text-[10px] uppercase tracking-widest text-text-muted"
+                    class="grid grid-cols-2 md:grid-cols-4 gap-8 font-mono text-[10px] uppercase tracking-widest text-text-muted"
                 >
-                    <div>
-                        <span class="block text-text-dim mb-1">Vintage</span>
-                        <span class="text-white">{entry.data.vintage}</span>
-                    </div>
-
-                    <div>
-                        <span class="block text-text-dim mb-1">Type</span>
-                        <span class="text-white">{entry.data.type}</span>
-                    </div>
-
-                    <div>
-                        <span class="block text-text-dim mb-1">Origin</span>
-                        <span class="text-white"
-                            >{entry.data.country} / {entry.data.region}</span
-                        >
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <span class="block text-text-dim mb-1">Grapes</span>
-                        <span class="text-white">{entry.data.grapes}</span>
-                    </div>
-
-                    <div class="md:text-right">
-                        <span class="block text-text-dim mb-1">Price</span>
-                        <span class="text-white">{entry.data.price}</span>
-                    </div>
+                    {classificationDetails.map((detail) => (
+                        <div>
+                            <span class="block text-text-dim mb-1">{detail.label}</span>
+                            <span class="text-white">{detail.value}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
 
             <!-- 3. The Vibe Card (La Cabra Style) -->
             <div
-                class={`w-full min-h-64 md:min-h-0 md:aspect-[3/1] flex flex-col items-center justify-center rounded-sm relative overflow-hidden ${moodClass}`}
+                class={`w-full min-h-72 md:min-h-0 md:aspect-[3/1] flex flex-col items-center rounded-sm overflow-hidden p-4 md:p-6 ${paletteClass}`}
             >
-                <!-- Tags Overlay -->
-                <div class="absolute top-4 left-4 right-4 flex flex-wrap gap-2">
-                    {
-                        entry.data.tags.map((tag) => (
-                            <span class="font-mono text-[10px] uppercase tracking-widest opacity-60 border border-current px-2 py-0.5 rounded-full">
-                                {tag}
-                            </span>
-                        ))
-                    }
-                </div>
+                {tagGroups.length > 0 && (
+                    <div class="w-full flex flex-col gap-2">
+                        {tagGroups.map((group) => (
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="font-mono text-[9px] uppercase tracking-widest">
+                                    {group.label}
+                                </span>
+                                {group.values.map((tag) => (
+                                    <span class="font-mono text-[9px] uppercase tracking-widest border border-current px-2 py-0.5 rounded-full">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        ))}
+                    </div>
+                )}
 
                 <h2
-                    class="text-3xl md:text-4xl font-sans font-medium tracking-tight uppercase text-center max-w-4xl px-6"
+                    class="flex flex-1 items-center justify-center text-3xl md:text-4xl font-sans font-medium tracking-tight uppercase text-center max-w-4xl px-2 md:px-6"
                 >
-                    {entry.data.vibe}
+                    {formatSelectionVibe(entry.data.vibe)}
                 </h2>
             </div>
         </header>

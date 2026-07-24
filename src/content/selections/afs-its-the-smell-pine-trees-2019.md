@@ -4,11 +4,19 @@ producer: "Anders Frederik Steen & Anne Bruun Blauert"
 country: "France"
 region: "Alsace"
 vintage: "2019"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Pinot Noir, Pinot Gris, Gewürztraminer" 
 price: "65,00 €"
-tags: ["Oxidation", "Salt", "Natural"]
-vibe: "Oxidation. Dry. Salt."
+tags:
+  farming: ["Certified Organic", "Certified Biodynamic", "Hand Harvested"]
+  vinification: ["Native Yeast", "No Added Sulphites", "Unfined", "Unfiltered"]
+  vessel: ["Barrel"]
+  ageing: ["Oxidative Ageing"]
+vibe: ["Oxidation", "Dry", "Salt"]
+palette: "Earth"
 metrics:
   liveliness: 2
   drinkability: 1

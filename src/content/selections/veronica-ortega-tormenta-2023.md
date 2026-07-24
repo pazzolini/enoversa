@@ -4,11 +4,21 @@ producer: "Verónica Ortega"
 country: "Spain"
 region: "Bierzo"
 vintage: "2023"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  sweetness: "Dry"
+  fortified: false
 grapes: "Godello"
 price: "38,00 €"
-tags: ["Low Intervention", "Limestone"]
-vibe: "Quince. Weight. Intensity."
+tags:
+  site: ["Clay", "Limestone"]
+  vineyard: ["Single Vineyard", "Bush Vines"]
+  farming: ["Organic Farming", "Hand Harvested"]
+  vinification: ["Skin Contact", "Destemmed", "Native Yeast"]
+  vessel: ["Amphora", "Barrel"]
+vibe: ["Quince", "Weight", "Intensity"]
+palette: "Gold"
 metrics:
   liveliness: 1
   drinkability: 2

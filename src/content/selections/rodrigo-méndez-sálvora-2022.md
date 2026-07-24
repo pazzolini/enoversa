@@ -4,11 +4,19 @@ producer: "Rodrigo Méndez"
 country: "Spain"
 region: "Rías Baixas"
 vintage: "2022"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Albariño"
 price: "37,00 €"
-tags: ["Salt", "Old Vines", "Barrel Aged"]
-vibe: "Sharp. Salt. Ready."
+tags:
+  site: ["Granite", "Sand"]
+  vineyard: ["Single Vineyard"]
+  vinification: ["Native Yeast"]
+  vessel: ["Barrel"]
+vibe: ["Sharp", "Salt", "Ready"]
+palette: "Marine"
 metrics:
   liveliness: 2
   drinkability: 2

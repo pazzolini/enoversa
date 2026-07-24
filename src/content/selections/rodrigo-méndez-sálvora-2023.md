@@ -4,11 +4,20 @@ producer: "Rodrigo Méndez"
 country: "Spain"
 region: "Rías Baixas"
 vintage: "2023"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Albariño"
 price: "37,00 €"
-tags: ["Salt", "Old Vines", "Barrel Aged"]
-vibe: "Tea. Salt. Patience."
+tags:
+  site: ["Granite"]
+  vineyard: ["Single Vineyard"]
+  farming: ["Hand Harvested"]
+  vinification: ["Native Yeast"]
+  vessel: ["Barrel"]
+vibe: ["Tea", "Salt", "Patience"]
+palette: "Marine"
 metrics:
   liveliness: 1
   drinkability: 2

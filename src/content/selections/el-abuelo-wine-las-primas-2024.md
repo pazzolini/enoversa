@@ -4,11 +4,17 @@ producer: "El Abuelo Wine"
 country: "Spain"
 region: "Sierra de Gredos"
 vintage: "2024"
-type: "Red"
+classification:
+  colour: "Red"
+  effervescence: "Still"
+  fortified: false
 grapes: "Garnacha Negra"
 price: "23 €"
-tags: ["Carbonic", "Natural"]
-vibe: "Pomegranate. Mineral. Juice."
+tags:
+  farming: ["Organic Farming", "Hand Harvested"]
+  vinification: ["Carbonic Maceration", "Native Yeast", "No Added Sulphites"]
+vibe: ["Pomegranate", "Mineral", "Juice"]
+palette: "Rose"
 metrics:
   liveliness: 2
   drinkability: 2

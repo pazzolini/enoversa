@@ -4,11 +4,17 @@ producer: "Itsasmendi"
 country: "Spain"
 region: "Bizkaiko Txakolina"
 vintage: "2022"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Hondarrabi Zuri"
 price: "20,00 €"
-tags: ["Skin Contact", "Amphora", "Carbonic"]
-vibe: "Apricot. Tea. Grip."
+tags:
+  vinification: ["Skin Contact", "Carbonic Maceration", "Whole Cluster", "Native Yeast", "Unfined", "Unfiltered"]
+  vessel: ["Stainless Steel", "Foudre", "Clay Tinaja"]
+vibe: ["Apricot", "Tea", "Grip"]
+palette: "Amber"
 metrics:
   liveliness: 1
   drinkability: 2

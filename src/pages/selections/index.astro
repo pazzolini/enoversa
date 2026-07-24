@@ -2,8 +2,14 @@
 import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import Navigation from '../../components/Navigation.astro';
-
-import { getMoodColor } from '../../utils/moodColors';
+import { getSelectionPalette } from '../../utils/selectionPalettes';
+import {
+    flattenSelectionTags,
+    formatSelectionVibe,
+    selectionTagFacetLabels,
+    selectionTagFacetOrder,
+    selectionTagVocabulary,
+} from '../../utils/selectionTaxonomy';
 
 // Fetch all selections and sort by tasting date (newest first)
 const allSelections = await getCollection('selections');
@@ -13,12 +19,27 @@ const sortedSelections = [...allSelections].sort((a, b) => {
 });
 
 // FILTER DATA PREPARATION
-const typeOrder = ['Red', 'White', 'Sparkling', 'Rosé', 'Dessert'];
-const allTypes = typeOrder.filter(type => allSelections.some(selection => selection.data.type === type));
+const colourOrder = ['White', 'Rosé', 'Red'] as const;
+const allColours = colourOrder.filter(colour =>
+    allSelections.some(selection => selection.data.classification.colour === colour)
+);
+const effervescenceOrder = ['Still', 'Sparkling'] as const;
+const allEffervescence = effervescenceOrder.filter(effervescence =>
+    allSelections.some(selection => selection.data.classification.effervescence === effervescence)
+);
 const allCountries = [...new Set(allSelections.map(s => s.data.country))].sort();
-const allTags = [...new Set(allSelections.flatMap(s => s.data.tags))]
-    .filter(tag => !allTypes.includes(tag))
-    .sort();
+const tagCounts = allSelections
+    .flatMap(selection => flattenSelectionTags(selection.data.tags))
+    .reduce((counts, tag) => {
+        counts.set(tag, (counts.get(tag) ?? 0) + 1);
+        return counts;
+    }, new Map<string, number>());
+const filterTagGroups = selectionTagFacetOrder.flatMap(facet => {
+    const tags = selectionTagVocabulary[facet].filter(tag => (tagCounts.get(tag) ?? 0) >= 2);
+    return tags.length
+        ? [{ facet, label: selectionTagFacetLabels[facet], tags }]
+        : [];
+});
 const priceIntervals = [
     { label: '< 30€', min: 0, max: 30 },
     { label: '30€ - 59€', min: 30, max: 60 },
@@ -76,13 +97,24 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
         <!-- FILTERS -->
         <div id="filter-wrapper" class="max-w-7xl mx-auto overflow-hidden transition-all duration-500 max-h-0 opacity-0 mb-12">
             <section class="space-y-5 select-none pb-8 border-b border-line/30" id="filter-container">
-                <!-- Type Filter -->
+                <!-- Colour Filter -->
                 <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
-                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Type</span>
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Colour</span>
                     <div class="flex flex-wrap gap-2">
-                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="type" data-value="all">All</button>
-                        {allTypes.map((type) => (
-                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="type" data-value={type}>{type}</button>
+                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="colour" data-value="all">All</button>
+                        {allColours.map((colour) => (
+                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="colour" data-value={colour}>{colour}</button>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Effervescence Filter -->
+                <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
+                    <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Bubbles</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="effervescence" data-value="all">All</button>
+                        {allEffervescence.map((effervescence) => (
+                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="effervescence" data-value={effervescence}>{effervescence}</button>
                         ))}
                     </div>
                 </div>
@@ -109,16 +141,26 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
                     </div>
                 </div>
 
-                <!-- Tag Filter -->
-                <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-start">
-                    <span class="pt-4 font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Tag</span>
-                    <div class="flex flex-wrap gap-2">
-                        <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="tag" data-value="all">All</button>
-                        {allTags.map((tag) => (
-                            <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="tag" data-value={tag}>{tag}</button>
+                {filterTagGroups.length > 0 && (
+                    <>
+                        <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
+                            <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">Tags</span>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" class="filter-btn min-h-11 px-4 border border-accent bg-accent text-bg font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="tag" data-value="all">All</button>
+                            </div>
+                        </div>
+                        {filterTagGroups.map((group) => (
+                            <div class="grid grid-cols-1 sm:grid-cols-[5rem_1fr] gap-3 sm:gap-4 sm:items-center">
+                                <span class="font-mono text-[10px] text-text-dim uppercase tracking-widest opacity-50">{group.label}</span>
+                                <div class="flex flex-wrap gap-2">
+                                    {group.tags.map((tag) => (
+                                        <button type="button" class="filter-btn min-h-11 px-4 border border-line text-text-dim hover:text-white hover:border-text-dim font-mono text-[10px] uppercase tracking-widest transition-colors" data-category="tag" data-value={tag}>{tag}</button>
+                                    ))}
+                                </div>
+                            </div>
                         ))}
-                    </div>
-                </div>
+                    </>
+                )}
             </section>
         </div>
 
@@ -127,23 +169,24 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
             {sortedSelections.map(post => (
                 <article
                     class="group selection-card border-b border-line/40 pb-10 md:border-b-0 md:pb-0"
-                    data-type={post.data.type}
+                    data-colour={post.data.classification.colour}
+                    data-effervescence={post.data.classification.effervescence}
                     data-country={post.data.country}
-                    data-tags={post.data.tags.join(',')}
+                    data-tags={flattenSelectionTags(post.data.tags).join('|')}
                     data-price={parsePrice(post.data.price)}
                 >
                     <a href={`/selections/${post.id}`} class="block">
                         
                         <!-- THE VIBE CARD -->
-                        <div class={`aspect-[4/3] md:aspect-[4/5] relative mb-6 overflow-hidden rounded-sm flex items-center justify-center px-6 py-8 transition duration-500 group-hover:scale-[1.02] ${getMoodColor(post.data.tags[0])}`}>
-                            <p class="font-sans text-2xl font-medium uppercase text-center tracking-tight opacity-90 leading-tight">
-                                {post.data.vibe}
+                        <div class={`aspect-[4/3] md:aspect-[4/5] relative mb-6 overflow-hidden rounded-sm flex items-center justify-center px-6 py-8 transition duration-500 group-hover:scale-[1.02] ${getSelectionPalette(post.data.palette)}`}>
+                            <p class="font-sans text-2xl font-medium uppercase text-center tracking-tight leading-tight">
+                                {formatSelectionVibe(post.data.vibe)}
                             </p>
                             
                             <!-- Overlay Tags -->
                             <div class="absolute bottom-4 left-4 flex gap-2 flex-wrap">
-                                {post.data.tags.map(tag => (
-                                    <span class="font-mono text-[9px] uppercase tracking-widest border border-current px-1.5 py-0.5 rounded-full opacity-60">
+                                {flattenSelectionTags(post.data.tags).map(tag => (
+                                    <span class="font-mono text-[9px] uppercase tracking-widest border border-current px-1.5 py-0.5 rounded-full">
                                         {tag}
                                     </span>
                                 ))}
@@ -163,7 +206,9 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
                         
                         <!-- Technical Preview -->
                         <div class="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[10px] text-text-dim mb-4">
-                            <span>{post.data.type}</span>
+                            <span>{post.data.classification.colour}</span>
+                            <span>•</span>
+                            <span>{post.data.classification.effervescence}</span>
                             <span>•</span>
                             <span>{post.data.region}</span>
                             <span>•</span>
@@ -206,7 +251,8 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
 <script>
     // Filter State Interface
     interface FilterState {
-        type: string | null;
+        colour: string | null;
+        effervescence: string | null;
         country: string | null;
         tag: string | null;
         price: string | null; // Stores JSON string of {min, max}
@@ -214,7 +260,8 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
     }
 
     let activeFilters: FilterState = {
-        type: null,
+        colour: null,
+        effervescence: null,
         country: null,
         tag: null,
         price: null
@@ -233,13 +280,14 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
     function init() {
         // Read URL params
         const params = new URLSearchParams(window.location.search);
-        activeFilters.type = params.get('type') || null;
+        activeFilters.colour = params.get('colour') || null;
+        activeFilters.effervescence = params.get('effervescence') || null;
         activeFilters.country = params.get('country') || null;
         activeFilters.tag = params.get('tag') || null;
         activeFilters.price = params.get('price') || null;
 
         // Auto-open filter if any filter is active
-        if (activeFilters.type || activeFilters.country || activeFilters.tag || activeFilters.price) {
+        if (activeFilters.colour || activeFilters.effervescence || activeFilters.country || activeFilters.tag || activeFilters.price) {
             if (filterWrapper && filterToggleText) {
                 filterWrapper.classList.remove('max-h-0', 'opacity-0');
                 filterWrapper.classList.add('max-h-[1200px]', 'opacity-100');
@@ -289,9 +337,10 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
         cards.forEach(card => {
             if (!(card instanceof HTMLElement)) return;
 
-            const cardType = card.dataset.type;
+            const cardColour = card.dataset.colour;
+            const cardEffervescence = card.dataset.effervescence;
             const cardCountry = card.dataset.country;
-            const cardTags = (card.dataset.tags || '').split(',');
+            const cardTags = (card.dataset.tags || '').split('|').filter(Boolean);
             const cardPrice = parseFloat(card.dataset.price || '0');
 
             // Price Match Logic
@@ -306,11 +355,12 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
                 }
             }
 
-            const matchType = !activeFilters.type || cardType === activeFilters.type;
+            const matchColour = !activeFilters.colour || cardColour === activeFilters.colour;
+            const matchEffervescence = !activeFilters.effervescence || cardEffervescence === activeFilters.effervescence;
             const matchCountry = !activeFilters.country || cardCountry === activeFilters.country;
             const matchTag = !activeFilters.tag || cardTags.includes(activeFilters.tag);
 
-            if (matchType && matchCountry && matchTag && matchPrice) {
+            if (matchColour && matchEffervescence && matchCountry && matchTag && matchPrice) {
                 card.classList.remove('hidden');
                 visibleCount++;
             } else {
@@ -334,7 +384,8 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
     // Update URL Params
     function updateURL() {
         const params = new URLSearchParams();
-        if (activeFilters.type) params.set('type', activeFilters.type);
+        if (activeFilters.colour) params.set('colour', activeFilters.colour);
+        if (activeFilters.effervescence) params.set('effervescence', activeFilters.effervescence);
         if (activeFilters.country) params.set('country', activeFilters.country);
         if (activeFilters.tag) params.set('tag', activeFilters.tag);
         if (activeFilters.price) params.set('price', activeFilters.price);
@@ -368,7 +419,13 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
 
     if (clearBtn) {
         clearBtn.addEventListener('click', () => {
-            activeFilters = { type: null, country: null, tag: null, price: null };
+            activeFilters = {
+                colour: null,
+                effervescence: null,
+                country: null,
+                tag: null,
+                price: null,
+            };
             updateUI();
             applyFilters();
         });

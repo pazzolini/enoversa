@@ -4,11 +4,19 @@ producer: "MicroBioWines"
 country: "Spain"
 region: "Nieva"
 vintage: "2023"
-type: "White"
+classification:
+  colour: "White"
+  effervescence: "Still"
+  fortified: false
 grapes: "Verdejo"
 price: "28,00 €"
-tags: ["Skin Contact", "Amphora", "Natural"]
-vibe: "Pear. Juice. Grip."
+tags:
+  vineyard: ["Ungrafted"]
+  farming: ["Certified Organic", "Hand Harvested"]
+  vinification: ["Skin Contact", "Native Yeast", "No Added Sulphites"]
+  vessel: ["Clay Tinaja"]
+vibe: ["Pear", "Juice", "Grip"]
+palette: "Amber"
 metrics:
   liveliness: 2
   drinkability: 2

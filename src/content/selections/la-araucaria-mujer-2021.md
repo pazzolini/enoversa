@@ -4,11 +4,18 @@ producer: "La Araucaria"
 country: "Spain"
 region: "Valle de la Orotava"
 vintage: "2021"
-type: "Red"
+classification:
+  colour: "Red"
+  effervescence: "Still"
+  fortified: false
 grapes: "Vijariego Negro"
 price: "35,00 €"
-tags: ["Volcanic", "Animal", "Natural"]
-vibe: "Animal. Tension. Mineral."
+tags:
+  site: ["Volcanic", "Clay", "Gravel"]
+  farming: ["Organic Farming", "Biodynamic Farming"]
+  vinification: ["Native Yeast", "No Added Sulphites", "Unfiltered"]
+vibe: ["Animal", "Tension", "Mineral"]
+palette: "Earth"
 metrics:
   liveliness: 2
   drinkability: 1

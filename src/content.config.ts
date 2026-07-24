@@ -1,6 +1,8 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { selectionPaletteNames } from "./utils/selectionPalettes";
+import { selectionTagVocabulary } from "./utils/selectionTaxonomy";
 
 const deprecatedVibeDescriptors = new Map([
     ["oily", "Oil"],
@@ -16,29 +18,35 @@ const deprecatedVibeDescriptors = new Map([
     ["acidic", "Acidity"],
 ]);
 
-const selectionVibe = z.string().superRefine((value, context) => {
-    const descriptors = value
-        .split(".")
-        .map((descriptor) => descriptor.trim())
-        .filter(Boolean);
-
-    if (descriptors.length !== 3) {
+const selectionVibeDescriptor = z.string().trim().min(1).superRefine((descriptor, context) => {
+    const replacement = deprecatedVibeDescriptors.get(descriptor.toLowerCase());
+    if (replacement) {
         context.addIssue({
             code: "custom",
-            message: "Selection vibes must contain exactly three full-stop-separated descriptors.",
+            message: `Use the canonical descriptor “${replacement}” instead of “${descriptor}”.`,
         });
     }
-
-    for (const descriptor of descriptors) {
-        const replacement = deprecatedVibeDescriptors.get(descriptor.toLowerCase());
-        if (replacement) {
-            context.addIssue({
-                code: "custom",
-                message: `Use the canonical descriptor “${replacement}” instead of “${descriptor}”.`,
-            });
-        }
-    }
 });
+
+const selectionVibe = z.tuple([
+    selectionVibeDescriptor,
+    selectionVibeDescriptor,
+    selectionVibeDescriptor,
+]);
+
+const tagList = <T extends readonly [string, ...string[]]>(values: T) =>
+    z.array(z.enum(values)).min(1);
+
+const selectionTags = z.object({
+    site: tagList(selectionTagVocabulary.site).optional(),
+    vineyard: tagList(selectionTagVocabulary.vineyard).optional(),
+    farming: tagList(selectionTagVocabulary.farming).optional(),
+    vinification: tagList(selectionTagVocabulary.vinification).optional(),
+    vessel: tagList(selectionTagVocabulary.vessel).optional(),
+    ageing: tagList(selectionTagVocabulary.ageing).optional(),
+    style: tagList(selectionTagVocabulary.style).optional(),
+    producer: tagList(selectionTagVocabulary.producer).optional(),
+}).strict();
 
 const selections = defineCollection({
     loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/selections" }),
@@ -48,13 +56,19 @@ const selections = defineCollection({
         vintage: z.string(),
         country: z.string(),
         region: z.string(),
-        type: z.enum(["Red", "White", "Sparkling", "Rosé", "Dessert"]),
+        classification: z.object({
+            colour: z.enum(["White", "Rosé", "Red"]),
+            effervescence: z.enum(["Still", "Sparkling"]),
+            sweetness: z.enum(["Dry", "Medium-dry", "Semi-sweet", "Sweet"]).optional(),
+            fortified: z.boolean(),
+        }).strict(),
         grapes: z.string(),
         price: z.string(),
         date: z.coerce.date(),
         tastingDate: z.coerce.date(),
-        tags: z.array(z.string()),
+        tags: selectionTags,
         vibe: selectionVibe,
+        palette: z.enum(selectionPaletteNames),
         metrics: z.object({
             liveliness: z.number().min(0).max(2),
             drinkability: z.number().min(0).max(2),
