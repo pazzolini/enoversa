@@ -182,15 +182,6 @@ const getTotalScore = (metrics: typeof allSelections[number]['data']['metrics'])
                             <p class="font-sans text-2xl font-medium uppercase text-center tracking-tight leading-tight">
                                 {formatSelectionVibe(post.data.vibe)}
                             </p>
-                            
-                            <!-- Overlay Tags -->
-                            <div class="absolute bottom-4 left-4 flex gap-2 flex-wrap">
-                                {flattenSelectionTags(post.data.tags).map(tag => (
-                                    <span class="font-mono text-[9px] uppercase tracking-widest border border-current px-1.5 py-0.5 rounded-full">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
                         </div>
 
                         <!-- Content -->

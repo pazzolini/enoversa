@@ -30,6 +30,8 @@ test('selection classification and typed tag filters stay separate', async ({ pa
   await expect(page.locator('button[data-category="effervescence"][data-value="Sparkling"]')).toBeVisible();
   await expect(page.locator('button[data-category="tag"][data-value="Carbonic Maceration"]')).toBeVisible();
   await expect(page.locator('button[data-category="tag"][data-value="Co-fermented"]')).toHaveCount(0);
+  const laBrujaCard = page.locator('.selection-card').filter({ hasText: 'La Bruja' });
+  await expect(laBrujaCard.getByText('Granite', { exact: true })).toHaveCount(0);
 
   await page.locator('button[data-category="colour"][data-value="Red"]').click();
   await page.locator('button[data-category="tag"][data-value="Carbonic Maceration"]').click();
