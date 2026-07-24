@@ -3,6 +3,8 @@ import { expect, test } from '@playwright/test';
 test('the main navigation reaches the selections index', async ({ page }) => {
   await page.goto('/');
 
+  const featuredLaBruja = page.locator('#selections article').filter({ hasText: 'La Bruja' });
+  await expect(featuredLaBruja.getByText('Granite', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Open navigation menu' })).toBeVisible();
   const menuButton = page.locator('#menu-btn');
   await menuButton.click();
@@ -45,10 +47,13 @@ test('selection classification and typed tag filters stay separate', async ({ pa
 test('an individual selection groups factual tags apart from the vibe', async ({ page }) => {
   await page.goto('/selections/domaine-matassa-french-disko-2023');
 
-  await expect(page.getByText('Colour', { exact: true })).toBeVisible();
-  await expect(page.getByText('Effervescence', { exact: true })).toBeVisible();
-  await expect(page.getByText('Vinification', { exact: true })).toBeVisible();
-  await expect(page.getByText('Carbonic Maceration', { exact: true })).toBeVisible();
+  const metadata = page.locator('[data-selection-metadata]');
+  const vibe = page.locator('[data-selection-vibe]');
+  await expect(metadata.getByText('Colour', { exact: true })).toBeVisible();
+  await expect(metadata.getByText('Effervescence', { exact: true })).toBeVisible();
+  await expect(metadata.getByText('Vinification', { exact: true })).toBeVisible();
+  await expect(metadata.getByText(/Carbonic Maceration/)).toBeVisible();
+  await expect(vibe.getByText(/Carbonic Maceration/)).toHaveCount(0);
   await expect(page.getByText('Natural', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('heading', { level: 2, name: 'REDCURRANT. SANGUINE. WEIGHTLESS.' })).toBeVisible();
 });

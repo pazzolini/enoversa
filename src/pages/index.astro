@@ -5,10 +5,7 @@ import PlacesMap from "../components/PlacesMap.astro";
 import { getCollection } from "astro:content";
 import { comparePlaces } from "../utils/placeSort";
 import { getSelectionPalette } from "../utils/selectionPalettes";
-import {
-    flattenSelectionTags,
-    formatSelectionVibe,
-} from "../utils/selectionTaxonomy";
+import { formatSelectionVibe } from "../utils/selectionTaxonomy";
 
 const allSelections = await getCollection("selections");
 const featuredSelections = allSelections
@@ -250,13 +247,8 @@ const legacyUrl = "https://legacy.enoversa.com";
                                         <p class="text-text-muted font-light leading-relaxed mb-4 line-clamp-3">
                                             {post.data.excerpt}
                                         </p>
-                                        <div class="flex justify-between items-center gap-4">
-                                            {flattenSelectionTags(post.data.tags).length > 0 && (
-                                                <span class="font-mono text-[10px] uppercase tracking-widest text-text-dim">
-                                                    {flattenSelectionTags(post.data.tags).join(" · ")}
-                                                </span>
-                                            )}
-                                            <span class="ml-auto shrink-0 text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">
+                                        <div class="flex justify-end items-center">
+                                            <span class="shrink-0 text-xs font-mono uppercase tracking-wider text-text-dim group-hover:text-white transition">
                                                 Read Notes ->
                                             </span>
                                         </div>

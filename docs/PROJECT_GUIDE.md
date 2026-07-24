@@ -201,7 +201,7 @@ Selection vibes are arrays of exactly three editorial descriptors. Prefer concre
 
 The required `palette` is an editorial visual choice, completely independent of classification and tags. Allowed palettes are `Burgundy`, `Rose`, `Gold`, `Amber`, `Moss`, `Marine`, `Slate`, `Earth`, `Plum` and `Void`. Their accessible colour pairs live in `src/utils/selectionPalettes.ts`; do not add or modify a palette without checking normal and small-text contrast.
 
-Cards show the editorial `vibe` without production tags. Tags remain available as filters and are grouped by facet on individual Selection pages. A tag only becomes a filter when it occurs on at least two wines; singleton tags remain visible on the individual page. Empty facets and filter groups are never rendered.
+Cards show the editorial `vibe` without production tags. Tags remain available as filters and are grouped by facet within the technical metadata on individual Selection pages, never inside the coloured `vibe` card. A tag only becomes a filter when it occurs on at least two wines; singleton tags remain visible on the individual page. Empty facets and filter groups are never rendered.
 
 ### 6.2 Portraits
 

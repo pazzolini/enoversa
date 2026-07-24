@@ -82,7 +82,7 @@ const totalScore =
             </div>
 
             <!-- 2. The Technical Data Strip -->
-            <div class="border-y border-line py-6 mb-12">
+            <div class="border-y border-line py-6 mb-12" data-selection-metadata>
                 <div
                     class="grid grid-cols-2 md:grid-cols-4 gap-8 font-mono text-[10px] uppercase tracking-widest text-text-muted"
                 >
@@ -93,31 +93,30 @@ const totalScore =
                         </div>
                     ))}
                 </div>
-            </div>
-
-            <!-- 3. The Vibe Card (La Cabra Style) -->
-            <div
-                class={`w-full min-h-72 md:min-h-0 md:aspect-[3/1] flex flex-col items-center rounded-sm overflow-hidden p-4 md:p-6 ${paletteClass}`}
-            >
                 {tagGroups.length > 0 && (
-                    <div class="w-full flex flex-col gap-2">
+                    <div
+                        class="mt-6 pt-6 border-t border-line/60 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-5 font-mono text-[10px] uppercase tracking-widest"
+                        data-selection-tags
+                    >
                         {tagGroups.map((group) => (
-                            <div class="flex flex-wrap items-center gap-2">
-                                <span class="font-mono text-[9px] uppercase tracking-widest">
-                                    {group.label}
+                            <div>
+                                <span class="block text-text-dim mb-1">{group.label}</span>
+                                <span class="text-white leading-relaxed">
+                                    {group.values.join(" · ")}
                                 </span>
-                                {group.values.map((tag) => (
-                                    <span class="font-mono text-[9px] uppercase tracking-widest border border-current px-2 py-0.5 rounded-full">
-                                        {tag}
-                                    </span>
-                                ))}
                             </div>
                         ))}
                     </div>
                 )}
+            </div>
 
+            <!-- 3. The Vibe Card (La Cabra Style) -->
+            <div
+                class={`w-full min-h-72 md:min-h-0 md:aspect-[3/1] flex items-center justify-center rounded-sm overflow-hidden p-4 md:p-6 ${paletteClass}`}
+                data-selection-vibe
+            >
                 <h2
-                    class="flex flex-1 items-center justify-center text-3xl md:text-4xl font-sans font-medium tracking-tight uppercase text-center max-w-4xl px-2 md:px-6"
+                    class="text-3xl md:text-4xl font-sans font-medium tracking-tight uppercase text-center max-w-4xl px-2 md:px-6"
                 >
                     {formatSelectionVibe(entry.data.vibe)}
                 </h2>
